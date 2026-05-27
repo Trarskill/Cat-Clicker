@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://8fdw2i4y4riu"]
+
+[ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
+[ext_resource type="Texture2D" uid="uid://c3hace7rfxv3b" path="res://Assets/Graphics/Characters/MeowQuest-ai-hero_sptite.png" id="2_ta8b4"]
+
+[node name="Cat" type="Node2D"]
+script = ExtResource("1_cat_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 6
+scale = Vector2(0.3, 0.3)
+texture = ExtResource("2_ta8b4")
+hframes = 5
+frame = 4

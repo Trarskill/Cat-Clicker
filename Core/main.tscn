@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://0rjxt6xf8rlw"]
+
+[ext_resource type="PackedScene" uid="uid://cr7gx250rah1v" path="res://UI/Screens/Dashboard.tscn" id="1_t7ply"]
+
+[node name="Main" type="Node"]
+
+[node name="Dashboard" parent="." instance=ExtResource("1_t7ply")]

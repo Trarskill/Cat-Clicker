@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://b8ao5lyyy132s"]
+
+[ext_resource type="Script" path="res://Characters/Dummy/Dummy.gd" id="1_dummy_script"]
+[ext_resource type="Texture2D" uid="uid://c27rsmbx1k4od" path="res://Assets/Graphics/Characters/enemy-demmy.png" id="2_5bmkl"]
+
+[node name="Dummy" type="Node2D"]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_dummy_script")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 6
+position = Vector2(5, 0)
+texture = ExtResource("2_5bmkl")
+flip_h = true

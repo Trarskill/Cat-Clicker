@@ -1,0 +1,109 @@
+[gd_scene load_steps=7 format=3 uid="uid://cp2jffsneldni"]
+
+[ext_resource type="Script" path="res://UI/HUD/LevelBar/LevelBar.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://gnwvb53hkvq3" path="res://Assets/Fonts/SourceCodePro-Black.ttf" id="2_k62lg"]
+[ext_resource type="Texture2D" uid="uid://dxth3shx7uqa2" path="res://Assets/Graphics/Icons/lvl-icon-ai.png" id="2_k530o"]
+[ext_resource type="FontFile" uid="uid://wjw3f5lx5dj0" path="res://Assets/Fonts/Xolonium-Bold.ttf" id="3_lsp56"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_bg"]
+bg_color = Color(0.262745, 0.172549, 0.113725, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.45098, 0.301961, 0.2, 1)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bar_fill"]
+bg_color = Color(0.556863, 0.776471, 0.427451, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 100
+corner_radius_top_right = 100
+corner_radius_bottom_right = 100
+corner_radius_bottom_left = 100
+
+[node name="LevelBar" type="VBoxContainer"]
+custom_minimum_size = Vector2(300, 80)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -40.0
+offset_right = 150.0
+offset_bottom = 40.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme_override_constants/separation = 4
+alignment = 1
+script = ExtResource("1_script")
+
+[node name="LevelTitle" type="Label" parent="."]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.941176, 0.901961, 0.854902, 1)
+theme_override_colors/font_outline_color = Color(0.262745, 0.172549, 0.113725, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = ExtResource("2_k62lg")
+theme_override_font_sizes/font_size = 28
+text = "Level 1"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarRow" type="HBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="BarRow"]
+custom_minimum_size = Vector2(240, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 1
+theme_override_styles/background = SubResource("StyleBoxFlat_bar_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bar_fill")
+value = 50.0
+show_percentage = false
+
+[node name="XPLabel" type="Label" parent="BarRow/ProgressBar"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.262745, 0.172549, 0.113725, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("3_lsp56")
+theme_override_font_sizes/font_size = 20
+text = "50 / 1000 XP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IconTexture" type="TextureRect" parent="BarRow/ProgressBar"]
+visible = false
+texture_filter = 6
+custom_minimum_size = Vector2(58, 58)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.057
+anchor_right = 0.057
+anchor_bottom = 1.0
+offset_left = -29.1
+offset_top = -9.0
+offset_right = 28.9
+offset_bottom = 9.0
+grow_vertical = 2
+texture = ExtResource("2_k530o")
+expand_mode = 1
+stretch_mode = 5

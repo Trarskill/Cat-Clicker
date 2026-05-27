@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://h44hsbgi5rj4"]
+
+[ext_resource type="Script" path="res://UI/Components/ButtonShopGroup/ButtonShopGroup.gd" id="1_88qpa"]
+[ext_resource type="Texture2D" uid="uid://kp0meopfqjvf" path="res://Assets/Graphics/Icons/MeowQuest-ai-button-shoppopup.png" id="2_3aurv"]
+[ext_resource type="PackedScene" uid="uid://ce4whhntqrh1q" path="res://UI/Components/ShopTabBtn/ShopTabBtn.tscn" id="2_7tbwn"]
+[ext_resource type="Texture2D" uid="uid://ccuu1dj6n3a8d" path="res://Assets/Graphics/Icons/Button/tent-shop-icon-ai.png" id="2_dwmk7"]
+[ext_resource type="Texture2D" uid="uid://cxllelx8yfnm7" path="res://Assets/Graphics/Icons/MeowQuest-ai-button-press-shoppopup.png" id="5_fdynb"]
+[ext_resource type="Texture2D" uid="uid://bus3fyvn7dpne" path="res://Assets/Graphics/Icons/Button/weapons-shop-icon-ai.png" id="6_qdco7"]
+[ext_resource type="Texture2D" uid="uid://fvi0orei0q6x" path="res://Assets/Graphics/Icons/Button/sorceress-cats-shop-icon-ai.png" id="7_0hg0b"]
+
+[node name="ButtonShopGroup" type="HBoxContainer"]
+custom_minimum_size = Vector2(0, 75)
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 75.0
+grow_horizontal = 2
+theme_override_constants/separation = 20
+alignment = 1
+script = ExtResource("1_88qpa")
+
+[node name="TabGeneral" parent="." instance=ExtResource("2_7tbwn")]
+texture_filter = 6
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+tab_text = "Лавка"
+tab_icon = ExtResource("2_dwmk7")
+texture_normal = ExtResource("2_3aurv")
+texture_active = ExtResource("5_fdynb")
+
+[node name="TabWeapon" parent="." instance=ExtResource("2_7tbwn")]
+texture_filter = 6
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+tab_id = "weapon"
+tab_text = "Зброя"
+tab_icon = ExtResource("6_qdco7")
+texture_normal = ExtResource("2_3aurv")
+texture_active = ExtResource("5_fdynb")
+
+[node name="TabMagic" parent="." instance=ExtResource("2_7tbwn")]
+texture_filter = 6
+custom_minimum_size = Vector2(120, 60)
+layout_mode = 2
+tab_id = "magic"
+tab_text = "Магія"
+tab_icon = ExtResource("7_0hg0b")
+texture_normal = ExtResource("2_3aurv")
+texture_active = ExtResource("5_fdynb")

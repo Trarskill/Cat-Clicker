@@ -1,0 +1,100 @@
+[gd_scene load_steps=13 format=3 uid="uid://8fdw2i4y4riu"]
+
+[ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
+[ext_resource type="Texture2D" uid="uid://crm0w4b8ehnlp" path="res://Assets/Graphics/Characters/hero_sptite-ai-v2.1.png" id="2_tyd50"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_b80f4"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(0, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vhnhf"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(1024, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtu2y"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(2048, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i8wno"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(3072, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ndyjy"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(4096, 1024, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wnkpr"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(0, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wd3yo"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(1024, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w152d"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(2048, 0, 1024, 1024)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1bw1o"]
+atlas = ExtResource("2_tyd50")
+region = Rect2(3072, 0, 1024, 1024)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_cat"]
+animations = [{
+"frames": [{
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_b80f4")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_vhnhf")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_wtu2y")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_i8wno")
+}, {
+"duration": 0.7,
+"texture": SubResource("AtlasTexture_ndyjy")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wnkpr")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wd3yo")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w152d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1bw1o")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 6.0
+}]
+
+[node name="Cat" type="Node2D"]
+scale = Vector2(0.9, 0.9)
+script = ExtResource("1_cat_script")
+
+[node name="Shadow" type="AnimatedSprite2D" parent="."]
+modulate = Color(0, 0, 0, 0.392157)
+position = Vector2(58, 243)
+scale = Vector2(1, 0.4)
+skew = 0.436332
+sprite_frames = SubResource("SpriteFrames_cat")
+animation = &"idle"
+frame = 3
+frame_progress = 0.528118
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_cat")
+animation = &"idle"
+frame = 2
+frame_progress = 0.942635

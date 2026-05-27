@@ -1,0 +1,73 @@
+[gd_scene load_steps=5 format=3 uid="uid://d1otjlk781tvt"]
+
+[ext_resource type="Script" path="res://UI/Popups/Inventory/InventoryPopup.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d4i4k3t5yiy30" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-shoppopup.png" id="2_bg"]
+[ext_resource type="FontFile" uid="uid://gnwvb53hkvq3" path="res://Assets/Fonts/SourceCodePro-Black.ttf" id="3_f73o6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w08o"]
+bg_color = Color(0.1, 0.1, 0.1, 0.5)
+
+[node name="InventoryPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(0, 800)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -800.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0w08o")
+
+[node name="Background" type="TextureRect" parent="Panel"]
+layout_mode = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MainLayout" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Header" type="MarginContainer" parent="Panel/MainLayout"]
+layout_mode = 2
+theme_override_constants/margin_top = 30
+
+[node name="Title" type="Label" parent="Panel/MainLayout/Header"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_fonts/font = ExtResource("3_f73o6")
+theme_override_font_sizes/font_size = 42
+text = "ІНВЕНТАР"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MainLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 40
+theme_override_constants/margin_bottom = 40
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MainLayout/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="Grid" type="GridContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+theme_override_constants/h_separation = 8
+theme_override_constants/v_separation = 8
+columns = 5

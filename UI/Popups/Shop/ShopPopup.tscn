@@ -1,0 +1,221 @@
+[gd_scene load_steps=19 format=3 uid="uid://c4qp3vfqv1njv"]
+
+[ext_resource type="Script" path="res://UI/Popups/Shop/ShopPopup.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://d4i4k3t5yiy30" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-shoppopup.png" id="2_micnq"]
+[ext_resource type="Texture2D" uid="uid://3w37jox4yr43" path="res://Assets/Graphics/Icons/MeowQuest-ai-arrow-shoppopup.png" id="3_vyik8"]
+[ext_resource type="PackedScene" uid="uid://h44hsbgi5rj4" path="res://UI/Components/ButtonShopGroup/ButtonShopGroup.tscn" id="4_8td6q"]
+[ext_resource type="PackedScene" uid="uid://cbj3m1nj75luk" path="res://UI/Components/ShopItemCard/ShopItemCard.tscn" id="5_vx2fw"]
+[ext_resource type="Texture2D" uid="uid://cewg1yurarss5" path="res://Assets/Graphics/Icons/Сurrency/Meowgem-currency-ai.png" id="6_43mri"]
+[ext_resource type="Texture2D" uid="uid://co53aff3b0umx" path="res://Assets/Graphics/Icons/Items/mysterious-chest-ai.png" id="6_idkmo"]
+[ext_resource type="Texture2D" uid="uid://0ednoxoli3t2" path="res://Assets/Graphics/Icons/Items/bowl-ai.png" id="6_shcul"]
+[ext_resource type="Texture2D" uid="uid://dlai8i0awrfmw" path="res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png" id="7_6ctw5"]
+[ext_resource type="Texture2D" uid="uid://d1ejebkt8ggwj" path="res://Assets/Graphics/Icons/Items/apple-ai.png" id="10_jjdet"]
+[ext_resource type="Texture2D" uid="uid://buystellul4qh" path="res://Assets/Graphics/Icons/Items/bag-of-fruit-ai.png" id="11_xtp1k"]
+[ext_resource type="Texture2D" uid="uid://dkvcguo2q1d6l" path="res://Assets/Graphics/Icons/Items/wooden-sword-ai.png" id="12_haw83"]
+[ext_resource type="Texture2D" uid="uid://dn3h5b4kr2mrw" path="res://Assets/Graphics/Icons/Items/wooden-shield-ai.png" id="13_n4a1i"]
+[ext_resource type="Texture2D" uid="uid://bsdqi0qdxewni" path="res://Assets/Graphics/Icons/Items/steel-sword-ai.png" id="14_55idl"]
+[ext_resource type="Texture2D" uid="uid://d22hqnrdhx2ep" path="res://Assets/Graphics/Icons/Items/magical-rose-ai.png" id="15_ccpf1"]
+[ext_resource type="Texture2D" uid="uid://c7kmch6p0vbxp" path="res://Assets/Graphics/Icons/Items/potion-ai.png" id="16_ywgk1"]
+[ext_resource type="Texture2D" uid="uid://dpvn8ebnycrou" path="res://Assets/Graphics/Icons/Items/wooden-magic-wand-ai.png" id="17_nphjv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w08o"]
+
+[node name="ShopPopup" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Panel" type="PanelContainer" parent="."]
+clip_children = 2
+custom_minimum_size = Vector2(0, 1280)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_0w08o")
+
+[node name="plate" type="TextureRect" parent="Panel"]
+texture_filter = 6
+layout_mode = 2
+texture = ExtResource("2_micnq")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="MainLayout" type="VBoxContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="HandleArea" type="Button" parent="Panel/MainLayout"]
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+size_flags_vertical = 0
+flat = true
+
+[node name="Arrow" type="TextureRect" parent="Panel/MainLayout/HandleArea"]
+texture_filter = 6
+custom_minimum_size = Vector2(75, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_vyik8")
+expand_mode = 1
+
+[node name="ButtonShopGroup" parent="Panel/MainLayout" instance=ExtResource("4_8td6q")]
+layout_mode = 2
+theme_override_constants/separation = 16
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MainLayout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_bottom = 32
+
+[node name="ScrollContainer" type="ScrollContainer" parent="Panel/MainLayout/MarginContainer"]
+layout_mode = 2
+horizontal_scroll_mode = 0
+
+[node name="ShopLists" type="MarginContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="GeneralList" type="VBoxContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "- Тогрова лавка з різним мотлахом  -"
+horizontal_alignment = 1
+
+[node name="СhestItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "mysterious_chest"
+item_name = "Дерев'яна скриня з печатко"
+item_desc = "Цікаво що в серениді?"
+item_icon = ExtResource("6_idkmo")
+currency_icon = ExtResource("6_43mri")
+is_premium = true
+
+[node name="FishBoneItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+texture_filter = 6
+layout_mode = 2
+item_id = "bowl"
+item_name = "Кісточка від риби"
+item_desc = "Рибу хтось з'їв і залишилася тільки кісточка"
+item_price = 5
+item_icon = ExtResource("6_shcul")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="AppleItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "apple"
+item_name = "Яблуко"
+item_desc = "Звичайне яблуко, але дуже кисле."
+item_price = 35
+item_icon = ExtResource("10_jjdet")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="BagofFruitItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "bag_of_fruit"
+item_name = "Мішечок з фруктами"
+item_desc = "Ці фрукти світяться? Що буде якщо їх з'їсти?"
+item_price = 500
+item_icon = ExtResource("11_xtp1k")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="WeaponList" type="VBoxContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "- Магазин для тих хто хоче стати лицарем -"
+horizontal_alignment = 1
+
+[node name="WSwordItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "wooden_sword"
+item_name = "Меч з дерева"
+item_desc = "Скільки за шматок дерева? це грабунок!"
+item_price = 1000
+item_icon = ExtResource("12_haw83")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="WShieldItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "wooden_shield"
+item_name = "Щит з дерева"
+item_desc = "А навіщо він?"
+item_price = 750
+item_icon = ExtResource("13_n4a1i")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="StSwordItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "steel_sword"
+item_name = "Стальний меч"
+item_desc = "Цим буде найкреше бити по ворогу"
+item_price = 2500
+item_icon = ExtResource("14_55idl")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="MagicList" type="VBoxContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists"]
+visible = false
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Label" type="Label" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "- Магічна лавка котів чарівників -"
+horizontal_alignment = 1
+
+[node name="RoseItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "magical_rose"
+item_name = "Котяка роза"
+item_desc = "Кажуть якщо її змішати з зіллям можно стати кот-магом."
+item_price = 1
+item_icon = ExtResource("15_ccpf1")
+currency_icon = ExtResource("6_43mri")
+is_premium = true
+
+[node name="PotionItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "potion"
+item_name = "Невідоме зілля"
+item_desc = "Я не впевнений що це гарна думака пити це!"
+item_price = 100
+item_icon = ExtResource("16_ywgk1")
+currency_icon = ExtResource("7_6ctw5")
+
+[node name="MagStickItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "magic_stick"
+item_name = "Стара магічна палиця"
+item_desc = "Кажуть що я зможу стріляти магією з неї, але як?"
+item_price = 5000
+item_icon = ExtResource("17_nphjv")
+currency_icon = ExtResource("7_6ctw5")

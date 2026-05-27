@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwh6ff0g52dhp"]
+
+[ext_resource type="Script" path="res://UI/Components/InventoryItemCard/InventoryItemCard.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://gnwvb53hkvq3" path="res://Assets/Fonts/SourceCodePro-Black.ttf" id="2_h28pv"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.846565, 0.806305, 0.766746, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.896299, 0.868659, 0.841101, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="InventoryItemCard" type="PanelContainer"]
+custom_minimum_size = Vector2(110, 110)
+offset_right = 110.0
+offset_bottom = 110.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+script = ExtResource("1_script")
+
+[node name="ItemIcon" type="TextureRect" parent="."]
+texture_filter = 6
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CountLabel" type="Label" parent="."]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 8
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "16"
+
+[node name="ClickArea" type="Button" parent="."]
+layout_mode = 2
+focus_mode = 0
+flat = true
+
+[node name="TimerLabel" type="Label" parent="."]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.834375, 0.816844, 0.337226, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_h28pv")
+theme_override_font_sizes/font_size = 24
+text = "60s"
+horizontal_alignment = 1
+vertical_alignment = 1

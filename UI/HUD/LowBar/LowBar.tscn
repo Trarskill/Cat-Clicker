@@ -1,0 +1,58 @@
+[gd_scene load_steps=6 format=3 uid="uid://dbo3grhqh1w52"]
+
+[ext_resource type="PackedScene" uid="uid://b37i7wioi1wna" path="res://UI/Components/CustomButton/CustomButton.tscn" id="1_button"]
+[ext_resource type="Texture2D" uid="uid://ccuu1dj6n3a8d" path="res://Assets/Graphics/Icons/Button/tent-shop-icon-ai.png" id="2_jy8ka"]
+[ext_resource type="PackedScene" uid="uid://cp2jffsneldni" path="res://UI/HUD/LevelBar/LevelBar.tscn" id="2_levelbar"]
+[ext_resource type="Texture2D" uid="uid://dxw8ks3mfjb47" path="res://Assets/Graphics/Icons/Button/inventory-icon-ai.png" id="4_ss1sy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lowbar"]
+bg_color = Color(0.188235, 0.121569, 0.0784314, 0.9)
+border_width_top = 4
+border_color = Color(0.45098, 0.301961, 0.2, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+expand_margin_left = 10.0
+expand_margin_right = 10.0
+expand_margin_bottom = 10.0
+
+[node name="LowBar" type="PanelContainer"]
+custom_minimum_size = Vector2(0, 110)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -121.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_lowbar")
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 10
+
+[node name="Layout" type="HBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="ShopButton" parent="Margin/Layout" instance=ExtResource("1_button")]
+custom_minimum_size = Vector2(110, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+icon = ExtResource("2_jy8ka")
+
+[node name="LevelBar" parent="Margin/Layout" instance=ExtResource("2_levelbar")]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.5
+
+[node name="InvButton" parent="Margin/Layout" instance=ExtResource("1_button")]
+custom_minimum_size = Vector2(110, 80)
+layout_mode = 2
+size_flags_horizontal = 6
+size_flags_vertical = 4
+icon = ExtResource("4_ss1sy")

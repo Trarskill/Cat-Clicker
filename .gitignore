@@ -1,0 +1,11 @@
+# Кеш Годоту
+.godot
+
+# Асети графіки дуже великі
+Assets
+
+# Налаштування ексторту непотрібні
+export_presets.cfg
+
+# іконки Godot
+icon.svg.import

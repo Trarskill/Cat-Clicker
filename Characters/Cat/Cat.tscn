@@ -1,82 +1,196 @@
-[gd_scene load_steps=13 format=3 uid="uid://8fdw2i4y4riu"]
+[gd_scene load_steps=34 format=3 uid="uid://8fdw2i4y4riu"]
 
 [ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
-[ext_resource type="Texture2D" uid="uid://crm0w4b8ehnlp" path="res://Assets/Graphics/Characters/hero_sptite-ai-v2.1.png" id="2_tyd50"]
+[ext_resource type="Texture2D" uid="uid://bkxyi1poxdbkx" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-1.png" id="3_5y7ob"]
+[ext_resource type="Texture2D" uid="uid://bis5tn45uea05" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-1.png" id="3_bci1o"]
+[ext_resource type="Texture2D" uid="uid://be53jsit5l36u" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-1.png" id="3_r3b0j"]
+[ext_resource type="Texture2D" uid="uid://dxfdetvtbkv0v" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-1.png" id="3_s6vmk"]
+[ext_resource type="Texture2D" uid="uid://o5pm0lx5ehb" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-2.png" id="4_0cbvm"]
+[ext_resource type="Texture2D" uid="uid://bi0h7e0sviggh" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-3.png" id="4_34orq"]
+[ext_resource type="Texture2D" uid="uid://3u7ow2b4gtyl" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-2.png" id="4_l2rcv"]
+[ext_resource type="Texture2D" uid="uid://ba6hdawe3a3mo" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-2.png" id="4_w6ygq"]
+[ext_resource type="Texture2D" uid="uid://btw0c1088pkts" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-4.png" id="5_8b0yj"]
+[ext_resource type="Texture2D" uid="uid://bdkr41b8vpqyh" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-3.png" id="5_37ed7"]
+[ext_resource type="Texture2D" uid="uid://bgfqr0kxafdco" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-3.png" id="5_mo5i2"]
+[ext_resource type="Texture2D" uid="uid://bpgjp1e8mt7mo" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-3.png" id="5_pkapd"]
+[ext_resource type="Texture2D" uid="uid://bwfi2rkm0qqys" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-4.png" id="6_epmss"]
+[ext_resource type="Texture2D" uid="uid://y7ojbydga1nq" path="res://Assets/Graphics/Characters/hero/hero_sptite-ai-v2.1.png" id="6_goovc"]
+[ext_resource type="Texture2D" uid="uid://b62snh1778w4a" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-2.png" id="6_hsl2u"]
+[ext_resource type="Texture2D" uid="uid://dqw570n0r5yrm" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-1.png" id="7_2qhf5"]
+[ext_resource type="Texture2D" uid="uid://dpl8iahcvonxk" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-2.png" id="8_wm2r3"]
+[ext_resource type="Texture2D" uid="uid://cs73rrauu1pm1" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-3.png" id="9_2508u"]
+[ext_resource type="Texture2D" uid="uid://b61h2o2pqakqu" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-4.png" id="10_keg76"]
+[ext_resource type="Texture2D" uid="uid://du75i7sy306cp" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-1.png" id="15_o2kiy"]
+[ext_resource type="Texture2D" uid="uid://pc0t8k0whde" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-2.png" id="16_ipjld"]
+[ext_resource type="Texture2D" uid="uid://cwssgq042awd0" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-3.png" id="17_4cdbw"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b80f4"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(0, 1024, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_v0apj"]
+atlas = ExtResource("6_goovc")
+region = Rect2(0, 512, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vhnhf"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(1024, 1024, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_fxr10"]
+atlas = ExtResource("6_goovc")
+region = Rect2(512, 512, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wtu2y"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(2048, 1024, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_cpppl"]
+atlas = ExtResource("6_goovc")
+region = Rect2(1024, 512, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_i8wno"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(3072, 1024, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_yuear"]
+atlas = ExtResource("6_goovc")
+region = Rect2(1536, 512, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ndyjy"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(4096, 1024, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_4a5op"]
+atlas = ExtResource("6_goovc")
+region = Rect2(2048, 512, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wnkpr"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(0, 0, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_x5kde"]
+atlas = ExtResource("6_goovc")
+region = Rect2(0, 0, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_wd3yo"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(1024, 0, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_sp63n"]
+atlas = ExtResource("6_goovc")
+region = Rect2(512, 0, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_w152d"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(2048, 0, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_k0yt6"]
+atlas = ExtResource("6_goovc")
+region = Rect2(1024, 0, 512, 512)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1bw1o"]
-atlas = ExtResource("2_tyd50")
-region = Rect2(3072, 0, 1024, 1024)
+[sub_resource type="AtlasTexture" id="AtlasTexture_kw1gx"]
+atlas = ExtResource("6_goovc")
+region = Rect2(1536, 0, 512, 512)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cat"]
 animations = [{
 "frames": [{
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_b80f4")
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_v0apj")
 }, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_vhnhf")
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_fxr10")
 }, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_wtu2y")
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_cpppl")
 }, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_i8wno")
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_yuear")
 }, {
-"duration": 0.7,
-"texture": SubResource("AtlasTexture_ndyjy")
+"duration": 0.9,
+"texture": SubResource("AtlasTexture_4a5op")
 }],
 "loop": false,
-"name": &"attack",
+"name": &"attack_cat",
 "speed": 10.0
 }, {
 "frames": [{
+"duration": 0.9,
+"texture": ExtResource("3_bci1o")
+}, {
+"duration": 0.9,
+"texture": ExtResource("4_34orq")
+}, {
+"duration": 0.9,
+"texture": ExtResource("5_8b0yj")
+}, {
+"duration": 0.9,
+"texture": ExtResource("6_hsl2u")
+}],
+"loop": false,
+"name": &"attack_shield",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 0.9,
+"texture": ExtResource("3_s6vmk")
+}, {
+"duration": 0.9,
+"texture": ExtResource("4_l2rcv")
+}, {
+"duration": 0.9,
+"texture": ExtResource("5_37ed7")
+}, {
+"duration": 0.9,
+"texture": ExtResource("6_epmss")
+}],
+"loop": false,
+"name": &"attack_steel_sword",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 0.9,
+"texture": ExtResource("7_2qhf5")
+}, {
+"duration": 0.9,
+"texture": ExtResource("8_wm2r3")
+}, {
+"duration": 0.9,
+"texture": ExtResource("9_2508u")
+}, {
+"duration": 0.9,
+"texture": ExtResource("10_keg76")
+}],
+"loop": false,
+"name": &"attack_wooden_sword",
+"speed": 9.0
+}, {
+"frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wnkpr")
+"texture": SubResource("AtlasTexture_x5kde")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wd3yo")
+"texture": SubResource("AtlasTexture_sp63n")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_w152d")
+"texture": SubResource("AtlasTexture_k0yt6")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1bw1o")
+"texture": SubResource("AtlasTexture_kw1gx")
 }],
 "loop": true,
-"name": &"idle",
-"speed": 6.0
+"name": &"idle_cat",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("15_o2kiy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_ipjld")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_4cdbw")
+}],
+"loop": true,
+"name": &"idle_shield",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_r3b0j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_w6ygq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_mo5i2")
+}],
+"loop": true,
+"name": &"idle_steel_sword",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_5y7ob")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_0cbvm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_pkapd")
+}],
+"loop": true,
+"name": &"idle_wooden_sword",
+"speed": 5.0
 }]
 
 [node name="Cat" type="Node2D"]
@@ -85,16 +199,20 @@ script = ExtResource("1_cat_script")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 0.392157)
-position = Vector2(58, 243)
-scale = Vector2(1, 0.4)
+texture_filter = 6
+position = Vector2(-435, 140)
+scale = Vector2(1.8521, 0.520142)
 skew = 0.436332
 sprite_frames = SubResource("SpriteFrames_cat")
-animation = &"idle"
-frame = 3
-frame_progress = 0.528118
+animation = &"attack_cat"
+centered = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 6
+position = Vector2(-567, -522)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_cat")
-animation = &"idle"
-frame = 2
-frame_progress = 0.942635
+animation = &"attack_shield"
+frame = 3
+frame_progress = 1.0
+centered = false

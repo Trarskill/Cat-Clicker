@@ -1,14 +1,20 @@
 extends Node2D
 
-@onready var sprite = $Sprite2D
+@onready var anim = $AnimatedSprite2D
+
+func _ready() -> void:
+	if anim.sprite_frames.get_frame_count("idle") > 0:
+		anim.play("idle")
+
 
 func take_hit() -> void:
-	var tween = create_tween().set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+	if anim.sprite_frames.get_frame_count("hurt") > 0:
+		anim.play("hurt")
+		
+		await anim.animation_finished
+		
+		anim.play("idle")
+	else:
+		print("Анімація attack ще не додана!")
+		await get_tree().create_timer(0.5).timeout 
 	
-	tween.tween_property(sprite, "rotation_degrees", 15.0, 0.05)
-	tween.parallel().tween_property(sprite, "scale", Vector2(0.9, 0.9), 0.05)
-	
-	tween.tween_property(sprite, "rotation_degrees", 0.0, 0.2)
-	tween.parallel().tween_property(sprite, "scale", Vector2(1.0, 1.0), 0.2)
-	
-	await tween.finished

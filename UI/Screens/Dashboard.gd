@@ -16,7 +16,6 @@ extends Control
 @onready var lowbar_shop_button = $UILayer/LowBar/Margin/Layout/ShopButton
 @onready var lowbar_inventory_button = $UILayer/LowBar/Margin/Layout/InvButton
 
-var is_processing_click: bool = false
 var is_menu_locked: bool = false
 var current_menu_offset_y: float = 0.0
 
@@ -25,6 +24,9 @@ var world_tween: Tween
 func _ready() -> void:
 	SaveManager.load_game()
 	update_ui()
+	
+	if cat.has_method("update_equipment_visuals"):
+		cat.update_equipment_visuals()
 	
 	click_area.pressed.connect(_on_click_area_pressed)
 	lowbar_shop_button.pressed.connect(_on_shop_button_pressed)
@@ -45,10 +47,6 @@ func _on_dashboard_resized() -> void:
 	game_world.position.y = (size.y / 2.0) + current_menu_offset_y
 
 func _on_click_area_pressed() -> void:
-	#if is_processing_click:
-		#return
-		
-	is_processing_click = true
 	
 	await cat.play_attack()
 	await dummy.take_hit()
@@ -92,7 +90,6 @@ func _on_click_area_pressed() -> void:
 			Global.meowcoin += randi_range(1, max_coins)
 	
 	update_ui()
-	is_processing_click = false
 
 func update_ui() -> void:
 	header.update_meowcoin(Global.meowcoin)
@@ -152,6 +149,9 @@ func _on_inventory_button_pressed() -> void:
 
 func _on_inventory_action():
 	update_ui()
+	
+	if cat.has_method("update_equipment_visuals"):
+		cat.update_equipment_visuals()
 
 # --- УНІВЕРСАЛЬНА ФУНКЦІЯ РУХУ СВІТУ (ДЛЯ ВСІХ ВІКОН) ---
 func shift_game_world(target_y: float) -> void:

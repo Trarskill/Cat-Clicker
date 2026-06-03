@@ -59,14 +59,16 @@ flat = true
 position = Vector2(360, 620)
 
 [node name="DummyPosition" type="Marker2D" parent="GameWorld"]
-position = Vector2(100, -100)
+position = Vector2(120, -100)
 
 [node name="Dummy" parent="GameWorld/DummyPosition" instance=ExtResource("3_dqbfs")]
+scale = Vector2(0.32, 0.32)
 
 [node name="CatPosition" type="Marker2D" parent="GameWorld"]
-position = Vector2(-100, -100)
+position = Vector2(-120, -100)
 
 [node name="Cat" parent="GameWorld/CatPosition" instance=ExtResource("2_eo25s")]
+position = Vector2(20, 10)
 scale = Vector2(0.3, 0.3)
 
 [node name="ItemsArea" type="Marker2D" parent="GameWorld"]

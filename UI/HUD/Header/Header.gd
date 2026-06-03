@@ -6,11 +6,24 @@ extends MarginContainer
 @onready var meowgem_label = $HeaderLayout/CoinBar/MeowgemGroup/Label
 
 func _ready() -> void:
-	# Для тесту можна розкоментувати і перевірити, як виглядають цифри:
-	# update_meowcoin(1500)
-	# update_rustycoin(45)
-	# update_meowgem(3)
-	pass
+	_apply_safe_area()
+
+func _apply_safe_area() -> void:
+	var os_name = OS.get_name()
+	if os_name == "Windows" or os_name == "macOS" or os_name == "Linux":
+		return # На ПК просто зупиняємо функцію і нічого не робимо
+		
+	# 2. Логіка для телефонів (Android / iOS)
+	var safe_area = DisplayServer.get_display_safe_area()
+	var window_size = DisplayServer.window_get_size()
+	
+	if safe_area.size == window_size or window_size.y == 0:
+		return
+		
+	var scale_ratio = get_viewport_rect().size.y / float(window_size.y)
+	var top_margin = safe_area.position.y * scale_ratio
+	
+	add_theme_constant_override("margin_top", int(top_margin))
 
 # Meowcoin використовує форматування (K, M, B)
 func update_meowcoin(amount: float) -> void:

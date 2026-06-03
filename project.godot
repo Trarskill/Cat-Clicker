@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="An Epic Tail Cat Clicker v0.1n"
+config/name="Cat Clicker"
 config/version="0.1"
 config/tags=PackedStringArray("clicker")
 run/main_scene="res://Core/main.tscn"

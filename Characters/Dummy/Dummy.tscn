@@ -1,14 +1,50 @@
-[gd_scene load_steps=3 format=3 uid="uid://b8ao5lyyy132s"]
+[gd_scene load_steps=8 format=3 uid="uid://b8ao5lyyy132s"]
 
 [ext_resource type="Script" path="res://Characters/Dummy/Dummy.gd" id="1_dummy_script"]
-[ext_resource type="Texture2D" uid="uid://c27rsmbx1k4od" path="res://Assets/Graphics/Characters/enemy-demmy.png" id="2_5bmkl"]
+[ext_resource type="Texture2D" uid="uid://b0heqihs0mhn0" path="res://Assets/Graphics/Characters/demmy/demmy-hurt-1.png" id="3_pt58j"]
+[ext_resource type="Texture2D" uid="uid://cmysob043yikf" path="res://Assets/Graphics/Characters/demmy/demmy-hurt-2.png" id="4_fxhgk"]
+[ext_resource type="Texture2D" uid="uid://72gr7fhsfk4d" path="res://Assets/Graphics/Characters/demmy/demmy-hurt-3.png" id="5_1w880"]
+[ext_resource type="Texture2D" uid="uid://cp3mh20b6e8do" path="res://Assets/Graphics/Characters/demmy/demmy-hurt-4.png" id="6_3rcdc"]
+[ext_resource type="Texture2D" uid="uid://0c0qb5fvav0p" path="res://Assets/Graphics/Characters/demmy/demmy-idle-1.png" id="7_7ctkq"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gfmer"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_pt58j")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_fxhgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_1w880")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_3rcdc")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("7_7ctkq")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
 
 [node name="Dummy" type="Node2D"]
 scale = Vector2(0.3, 0.3)
 script = ExtResource("1_dummy_script")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 6
-position = Vector2(5, 0)
-texture = ExtResource("2_5bmkl")
+position = Vector2(-66.6666, 0)
+scale = Vector2(1.985, 2)
+sprite_frames = SubResource("SpriteFrames_gfmer")
+animation = &"hurt"
+frame = 3
+frame_progress = 1.0
 flip_h = true

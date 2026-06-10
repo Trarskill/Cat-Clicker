@@ -20,55 +20,41 @@ var pos_closed := 0.0
 var pos_partial := 770.0 # приблизно 60%
 var pos_full := 1280.0
 
+var current_popup = null
+
 func _ready() -> void:
 	panel.position.y = 0
 	visible = false 
 	handle_area.pressed.connect(_on_handle_pressed)
 	
-	# З'єднуємо сигнал від групи кнопок
 	if shop_group:
 		shop_group.shop_category_changed.connect(_on_category_changed)
-		
-	# Підключаємо ВСІ картки товарів до єдиної функції покупок
+	
 	var all_lists = [general_list, weapon_list, magic_list]
 	for list in all_lists:
 		for element in list.get_children():
 			if element.has_signal("buy_requested"):
 				element.buy_requested.connect(_on_buy_requested)
-	
-	update_all_cards()
+			if element.has_signal("info_requested"):
+				element.info_requested.connect(_on_card_info_requested)
 
 # --- ЛОГІКА ПОКУПОК ТА АНІМАЦІЙ ---
 
-func _on_buy_requested(item_id: String, price: int, is_premium: bool) -> void:
-	# 1. Знаходимо картку, яка відправила запит (щоб програти анімацію саме на ній)
-	var card_sender = null
-	var all_lists = [general_list, weapon_list, magic_list]
+func _on_buy_requested(item_id: String, price: int, for_gem: bool) -> void:
+	var card = _get_card_by_id(item_id)
+	if not card: return
 	
-	for list in all_lists:
-		for element in list.get_children():
-			# Перевіряємо, чи це наша картка з потрібним ID
-			if element.has_method("play_success_animation") and element.item_id == item_id:
-				card_sender = element
-				break
-		if card_sender: 
-			break
-
-	# 2. Робимо покупку через глобальний банк
-	var success = Global.buy_item(item_id, price, is_premium)
+	var success = Global.buy_item(item_id, price, for_gem)
 	
-	# 3. Вибираємо анімацію
 	if success:
-		if card_sender: 
-			card_sender.play_success_animation()
-			
+		card.play_success_animation()
 		item_bought.emit()
 		update_all_cards()
 		
-		SaveManager.save_game()
+		if SaveManager.has_method("save_game"):
+			SaveManager.save_game()
 	else:
-		if card_sender: 
-			card_sender.play_error_animation()
+		card.play_error_animation()
 
 func update_all_cards() -> void:
 	var all_lists = [general_list, weapon_list, magic_list]
@@ -77,15 +63,24 @@ func update_all_cards() -> void:
 			if element.has_method("update_state"):
 				element.update_state()
 
+# --- ДОПОМІЖНА ФУНКЦІЯ ПОШУКУ КАРТКИ ---
+
+func _get_card_by_id(target_id: String) -> Node:
+	var all_lists = [general_list, weapon_list, magic_list]
+	for list in all_lists:
+		for element in list.get_children():
+			if element.get("item_id") == target_id:
+				return element
+	return null
+	
 # --- ЛОГІКА ІНТЕРФЕЙСУ (Перемикання та рух вікна) ---
 
 func _on_category_changed(category_id: String) -> void:
-	# Спочатку ховаємо всі списки
 	general_list.visible = false
 	weapon_list.visible = false
 	magic_list.visible = false
 	
-	# Показуємо тільки активний
+	
 	match category_id:
 		"general": general_list.visible = true
 		"weapon": weapon_list.visible = true
@@ -131,4 +126,39 @@ func animate_to_state(target_state: State) -> void:
 	state_changed.emit(current_state)
 
 func close() -> void:
+	remove_current_popup()
+	
 	animate_to_state(State.CLOSED)
+
+# --- ІНФОРМАЦІЙНЕ ВІКНО ---
+
+func _on_card_info_requested(item_id: String, card_pos: Vector2) -> void:
+	remove_current_popup() 
+	
+	var InteractionWindowScene = preload("res://UI/Components/InteractionWindow/InteractionWindow.tscn")
+	var popup = InteractionWindowScene.instantiate()
+	add_child(popup)
+	current_popup = popup
+	
+	if popup.has_method("setup"):
+		popup.setup(item_id)
+		
+		var action_btn = popup.find_child("ActionButton", true, false)
+		if action_btn:
+			action_btn.visible = false
+
+	if popup.has_method("appear_at"):
+		popup.appear_at(card_pos)
+
+func remove_current_popup() -> void:
+	if current_popup and is_instance_valid(current_popup):
+		current_popup.hide()
+		current_popup.queue_free()
+		current_popup = null
+
+func _input(event):
+	if event is InputEventMouseButton and event.pressed:
+		if current_popup and is_instance_valid(current_popup) and current_popup.is_inside_tree():
+			var popup_rect = current_popup.get_global_rect()
+			if not popup_rect.has_point(event.global_position):
+				remove_current_popup()

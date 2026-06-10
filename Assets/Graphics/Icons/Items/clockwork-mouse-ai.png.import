@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pc0t8k0whde"
-path="res://.godot/imported/hero-idle-shield-2.png-a530b5a2586f196337262fb719a10c51.ctex"
+uid="uid://ixbbx5nwet72"
+path="res://.godot/imported/clockwork-mouse-ai.png-4de4f564c94a9c6b00f1765526c96bd0.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-2.png"
-dest_files=["res://.godot/imported/hero-idle-shield-2.png-a530b5a2586f196337262fb719a10c51.ctex"]
+source_file="res://Assets/Graphics/Icons/Items/clockwork-mouse-ai.png"
+dest_files=["res://.godot/imported/clockwork-mouse-ai.png-4de4f564c94a9c6b00f1765526c96bd0.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

@@ -1,6 +1,6 @@
 extends PanelContainer
 
-signal item_clicked(item_id: String, item_name: String, click_position: Vector2)
+signal info_requested(item_id: String, click_position: Vector2)
 
 @export var item_id: String = ""
 @export var item_name: String = "Предмет"
@@ -20,9 +20,9 @@ func _ready():
 	click_area.pressed.connect(_on_card_pressed)
 
 func _process(_delta: float) -> void:
-	if item_id == "bowl" and Global.bowl_timer > 0:
+	if item_id == "bowl_with_bone" and Global.bowl_bone_timer > 0:
 		timer_label.visible = true
-		timer_label.text = str(int(Global.bowl_timer)) + "с"
+		timer_label.text = str(int(Global.bowl_bone_timer)) + "с"
 	elif item_id == "bag_of_fruit" and Global.bag_of_fruit_timer > 0:
 		timer_label.visible = true
 		timer_label.text = str(int(Global.bag_of_fruit_timer)) + "с"
@@ -46,4 +46,4 @@ func set_equipped_visual(is_equipped: bool) -> void:
 		self_modulate = Color(1.0, 1.0, 1.0)
 
 func _on_card_pressed():
-	item_clicked.emit(item_id, item_name, global_position)
+	info_requested.emit(item_id, global_position)

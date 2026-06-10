@@ -8,7 +8,7 @@ signal item_action_executed
 @onready var scroll_container = $Panel/MainLayout/MarginContainer/ScrollContainer
 
 const ITEM_CARD_SCENE = preload("res://UI/Components/InventoryItemCard/InventoryItemCard.tscn")
-const INTERACTION_WINDOW_SCENE = preload("res://UI/Popups/Inventory/InteractionWindow/InteractionWindow.tscn")
+const INTERACTION_WINDOW_SCENE = preload("res://UI/Components/InteractionWindow/InteractionWindow.tscn")
 
 var current_popup = null
 
@@ -54,8 +54,12 @@ func create_item_card(item_id: String, count: int):
 		
 		var is_equipped = (item_id == Global.equipped_weapon or item_id == Global.equipped_shield)
 		card.set_equipped_visual(is_equipped)
-		
-		card.item_clicked.connect(_on_item_card_clicked)
+	
+		if card.has_signal("info_requested"):
+			card.info_requested.connect(_on_card_info_requested)
+	
+		elif card.has_signal("item_clicked"):
+			card.item_clicked.connect(_on_card_info_requested)
 
 func update_inventory_display():
 	for child in grid.get_children():
@@ -75,7 +79,7 @@ func update_inventory_display():
 			should_show = count > 0
 		
 		# УНІКАЛЬНА ВЛАСТИВІСТЬ: показувати предмети, поки тікає таймер, навіть при кількості 0
-		if item_id == "bowl" and Global.bowl_timer > 0:
+		if item_id == "bowl_with_bone" and Global.bowl_bone_timer > 0:
 			should_show = true
 		if item_id == "bag_of_fruit" and Global.bag_of_fruit_timer > 0:
 			should_show = true
@@ -83,34 +87,21 @@ func update_inventory_display():
 		if should_show:
 			create_item_card(item_id, count)
 
-func _on_item_card_clicked(item_id: String, item_name: String, card_pos: Vector2):
-	remove_current_popup()
+func _on_card_info_requested(item_id: String, card_pos: Vector2) -> void:
+	remove_current_popup() 
 	
 	var popup = INTERACTION_WINDOW_SCENE.instantiate()
 	add_child(popup)
 	current_popup = popup
 	
-	popup.setup(item_id, item_name)
-	popup.action_performed.connect(_on_popup_action_handled)
+	if popup.has_method("setup"):
+		popup.setup(item_id)
 	
-	var viewport_size = get_viewport_rect().size
-	var popup_size = popup.custom_minimum_size 
-	var card_size = Vector2(110, 110) 
-	
-	var target_pos = card_pos + Vector2(-25, -110)
-	
-	if target_pos.y < 0:
-		target_pos.y = card_pos.y + card_size.y + 10
-	if target_pos.x + popup_size.x > viewport_size.x:
-		target_pos.x = viewport_size.x - popup_size.x - 10
-	if target_pos.x < 0:
-		target_pos.x = 10
+	if popup.has_signal("action_performed"):
+		popup.action_performed.connect(_on_popup_action_handled)
 		
-	popup.global_position = target_pos
-	
-	popup.modulate.a = 0
-	var tw = create_tween()
-	tw.tween_property(popup, "modulate:a", 1.0, 0.2)
+	if popup.has_method("appear_at"):
+		popup.appear_at(card_pos)
 
 # --- ЛОГІКА АДАПТИВНОЇ СІТКИ ---
 func _on_scroll_resized() -> void:

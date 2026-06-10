@@ -15,6 +15,7 @@ func save_game() -> void:
 		"is_endgame_half_reached": Global.is_endgame_half_reached,
 		"equipped_weapon": Global.equipped_weapon,
 		"equipped_shield": Global.equipped_shield,
+		"potion_balance": Global.potion_balance,
 		"inventory": Global.inventory
 	}
 	
@@ -57,6 +58,7 @@ func load_game() -> void:
 			if data.has("is_endgame_half_reached"): Global.is_endgame_half_reached = data["is_endgame_half_reached"]
 			if data.has("equipped_weapon"): Global.equipped_weapon = data["equipped_weapon"]
 			if data.has("equipped_shield"): Global.equipped_shield = data["equipped_shield"]
+			if data.has("potion_balance"): Global.potion_balance = int(data["potion_balance"])
 			
 			if data.has("inventory"):
 				for key in data["inventory"].keys():

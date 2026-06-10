@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://ddsgda6frejas"]
+[gd_scene load_steps=9 format=3 uid="uid://ddsgda6frejas"]
 
-[ext_resource type="Script" path="res://UI/Popups/Inventory/InteractionWindow/InteractionWindow.gd" id="1_script"]
+[ext_resource type="Script" path="res://UI/Components/InteractionWindow/InteractionWindow.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://cnyimp8u0qwah" path="res://Assets/Fonts/Linotype Aroma Bold.ttf" id="2_81bff"]
+[ext_resource type="FontFile" uid="uid://wjw3f5lx5dj0" path="res://Assets/Fonts/Xolonium-Bold.ttf" id="3_mcbgn"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
 bg_color = Color(0.129412, 0.105882, 0.0901961, 0.85)
@@ -19,6 +21,18 @@ shadow_size = 12
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_separator"]
 color = Color(0.690196, 0.54902, 0.321569, 0.5)
 thickness = 2
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_properties"]
+bg_color = Color(0.898039, 0.792157, 0.643137, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.823529, 0.698039, 0.529412, 1)
+corner_radius_top_left = 24
+corner_radius_top_right = 24
+corner_radius_bottom_right = 24
+corner_radius_bottom_left = 24
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_disabled"]
 bg_color = Color(0.180392, 0.180392, 0.180392, 1)
@@ -54,12 +68,14 @@ theme_override_constants/margin_bottom = 12
 
 [node name="Content" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 12
 
 [node name="ItemName" type="Label" parent="Margin/Content"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.952941, 0.823529, 0.545098, 1)
+theme_override_fonts/font = ExtResource("2_81bff")
 theme_override_font_sizes/font_size = 24
+text = "ItemName"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 2
@@ -68,12 +84,46 @@ autowrap_mode = 2
 layout_mode = 2
 theme_override_styles/separator = SubResource("StyleBoxLine_separator")
 
-[node name="PropertiesLabel" type="Label" parent="Margin/Content"]
+[node name="DescriptionText" type="Label" parent="Margin/Content"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.878431, 0.878431, 0.878431, 1)
+theme_override_fonts/font = ExtResource("2_81bff")
 theme_override_font_sizes/font_size = 18
+text = "DescriptionText"
 horizontal_alignment = 1
 autowrap_mode = 2
+
+[node name="PanelProperties" type="PanelContainer" parent="Margin/Content"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_properties")
+
+[node name="Margin" type="MarginContainer" parent="Margin/Content/PanelProperties"]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 6
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 6
+
+[node name="HBox" type="HBoxContainer" parent="Margin/Content/PanelProperties/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="PropertyIcon" type="TextureRect" parent="Margin/Content/PanelProperties/Margin/HBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="StatsLabel" type="Label" parent="Margin/Content/PanelProperties/Margin/HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.368627, 0.270588, 0.2, 1)
+theme_override_fonts/font = ExtResource("3_mcbgn")
+theme_override_font_sizes/font_size = 18
+text = "+100"
+vertical_alignment = 1
 
 [node name="ActionButton" type="Button" parent="Margin/Content"]
 custom_minimum_size = Vector2(0, 55)
@@ -84,3 +134,4 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = "ActionButton"

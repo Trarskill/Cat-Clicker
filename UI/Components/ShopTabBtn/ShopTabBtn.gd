@@ -19,7 +19,6 @@ func _ready():
 	if tab_icon:
 		icon_rect.texture = tab_icon
 		
-	# ОДРАЗУ ставимо базовий фон, щоб він не був прозорим при запуску
 	if texture_normal:
 		background.texture = texture_normal
 	
@@ -31,7 +30,7 @@ func _on_click_area_pressed():
 func set_active(is_active: bool):
 	if is_active:
 		if texture_active: background.texture = texture_active
-		label.modulate = Color(1.0, 0.9, 0.7) # Робимо текст золотистішим
+		label.modulate = Color(1.0, 0.9, 0.7)
 	else:
 		if texture_normal: background.texture = texture_normal
-		label.modulate = Color(0.8, 0.8, 0.8) # Робимо текст тьмянішим
+		label.modulate = Color(0.8, 0.8, 0.8)

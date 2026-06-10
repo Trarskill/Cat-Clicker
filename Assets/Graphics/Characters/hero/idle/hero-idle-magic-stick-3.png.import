@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pc0t8k0whde"
-path="res://.godot/imported/hero-idle-shield-2.png-a530b5a2586f196337262fb719a10c51.ctex"
+uid="uid://c3mpp3rywqw1v"
+path="res://.godot/imported/hero-idle-magic-stick-3.png-c16b9d3b1728148753ffd0f6db694d95.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-2.png"
-dest_files=["res://.godot/imported/hero-idle-shield-2.png-a530b5a2586f196337262fb719a10c51.ctex"]
+source_file="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-3.png"
+dest_files=["res://.godot/imported/hero-idle-magic-stick-3.png-c16b9d3b1728148753ffd0f6db694d95.ctex"]
 
 [params]
 

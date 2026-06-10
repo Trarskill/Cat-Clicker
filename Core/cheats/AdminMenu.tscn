@@ -64,7 +64,7 @@ text = "Скинути рівень (в нуль) 🔄"
 [node name="BtnGiveAll" type="Button" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
-text = "Все: Гроші + Предмети 🎁"
+text = "Всі предмети 🎁"
 
 [node name="BtnGiveMoney" type="Button" parent="MarginContainer/VBox"]
 custom_minimum_size = Vector2(0, 40)

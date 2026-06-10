@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bdposlqpami6i"
-path="res://.godot/imported/MeowQuest-ai-background-evening.png-6fdabf7fbbd42774e9923d0df92d272f.ctex"
+uid="uid://cv4oyjnxth65h"
+path="res://.godot/imported/hero-attack-magic-stick-4.png-3621b3eae0b9fdee55f292153900eacc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-evening.png"
-dest_files=["res://.godot/imported/MeowQuest-ai-background-evening.png-6fdabf7fbbd42774e9923d0df92d272f.ctex"]
+source_file="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-4.png"
+dest_files=["res://.godot/imported/hero-attack-magic-stick-4.png-3621b3eae0b9fdee55f292153900eacc.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

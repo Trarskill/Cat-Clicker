@@ -1,18 +1,22 @@
-[gd_scene load_steps=34 format=3 uid="uid://8fdw2i4y4riu"]
+[gd_scene load_steps=41 format=3 uid="uid://8fdw2i4y4riu"]
 
 [ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
 [ext_resource type="Texture2D" uid="uid://bkxyi1poxdbkx" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-1.png" id="3_5y7ob"]
+[ext_resource type="Texture2D" uid="uid://be5r0xn705vje" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-1.png" id="3_axrts"]
 [ext_resource type="Texture2D" uid="uid://bis5tn45uea05" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-1.png" id="3_bci1o"]
 [ext_resource type="Texture2D" uid="uid://be53jsit5l36u" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-1.png" id="3_r3b0j"]
 [ext_resource type="Texture2D" uid="uid://dxfdetvtbkv0v" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-1.png" id="3_s6vmk"]
 [ext_resource type="Texture2D" uid="uid://o5pm0lx5ehb" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-2.png" id="4_0cbvm"]
 [ext_resource type="Texture2D" uid="uid://bi0h7e0sviggh" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-3.png" id="4_34orq"]
+[ext_resource type="Texture2D" uid="uid://cteon0tbni0xl" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-2.png" id="4_axqa5"]
 [ext_resource type="Texture2D" uid="uid://3u7ow2b4gtyl" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-2.png" id="4_l2rcv"]
 [ext_resource type="Texture2D" uid="uid://ba6hdawe3a3mo" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-2.png" id="4_w6ygq"]
 [ext_resource type="Texture2D" uid="uid://btw0c1088pkts" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-4.png" id="5_8b0yj"]
 [ext_resource type="Texture2D" uid="uid://bdkr41b8vpqyh" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-3.png" id="5_37ed7"]
+[ext_resource type="Texture2D" uid="uid://tm1mbmatm46s" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-3.png" id="5_lsnlw"]
 [ext_resource type="Texture2D" uid="uid://bgfqr0kxafdco" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-3.png" id="5_mo5i2"]
 [ext_resource type="Texture2D" uid="uid://bpgjp1e8mt7mo" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-3.png" id="5_pkapd"]
+[ext_resource type="Texture2D" uid="uid://cv4oyjnxth65h" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-4.png" id="6_65nsa"]
 [ext_resource type="Texture2D" uid="uid://bwfi2rkm0qqys" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-4.png" id="6_epmss"]
 [ext_resource type="Texture2D" uid="uid://y7ojbydga1nq" path="res://Assets/Graphics/Characters/hero/hero_sptite-ai-v2.1.png" id="6_goovc"]
 [ext_resource type="Texture2D" uid="uid://b62snh1778w4a" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-2.png" id="6_hsl2u"]
@@ -21,8 +25,11 @@
 [ext_resource type="Texture2D" uid="uid://cs73rrauu1pm1" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-3.png" id="9_2508u"]
 [ext_resource type="Texture2D" uid="uid://b61h2o2pqakqu" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-4.png" id="10_keg76"]
 [ext_resource type="Texture2D" uid="uid://du75i7sy306cp" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-1.png" id="15_o2kiy"]
+[ext_resource type="Texture2D" uid="uid://bfrholvcqnrc4" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-1.png" id="15_xq482"]
 [ext_resource type="Texture2D" uid="uid://pc0t8k0whde" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-2.png" id="16_ipjld"]
+[ext_resource type="Texture2D" uid="uid://dgg5tv8dhligd" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-2.png" id="16_n5an8"]
 [ext_resource type="Texture2D" uid="uid://cwssgq042awd0" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-3.png" id="17_4cdbw"]
+[ext_resource type="Texture2D" uid="uid://c3mpp3rywqw1v" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-3.png" id="17_8sdnb"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v0apj"]
 atlas = ExtResource("6_goovc")
@@ -80,6 +87,23 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_cat",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_axrts")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_axqa5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_lsnlw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_65nsa")
+}],
+"loop": false,
+"name": &"attack_magic_stick",
 "speed": 10.0
 }, {
 "frames": [{
@@ -152,6 +176,20 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("15_xq482")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_n5an8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_8sdnb")
+}],
+"loop": true,
+"name": &"idle_magic_stick",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("15_o2kiy")
 }, {
 "duration": 1.0,
@@ -209,10 +247,9 @@ centered = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 6
-position = Vector2(-567, -522)
+position = Vector2(-582.222, -540)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_cat")
-animation = &"attack_shield"
-frame = 3
-frame_progress = 1.0
+animation = &"idle_cat"
+frame_progress = 0.206409
 centered = false

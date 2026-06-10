@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://sudoiujv6fd0"
-path="res://.godot/imported/MeowQuest-ai-background-early-day.png-a70cd4e80473b4098127452bcf7652e3.ctex"
+uid="uid://0aynxwhm3cdr"
+path="res://.godot/imported/equipment_icon.png-86736bd9819b55157a353a02ac3058cd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-early-day.png"
-dest_files=["res://.godot/imported/MeowQuest-ai-background-early-day.png-a70cd4e80473b4098127452bcf7652e3.ctex"]
+source_file="res://Assets/Graphics/Icons/ItemTypes/equipment_icon.png"
+dest_files=["res://.godot/imported/equipment_icon.png-86736bd9819b55157a353a02ac3058cd.ctex"]
 
 [params]
 

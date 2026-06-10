@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pc0t8k0whde"
-path="res://.godot/imported/hero-idle-shield-2.png-a530b5a2586f196337262fb719a10c51.ctex"
+uid="uid://go8f6y2fo1l0"
+path="res://.godot/imported/bowl-with-rice-ai.png-b559dce3b74caea4a8d2dd45f892280b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-2.png"
-dest_files=["res://.godot/imported/hero-idle-shield-2.png-a530b5a2586f196337262fb719a10c51.ctex"]
+source_file="res://Assets/Graphics/Icons/Items/bowl-with-rice-ai.png"
+dest_files=["res://.godot/imported/bowl-with-rice-ai.png-b559dce3b74caea4a8d2dd45f892280b.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=false
+mipmaps/generate=true
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

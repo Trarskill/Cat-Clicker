@@ -5,7 +5,6 @@ extends Control
 @onready var click_area = $ClickArea
 @onready var game_world = $GameWorld
 @onready var background = $Background
-@onready var background_night = $Background_Night
 
 @onready var shop_popup = $UILayer/ShopPopup
 @onready var inventory_popup = $UILayer/InventoryPopup
@@ -54,8 +53,8 @@ func _on_click_area_pressed() -> void:
 	# --- РОЗРАХУНОК ДОСВІДУ (XP) ---
 	var total_xp = Global.click_power
 	
-	if Global.bowl_timer > 0:
-		var bowl_data = DataManager.get_item("bowl")
+	if Global.bowl_bone_timer > 0:
+		var bowl_data = DataManager.get_item("bowl_with_bone")
 		total_xp += bowl_data["stats"]["xp_bonus"]
 		
 	if Global.equipped_weapon != "":
@@ -82,12 +81,9 @@ func _on_click_area_pressed() -> void:
 	
 	# --- РОЗРАХУНОК МОНЕТ (Мішок фруктів) ---
 	if Global.bag_of_fruit_timer > 0:
-		Global.click_counter += 1
-		if Global.click_counter >= 5:
-			Global.click_counter = 0
-			var fruit_data = DataManager.get_item("bag_of_fruit")
-			var max_coins = fruit_data["stats"]["coin_chance"]
-			Global.meowcoin += randi_range(1, max_coins)
+		var fruit_data = DataManager.get_item("bag_of_fruit")
+		var earned_coins = fruit_data["stats"].get("coin_gets", 1)
+		Global.meowcoin += earned_coins
 	
 	update_ui()
 
@@ -161,14 +157,11 @@ func shift_game_world(target_y: float) -> void:
 		world_tween.kill()
 		
 	world_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
-
+	
 	var final_game_world_y = (size.y / 2.0) + target_y
 	
 	world_tween.tween_property(game_world, "position:y", final_game_world_y, 0.5)
 	world_tween.tween_property(background, "position:y", target_y, 0.5)
-	
-	if background_night:
-		world_tween.tween_property(background_night, "position:y", target_y, 0.5)
 
 # --- ОБРОБНИК МАГАЗИНУ (Використовує універсальну функцію) ---
 func _on_shop_state_changed(new_state) -> void:

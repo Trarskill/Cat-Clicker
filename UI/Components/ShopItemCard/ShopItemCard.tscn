@@ -1,39 +1,114 @@
-[gd_scene load_steps=10 format=3 uid="uid://cbj3m1nj75luk"]
+[gd_scene load_steps=19 format=3 uid="uid://cbj3m1nj75luk"]
 
 [ext_resource type="Script" path="res://UI/Components/ShopItemCard/ShopItemCard.gd" id="1_jnlwc"]
+[ext_resource type="FontFile" uid="uid://cnyimp8u0qwah" path="res://Assets/Fonts/Linotype Aroma Bold.ttf" id="2_7pxda"]
 [ext_resource type="Texture2D" uid="uid://dlai8i0awrfmw" path="res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png" id="2_tc63r"]
+[ext_resource type="FontFile" uid="uid://bokyl6derud8j" path="res://Assets/Fonts/Montreal-Regular.ttf" id="3_bxoxk"]
+[ext_resource type="FontFile" uid="uid://gnwvb53hkvq3" path="res://Assets/Fonts/SourceCodePro-Black.ttf" id="5_3espe"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
-bg_color = Color(0.2, 0.16, 0.13, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.4, 0.28, 0.18, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hkskp"]
+bg_color = Color(0.945098, 0.823529, 0.662745, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 6
+border_color = Color(0.701961, 0.505882, 0.376471, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
 corner_radius_bottom_right = 12
 corner_radius_bottom_left = 12
+shadow_color = Color(0.298039, 0.152941, 0.133333, 1)
+shadow_size = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_icon_bg"]
-bg_color = Color(0.12, 0.1, 0.08, 1)
+bg_color = Color(0.6, 0.3706, 0.228, 1)
 border_width_left = 3
 border_width_top = 3
 border_width_right = 3
 border_width_bottom = 3
-border_color = Color(0.3, 0.3, 0.3, 1)
+border_color = Color(0.5, 0.308833, 0.19, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buy_btn"]
-bg_color = Color(0.2, 0.22, 0.25, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vxf8h"]
+bg_color = Color(0.917647, 0.713726, 0.301961, 1)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.705882, 0.509804, 0.152941, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info_pressed"]
+bg_color = Color(0.811765, 0.615686, 0.203922, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.705882, 0.509804, 0.152941, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_info_normal"]
+bg_color = Color(0.917647, 0.713726, 0.301961, 1)
+border_width_left = 2
+border_width_right = 2
+border_width_bottom = 4
+border_color = Color(0.705882, 0.509804, 0.152941, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buy_disabled"]
+bg_color = Color(0.3, 0.3, 0.3, 1)
+border_width_left = 2
+border_width_top = 6
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.15, 0.15, 0.15, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buy_normal"]
+bg_color = Color(0.27, 0.65, 0.27, 1)
 border_width_left = 2
 border_width_top = 2
 border_width_right = 2
-border_width_bottom = 4
-border_color = Color(0.1, 0.1, 0.12, 1)
+border_width_bottom = 6
+border_color = Color(0.12, 0.35, 0.12, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_buy_pressed"]
+bg_color = Color(0.2, 0.55, 0.2, 1)
+border_width_left = 2
+border_width_top = 6
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12, 0.35, 0.12, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_price_bg"]
+bg_color = Color(0, 0, 0, 0.35)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
@@ -136,11 +211,13 @@ anchors_preset = 10
 anchor_right = 1.0
 offset_bottom = 140.0
 grow_horizontal = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_bg")
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_hkskp")
 script = ExtResource("1_jnlwc")
 
 [node name="Margin" type="MarginContainer" parent="."]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/margin_left = 12
 theme_override_constants/margin_top = 12
 theme_override_constants/margin_right = 16
@@ -148,82 +225,129 @@ theme_override_constants/margin_bottom = 12
 
 [node name="HBox" type="HBoxContainer" parent="Margin"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 16
 
 [node name="IconFrame" type="PanelContainer" parent="Margin/HBox"]
 custom_minimum_size = Vector2(110, 110)
 layout_mode = 2
 size_flags_vertical = 4
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_icon_bg")
 
 [node name="ItemIcon" type="TextureRect" parent="Margin/HBox/IconFrame"]
 texture_filter = 6
 layout_mode = 2
+mouse_filter = 2
 expand_mode = 1
 stretch_mode = 5
 
-[node name="TextContent" type="VBoxContainer" parent="Margin/HBox"]
+[node name="TextContent" type="HBoxContainer" parent="Margin/HBox"]
 layout_mode = 2
 size_flags_horizontal = 3
-alignment = 1
+size_flags_vertical = 0
+mouse_filter = 2
+theme_override_constants/separation = 12
 
 [node name="TitleLabel" type="Label" parent="Margin/HBox/TextContent"]
 layout_mode = 2
-theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
-theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
+size_flags_horizontal = 3
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.290196, 0.172549, 0.0784314, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("2_7pxda")
 theme_override_font_sizes/font_size = 28
 text = "Назва товару"
-vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="DescLabel" type="Label" parent="Margin/HBox/TextContent"]
+[node name="InfoButton" type="Button" parent="Margin/HBox/TextContent"]
+custom_minimum_size = Vector2(44, 44)
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.9, 0.9, 1)
+size_flags_vertical = 0
+focus_mode = 0
+mouse_filter = 1
+theme_override_fonts/font = ExtResource("3_bxoxk")
+theme_override_font_sizes/font_size = 24
+theme_override_styles/hover = SubResource("StyleBoxFlat_vxf8h")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_info_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_info_normal")
+text = "i"
+
+[node name="BuyButton" type="Button" parent="Margin/HBox"]
+custom_minimum_size = Vector2(120, 88)
+layout_mode = 2
+size_flags_vertical = 4
+focus_mode = 0
+mouse_filter = 1
+theme_override_styles/disabled = SubResource("StyleBoxFlat_buy_disabled")
+theme_override_styles/hover = SubResource("StyleBoxFlat_buy_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_buy_pressed")
+theme_override_styles/normal = SubResource("StyleBoxFlat_buy_normal")
+
+[node name="InnerContent" type="VBoxContainer" parent="Margin/HBox/BuyButton"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 4.0
+offset_bottom = -6.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="BuyLabel" type="Label" parent="Margin/HBox/BuyButton/InnerContent"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
-theme_override_font_sizes/font_size = 22
-text = "опис товару"
-vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="ActionContent" type="VBoxContainer" parent="Margin/HBox"]
-custom_minimum_size = Vector2(140, 0)
-layout_mode = 2
-theme_override_constants/separation = 8
-alignment = 1
-
-[node name="BuyButton" type="Button" parent="Margin/HBox/ActionContent"]
-custom_minimum_size = Vector2(0, 50)
-layout_mode = 2
-focus_mode = 0
-theme_override_colors/font_color = Color(1, 0.85, 0.4, 1)
-theme_override_font_sizes/font_size = 24
-theme_override_styles/hover = SubResource("StyleBoxFlat_buy_btn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_buy_btn")
-theme_override_styles/normal = SubResource("StyleBoxFlat_buy_btn")
+theme_override_fonts/font = ExtResource("2_7pxda")
+theme_override_font_sizes/font_size = 18
 text = "КУПИТИ"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="PriceBox" type="HBoxContainer" parent="Margin/HBox/ActionContent"]
+[node name="PriceBg" type="PanelContainer" parent="Margin/HBox/BuyButton/InnerContent"]
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_price_bg")
+
+[node name="Margin" type="MarginContainer" parent="Margin/HBox/BuyButton/InnerContent/PriceBg"]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 4
+
+[node name="PriceBox" type="HBoxContainer" parent="Margin/HBox/BuyButton/InnerContent/PriceBg/Margin"]
+layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 8
 alignment = 1
 
-[node name="CoinIcon" type="TextureRect" parent="Margin/HBox/ActionContent/PriceBox"]
+[node name="CoinIcon" type="TextureRect" parent="Margin/HBox/BuyButton/InnerContent/PriceBg/Margin/PriceBox"]
 texture_filter = 6
-custom_minimum_size = Vector2(32, 32)
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
+mouse_filter = 2
 texture = ExtResource("2_tc63r")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="PriceLabel" type="Label" parent="Margin/HBox/ActionContent/PriceBox"]
+[node name="PriceLabel" type="Label" parent="Margin/HBox/BuyButton/InnerContent/PriceBg/Margin/PriceBox"]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 1, 1, 1)
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
-theme_override_constants/outline_size = 6
-theme_override_font_sizes/font_size = 28
-text = "10"
+theme_override_constants/outline_size = 4
+theme_override_fonts/font = ExtResource("5_3espe")
+theme_override_font_sizes/font_size = 18
+text = "0000"
 vertical_alignment = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]

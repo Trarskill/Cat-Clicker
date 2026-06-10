@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cr7gx250rah1v"]
+[gd_scene load_steps=9 format=3 uid="uid://cr7gx250rah1v"]
 
 [ext_resource type="PackedScene" uid="uid://pmqogmam13pc" path="res://UI/HUD/Header/Header.tscn" id="1_header"]
 [ext_resource type="Script" path="res://UI/Screens/Dashboard.gd" id="1_i8p53"]
@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://dqx41idpcgyce" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-day.png" id="2_i7uc8"]
 [ext_resource type="PackedScene" uid="uid://dbo3grhqh1w52" path="res://UI/HUD/LowBar/LowBar.tscn" id="2_lowbar"]
 [ext_resource type="PackedScene" uid="uid://b8ao5lyyy132s" path="res://Characters/Dummy/Dummy.tscn" id="3_dqbfs"]
-[ext_resource type="Texture2D" uid="uid://bayo1ovp8box4" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-night.png" id="3_viljj"]
 [ext_resource type="PackedScene" uid="uid://c4qp3vfqv1njv" path="res://UI/Popups/Shop/ShopPopup.tscn" id="6_frujl"]
 [ext_resource type="PackedScene" uid="uid://d1otjlk781tvt" path="res://UI/Popups/Inventory/InventoryPopup.tscn" id="6_py225"]
 
@@ -29,20 +28,6 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_i7uc8")
-expand_mode = 1
-stretch_mode = 6
-
-[node name="Background_Night" type="TextureRect" parent="."]
-visible = false
-texture_filter = 6
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-mouse_filter = 2
-texture = ExtResource("3_viljj")
 expand_mode = 1
 stretch_mode = 6
 

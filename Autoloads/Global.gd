@@ -5,6 +5,7 @@ var rustycoin: int = 0
 var meowgem: int = 0
 
 var click_power: int = 10
+var potion_balance: int = 0
 
 var level: int = 1
 var xp: int = 0
@@ -16,24 +17,36 @@ var equipped_weapon: String = ""
 var equipped_shield: String = ""
 
 var inventory: Dictionary = {
+	"cat_magic": 0,
+	"boss_map": false,
 	"mysterious_chest": false,
 	"wooden_sword": false,
 	"wooden_shield": false,
 	"steel_sword": false,
 	"magic_stick": false,
-	"bowl": 0,
+	"magic_fishing_rod": false,
+	"bowl_with_bone": 0,
+	"bowl_with_rice": 0,
+	"bowl_with_fish": 0,
 	"apple": 0,
 	"bag_of_fruit": 0,
+	"catnip": 0,
 	"magical_rose": 0,
-	"potion": 0,
-	"cat_magic": 0
+	"xp_potion": 0,
+	"strength_potion": 0,
+	"curse_potion": 0,
+	"clockwork_mouse": false
 }
 
 const MAX_STACK: int = 16
 
-var bowl_timer: float = 0.0
+var bowl_bone_timer: float = 0.0
+var bowl_rice_timer: float = 0.0
+var bowl_fish_timer: float = 0.0
 var bag_of_fruit_timer: float = 0.0
-var click_counter: int = 0
+var catnip_timer: float = 0.0
+var clockwork_mouse_timer: float = 0.0
+var clockwork_mouse_cooldown: float = 0.0
 
 # --- ЗМІННІ ДЛЯ ЧЕРГИ ТЕКСТІВ ---
 var floating_text_queue: Array = []
@@ -44,9 +57,9 @@ signal leveled_up(new_level)
 
 # Ця функція автоматично викликається Godot кожен кадр
 func _process(delta: float) -> void:
-	if bowl_timer > 0:
-		bowl_timer -= delta
-		if bowl_timer <= 0:
+	if bowl_bone_timer > 0:
+		bowl_bone_timer -= delta
+		if bowl_bone_timer <= 0:
 			item_timer_expired.emit()
 			
 	if bag_of_fruit_timer > 0:
@@ -224,7 +237,7 @@ func use_item(item_id: String) -> String:
 	# 2. СПЕЦІАЛЬНІ ПРЕДМЕТИ (Магічна Роза)
 	if item_data["type"] == DataManager.ItemType.SPECIAL:
 		if item_id == "magical_rose":
-			if inventory.get("potion", 0) >= 1:
+			if inventory.get("xp_potion", 0) >= 1:
 				var current_magic = inventory.get("cat_magic", 0)
 				
 				# ВИПРАВЛЕННЯ: Беремо max_lvl саме з даних "cat_magic", а не з рози
@@ -234,7 +247,7 @@ func use_item(item_id: String) -> String:
 				if current_magic >= max_magic:
 					return "Кото-магія досягла максимуму!"
 					
-				inventory["potion"] -= 1
+				inventory["xp_potion"] -= 1
 				inventory["magical_rose"] -= 1
 				inventory["cat_magic"] = current_magic + 1
 				return "Магію пробуджено! Рівень: " + str(inventory["cat_magic"])
@@ -260,23 +273,20 @@ func use_item(item_id: String) -> String:
 				return "Яблуко виявилося кислим... Нічого не отримано."
 				
 		# Зілля: Дає 100 XP + скейл від рівня магії
-		elif item_id == "potion":
+		elif item_id == "xp_potion":
 			var magic_lvl = inventory.get("cat_magic", 0)
 			var bonus_xp = 100 + (100 * magic_lvl) 
 			gain_xp(bonus_xp)
 			return "Випито! Отримано " + str(bonus_xp) + " XP"
 			
 		# Кісточка: Активація таймера
-		elif item_id == "bowl":
-			bowl_timer = stats.get("duration", 60)
+		elif item_id == "bowl_with_bone":
+			bowl_bone_timer = stats.get("duration", 60)
 			return "Бонус +1 XP до кліку активовано на 60 сек!"
 			
 		# Мішок фруктів: Активація таймера
 		elif item_id == "bag_of_fruit":
 			bag_of_fruit_timer = stats.get("duration", 60)
-			# Якщо у тебе використовується click_counter для підрахунку кожного 5-го кліку:
-			if "click_counter" in self:
-				self.click_counter = 0
 			return "Фруктовий бонус активовано на 60 сек!"
 			
 		# Таємнича скриня: Випадкова нагорода

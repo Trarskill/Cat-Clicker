@@ -54,10 +54,9 @@ func _on_reset_level_pressed() -> void:
 
 # 3. ФУНКЦІЯ: Видати ресурси + всі предмети
 func _on_give_all_pressed() -> void:
-	Global.meowcoin += 40000
-	Global.meowgem += 1000
+	var all_item_ids = ["mysterious_chest", "wooden_sword", "wooden_shield", "steel_sword", "magic_stick", "bowl_with_bone", "apple", "bag_of_fruit", "magical_rose",
+"xp_potion", "cat_magic"]
 	
-	var all_item_ids = ["bowl", "bag_of_fruit", "potion", "magical_rose", "magic_stick"]
 	for item_id in all_item_ids:
 		var item_data = DataManager.get_item(item_id)
 		if not item_data.is_empty():
@@ -99,11 +98,11 @@ func _on_clear_all_pressed() -> void:
 		"wooden_shield": false,
 		"steel_sword": false,
 		"magic_stick": false,
-		"bowl": 0,
+		"bowl_with_bone": 0,
 		"apple": 0,
 		"bag_of_fruit": 0,
 		"magical_rose": 0,
-		"potion": 0,
+		"xp_potion": 0,
 		"cat_magic": 0
 	}
 	

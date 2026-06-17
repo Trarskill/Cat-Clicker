@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coxb7vgx351qe"
-path="res://.godot/imported/Rustycoin-currency-ai.png-3b516fe3e13f5679c3cb1c11657fd643.ctex"
+uid="uid://cfg8mywq21sld"
+path="res://.godot/imported/power-of-paws-ai.png-4c5fda5bf7e4cb865d13047eb5bbc550.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Icons/Сurrency/Rustycoin-currency-ai.png"
-dest_files=["res://.godot/imported/Rustycoin-currency-ai.png-3b516fe3e13f5679c3cb1c11657fd643.ctex"]
+source_file="res://Assets/Graphics/Icons/Items/power-of-paws-ai.png"
+dest_files=["res://.godot/imported/power-of-paws-ai.png-4c5fda5bf7e4cb865d13047eb5bbc550.ctex"]
 
 [params]
 
@@ -21,7 +21,7 @@ compress/lossy_quality=0.7
 compress/hdr_compression=1
 compress/normal_map=0
 compress/channel_pack=0
-mipmaps/generate=true
+mipmaps/generate=false
 mipmaps/limit=-1
 roughness/mode=0
 roughness/src_normal=""

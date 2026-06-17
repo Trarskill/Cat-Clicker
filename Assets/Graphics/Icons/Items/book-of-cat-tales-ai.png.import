@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://h2jiqophatn0"
-path="res://.godot/imported/special_icon.png-5f9297ac5cef68ecb0700e5d6f358df6.ctex"
+uid="uid://bswawpl28xhfr"
+path="res://.godot/imported/book-of-cat-tales-ai.png-1967a38c801dd03d6f52729d2d151ea4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Icons/ItemTypes/special_icon.png"
-dest_files=["res://.godot/imported/special_icon.png-5f9297ac5cef68ecb0700e5d6f358df6.ctex"]
+source_file="res://Assets/Graphics/Icons/Items/book-of-cat-tales-ai.png"
+dest_files=["res://.godot/imported/book-of-cat-tales-ai.png-1967a38c801dd03d6f52729d2d151ea4.ctex"]
 
 [params]
 

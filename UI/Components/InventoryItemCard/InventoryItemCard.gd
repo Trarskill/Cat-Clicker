@@ -20,15 +20,36 @@ func _ready():
 	click_area.pressed.connect(_on_card_pressed)
 
 func _process(_delta: float) -> void:
-	if item_id == "bowl_with_bone" and Global.bowl_bone_timer > 0:
+	# Захист на випадок, якщо вузол ще не завантажився
+	if not timer_label: 
+		return 
+
+	var time_left: float = 0.0
+
+	# 1. Визначаємо, скільки часу залишилося для поточного предмета
+	match item_id:
+		"bowl_with_bone": time_left = Global.bowl_bone_timer
+		"bowl_with_rice": time_left = Global.bowl_rice_timer
+		"bowl_with_fish": time_left = Global.bowl_fish_timer
+		"bag_of_fruit": time_left = Global.bag_of_fruit_timer
+		"catnip": time_left = Global.catnip_timer
+		"clockwork_mouse":
+			# Унікальна логіка для мишки: показуємо або час роботи, або кулдаун
+			if Global.clockwork_mouse_timer > 0:
+				time_left = Global.clockwork_mouse_timer
+				timer_label.modulate = Color(0.4, 1.0, 0.4) # Зелений (Працює)
+			elif Global.clockwork_mouse_cooldown > 0:
+				time_left = Global.clockwork_mouse_cooldown
+				timer_label.modulate = Color(1.0, 0.4, 0.4) # Червоний (Кулдаун)
+
+	# 2. Вмикаємо або вимикаємо відображення таймера
+	if time_left > 0:
 		timer_label.visible = true
-		timer_label.text = str(int(Global.bowl_bone_timer)) + "с"
-	elif item_id == "bag_of_fruit" and Global.bag_of_fruit_timer > 0:
-		timer_label.visible = true
-		timer_label.text = str(int(Global.bag_of_fruit_timer)) + "с"
+		
+		timer_label.text = str(int(time_left)) + "с"
 	else:
-		if timer_label:
-			timer_label.visible = false
+		timer_label.visible = false
+		timer_label.modulate = Color(1, 1, 1) # Скидаємо колір до стандартного білого
 
 func update_data(new_quantity):
 	quantity = new_quantity
@@ -38,6 +59,13 @@ func update_data(new_quantity):
 	else:
 		count_label.visible = true
 		count_label.text = str(quantity)
+	
+	if quantity == 0:
+		icon_rect.modulate = Color(0.4, 0.4, 0.4, 0.8) 
+	else:
+		icon_rect.modulate = Color(1.0, 1.0, 1.0, 1.0) 
+	
+	click_area.mouse_filter = Control.MOUSE_FILTER_STOP
 
 func set_equipped_visual(is_equipped: bool) -> void:
 	if is_equipped:

@@ -9,25 +9,28 @@ func _ready() -> void:
 # --- ДОПОМІЖНА ФУНКЦІЯ: ВИЗНАЧАЄ ПОТОЧНЕ ЕКІПІРУВАННЯ ---
 func get_current_anim(action: String) -> String:
 	# Спочатку перевіряємо, яка саме зброя в руках
+	# Поверне: action назва дії + назва елемента
 	match Global.equipped_weapon:
 		"magic_stick":
-			return action + "_magic_stick" # Поверне: idle_magic_stick, attack_magic_stick
+			return action + "_magic_stick"
 		"steel_sword":
-			return action + "_steel_sword" # Поверне: idle_steel_sword, attack_steel_sword
+			return action + "_steel_sword"
 		"wooden_sword":
-			return action + "_wooden_sword"       # Поверне: idle_sword, attack_sword
+			return action + "_wooden_sword"
+		"magic_fishing_rod":
+			return action + "_fishing_rod" 
 			
 	# Якщо зброї немає, але є щит
 	if Global.equipped_shield != "":
-		return action + "_shield"          # Поверне: idle_shield, attack_shield
+		return action + "_shield"
 		
 	# Якщо котик без екіпірування
-	return action + "_cat"                 # Поверне: idle_cat, attack_cat
+	return action + "_cat"
 
 # --- ФУНКЦІЯ ДЛЯ МИТТЄВОГО ОНОВЛЕННЯ З ІНВЕНТАРЮ ---
+# Цю функцію викликатиме Dashboard при одяганні предмета,
+# щоб миттєво перемкнути idle-анімацію.
 func update_equipment_visuals() -> void:
-	# Цю функцію викликатиме Dashboard при одяганні предмета,
-	# щоб миттєво перемкнути idle-анімацію.
 	play_idle()
 
 # --- СТАН СПОКОЮ (IDLE) ---

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://coxb7vgx351qe"
-path="res://.godot/imported/Rustycoin-currency-ai.png-3b516fe3e13f5679c3cb1c11657fd643.ctex"
+uid="uid://rwhpnqgdyh56"
+path="res://.godot/imported/equipment-icon.png-1d936508e558be6b67ae1d83bc18dc06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Icons/Сurrency/Rustycoin-currency-ai.png"
-dest_files=["res://.godot/imported/Rustycoin-currency-ai.png-3b516fe3e13f5679c3cb1c11657fd643.ctex"]
+source_file="res://Assets/Graphics/Icons/ItemTypes/equipment-icon.png"
+dest_files=["res://.godot/imported/equipment-icon.png-1d936508e558be6b67ae1d83bc18dc06.ctex"]
 
 [params]
 

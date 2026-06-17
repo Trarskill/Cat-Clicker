@@ -42,6 +42,8 @@ corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_left = 8.0
+content_margin_right = 8.0
 bg_color = Color(0.25098, 0.180392, 0.109804, 1)
 border_width_bottom = 4
 border_color = Color(0.14902, 0.101961, 0.0588235, 1)
@@ -52,7 +54,7 @@ corner_radius_bottom_left = 6
 
 [node name="InteractionWindow" type="PanelContainer"]
 top_level = true
-z_index = 10
+z_index = 100
 custom_minimum_size = Vector2(350, 0)
 offset_right = 350.0
 offset_bottom = 177.0
@@ -111,6 +113,7 @@ theme_override_constants/separation = 8
 alignment = 1
 
 [node name="PropertyIcon" type="TextureRect" parent="Margin/Content/PanelProperties/Margin/HBox"]
+texture_filter = 6
 custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
 expand_mode = 1
@@ -125,9 +128,13 @@ theme_override_font_sizes/font_size = 18
 text = "+100"
 vertical_alignment = 1
 
-[node name="ActionButton" type="Button" parent="Margin/Content"]
+[node name="HBoxContainer" type="HBoxContainer" parent="Margin/Content"]
+layout_mode = 2
+
+[node name="ActionButton" type="Button" parent="Margin/Content/HBoxContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
 theme_override_font_sizes/font_size = 20
 theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
@@ -135,3 +142,13 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "ActionButton"
+
+[node name="ActionButtonx10" type="Button" parent="Margin/Content/HBoxContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+text = " x10 "

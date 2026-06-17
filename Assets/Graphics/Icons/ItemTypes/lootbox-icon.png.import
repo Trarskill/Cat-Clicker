@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://54kel2g5d66d"
-path="res://.godot/imported/consumable_icon.png-46e066c5ae9a1fc4809b05ffb6d547af.ctex"
+uid="uid://b16mkwc3v8d5q"
+path="res://.godot/imported/lootbox-icon.png-ccb2f1b20b7656d09572c8481e561ebd.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Icons/ItemTypes/consumable_icon.png"
-dest_files=["res://.godot/imported/consumable_icon.png-46e066c5ae9a1fc4809b05ffb6d547af.ctex"]
+source_file="res://Assets/Graphics/Icons/ItemTypes/lootbox-icon.png"
+dest_files=["res://.godot/imported/lootbox-icon.png-ccb2f1b20b7656d09572c8481e561ebd.ctex"]
 
 [params]
 

@@ -48,25 +48,24 @@ func _on_reset_level_pressed() -> void:
 	Global.max_xp = 50
 	Global.max_level_announced = false
 	Global.is_endgame_half_reached = false
-	
+	Global.click_lvl_power = 0
 	Global.leveled_up.emit(Global.level)
 	_refresh_game_state()
 
-# 3. ФУНКЦІЯ: Видати ресурси + всі предмети
+# 3. ФУНКЦІЯ: Видати всі предмети
 func _on_give_all_pressed() -> void:
-	var all_item_ids = ["mysterious_chest", "wooden_sword", "wooden_shield", "steel_sword", "magic_stick", "bowl_with_bone", "apple", "bag_of_fruit", "magical_rose",
-"xp_potion", "cat_magic"]
-	
-	for item_id in all_item_ids:
+	for item_id in Global.inventory.keys():
 		var item_data = DataManager.get_item(item_id)
+		
 		if not item_data.is_empty():
-			if item_data.has("is_upgrade_only") and item_data["is_upgrade_only"]:
-				Global.inventory[item_id] = 10
-			elif item_data.get("type") == DataManager.ItemType.EQUIPMENT:
+			if typeof(Global.inventory[item_id]) == TYPE_BOOL:
 				Global.inventory[item_id] = true
 			else:
-				Global.inventory[item_id] = 16
-				
+				if item_data.has("max_lvl"):
+					Global.inventory[item_id] = item_data["max_lvl"]
+				else:
+					Global.inventory[item_id] = Global.MAX_STACK
+	
 	Global.show_floating_text("Адмін-набір видано! 🎁", Color(0.4, 1.0, 0.4))
 	_refresh_game_state()
 
@@ -83,6 +82,9 @@ func _on_clear_all_pressed() -> void:
 	Global.meowcoin = 0
 	Global.meowgem = 0
 	Global.rustycoin = 0
+	Global.click_power = 10
+	Global.click_lvl_power = 0 
+	Global.potion_balance = 0
 	Global.xp = 0
 	Global.level = 1
 	Global.max_xp = 50
@@ -92,27 +94,28 @@ func _on_clear_all_pressed() -> void:
 	Global.equipped_weapon = ""
 	Global.equipped_shield = ""
 	
-	Global.inventory = {
-		"mysterious_chest": false,
-		"wooden_sword": false,
-		"wooden_shield": false,
-		"steel_sword": false,
-		"magic_stick": false,
-		"bowl_with_bone": 0,
-		"apple": 0,
-		"bag_of_fruit": 0,
-		"magical_rose": 0,
-		"xp_potion": 0,
-		"cat_magic": 0
-	}
+	for item_id in Global.inventory.keys():
+		if item_id == "power_of_paws":
+			continue 
+			
+		if typeof(Global.inventory[item_id]) == TYPE_BOOL:
+			Global.inventory[item_id] = false
+		else:
+			Global.inventory[item_id] = 0
+	
+	Global.bowl_bone_timer = 0.0
+	Global.bowl_rice_timer = 0.0
+	Global.bowl_fish_timer = 0.0
+	Global.bag_of_fruit_timer  = 0.0
+	Global.catnip_timer = 0.0
+	Global.clockwork_mouse_timer = 0.0
+	Global.clockwork_mouse_cooldown = 0.0
 	
 	Global.show_floating_text("Повний вайп пройдено! 🧹", Color(1.0, 0.4, 0.4))
 	_refresh_game_state()
 
 # Синхронізація та збереження файлу
 func _refresh_game_state() -> void:
-	SaveManager.save_game()
-	
 	var current_scene = get_tree().current_scene
 	if current_scene and current_scene.has_method("update_ui"):
 		current_scene.update_ui()

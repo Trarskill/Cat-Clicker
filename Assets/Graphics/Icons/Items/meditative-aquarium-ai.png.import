@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw7afq4283iyl"
-path="res://.godot/imported/special_magic_icon.png-5143a1f5b98e5642154a8c6e4b4787e4.ctex"
+uid="uid://bh3kont2newp2"
+path="res://.godot/imported/meditative-aquarium-ai.png-b3c6ef33ad50a67b5692a506c3178b6e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Icons/ItemTypes/special_magic_icon.png"
-dest_files=["res://.godot/imported/special_magic_icon.png-5143a1f5b98e5642154a8c6e4b4787e4.ctex"]
+source_file="res://Assets/Graphics/Icons/Items/meditative-aquarium-ai.png"
+dest_files=["res://.godot/imported/meditative-aquarium-ai.png-b3c6ef33ad50a67b5692a506c3178b6e.ctex"]
 
 [params]
 

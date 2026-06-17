@@ -37,11 +37,11 @@ stretch_mode = 6
 
 [node name="MainLayout" type="VBoxContainer" parent="Panel"]
 layout_mode = 2
-theme_override_constants/separation = 20
+theme_override_constants/separation = 16
 
 [node name="Header" type="MarginContainer" parent="Panel/MainLayout"]
 layout_mode = 2
-theme_override_constants/margin_top = 30
+theme_override_constants/margin_top = 24
 
 [node name="Title" type="Label" parent="Panel/MainLayout/Header"]
 layout_mode = 2

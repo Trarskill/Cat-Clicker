@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=3 uid="uid://8fdw2i4y4riu"]
+[gd_scene load_steps=42 format=3 uid="uid://8fdw2i4y4riu"]
 
 [ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
 [ext_resource type="Texture2D" uid="uid://bkxyi1poxdbkx" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-1.png" id="3_5y7ob"]
@@ -30,6 +30,7 @@
 [ext_resource type="Texture2D" uid="uid://dgg5tv8dhligd" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-2.png" id="16_n5an8"]
 [ext_resource type="Texture2D" uid="uid://cwssgq042awd0" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-3.png" id="17_4cdbw"]
 [ext_resource type="Texture2D" uid="uid://c3mpp3rywqw1v" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-3.png" id="17_8sdnb"]
+[ext_resource type="Texture2D" uid="uid://d4du4ny0oub1l" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-1.png" id="19_dkbj0"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_v0apj"]
 atlas = ExtResource("6_goovc")
@@ -176,6 +177,14 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("19_dkbj0")
+}],
+"loop": true,
+"name": &"idle_fishing_rod",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("15_xq482")
 }, {
 "duration": 1.0,
@@ -250,6 +259,5 @@ texture_filter = 6
 position = Vector2(-582.222, -540)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_cat")
-animation = &"idle_cat"
-frame_progress = 0.206409
+animation = &"attack_cat"
 centered = false

@@ -1,7 +1,14 @@
 extends Node
 
 # --- ТИПИ ПРЕДМЕТІВ ---
-enum ItemType { CONSUMABLE, EQUIPMENT, SPECIAL }
+enum ItemType { 
+	LOOTBOX,    # Скрині
+	CONSUMABLE, # Миттєві розхідники
+	BUFF,       # Тимчасові ефекти / Таймери
+	EQUIPMENT,  # Екіпірування
+	PASSIVE,    # Пасивний дохід / Idle
+	KEY_ITEM    # Ключові / Унікальні предмети
+	}
 
 # --- БАЗА ДАНИХ ПРЕДМЕТІВ ---
 const ITEM_DATABASE = {
@@ -11,7 +18,7 @@ const ITEM_DATABASE = {
 		"description": "Отримаєте декілька монет, але в майбутньому можна отримати щось ціне",
 		"proper": "Отримання предметів або грошей",
 		"icon": "res://Assets/Graphics/Icons/Items/mysterious-chest-ai.png",
-		"type": ItemType.SPECIAL,
+		"type": ItemType.LOOTBOX,
 		"price": 10,
 		"for_gem": true,
 		"stackable": false,
@@ -24,7 +31,7 @@ const ITEM_DATABASE = {
 		"description": "Хтось уже поласував найсмачнішим, але ця хрустка кісточка все ще зберігає аромат великого полювання",
 		"proper": "+1 XP за клік",
 		"icon": "res://Assets/Graphics/Icons/Items/bowl-with-bone-ai.png",
-		"type": ItemType.CONSUMABLE,
+		"type": ItemType.BUFF,
 		"price": 5,
 		"for_gem": false,
 		"stackable": true,
@@ -35,7 +42,7 @@ const ITEM_DATABASE = {
 		"description": "Простий, але дуже поживний рис. Коти не завжди в захваті від нього, але енергію він дає стабільно.",
 		"proper": "+9 XP за клік",
 		"icon": "res://Assets/Graphics/Icons/Items/bowl-with-rice-ai.png",
-		"type": ItemType.CONSUMABLE,
+		"type": ItemType.BUFF,
 		"price": 45,
 		"for_gem": false,
 		"stackable": true,
@@ -46,7 +53,7 @@ const ITEM_DATABASE = {
 		"description": "Свіжа, ароматна рибка! Від одного запаху котик сповнюється ситим і готовий тренуватися інтенсивніше.",
 		"proper": "+19 XP за клік",
 		"icon": "res://Assets/Graphics/Icons/Items/bowl-with-fish-ai.png",
-		"type": ItemType.CONSUMABLE,
+		"type": ItemType.BUFF,
 		"price": 135, 
 		"for_gem": false,
 		"stackable": true,
@@ -68,7 +75,7 @@ const ITEM_DATABASE = {
 		"description": "Ці фрукти світяться! Їхній сік настільки незвичайний, що на короткий час перетворює кожен рух на магніт для золота!",
 		"proper": "1 Клік = 1 Монета",
 		"icon": "res://Assets/Graphics/Icons/Items/bag-of-fruit-ai.png",
-		"type": ItemType.CONSUMABLE,
+		"type": ItemType.BUFF,
 		"price": 500,
 		"for_gem": false,
 		"stackable": true,
@@ -79,7 +86,7 @@ const ITEM_DATABASE = {
 		"description": "Сушена м'ята найвищого ґатунку. Від одного її запаху в котику прокидається дикий!",
 		"proper": "x2 XP за клік",
 		"icon": "res://Assets/Graphics/Icons/Items/catnip-ai.png",
-		"type": ItemType.CONSUMABLE,
+		"type": ItemType.BUFF,
 		"price": 500,
 		"for_gem": false,
 		"stackable": true,
@@ -119,21 +126,6 @@ const ITEM_DATABASE = {
 		"for_gem": false,
 		"stackable": true,
 		"stats": {"permanent_power": -1, "gem_reward": 2}
-	},
-
-# --- МАГІЯ ---
-	"cat_magic": {
-		"name": "Кото-Магія",
-		"description": "Стародавня сила, що зростає з кожним ритуалом.",
-		"proper": "Треба володіти магією",
-		"icon": "res://Assets/Graphics/Icons/Items/cat-magic-ai.png",
-		"type": ItemType.SPECIAL,
-		"price": 0, 
-		"for_gem": false,
-		"stackable": true, 
-		"is_upgrade_only": true,
-		"max_lvl": 10,
-		"stats": {"multiplier_per_level": 0.05}
 	},
 
 # --- ЗБРОЯ/ЕКІПЕРУВАННЯ ---
@@ -187,30 +179,30 @@ const ITEM_DATABASE = {
 		"proper": "+1 монета за клік",
 		"icon": "res://Assets/Graphics/Icons/Items/magic-fishing-rod-ai.png",
 		"type": ItemType.EQUIPMENT,
-		"price": 9990,
+		"price": 9050,
 		"for_gem": false,
 		"stackable": false,
 		"stats": {"coin_bonus": 1}
 	},
-	
+
 # --- СПЕЦИФІЧНІ РЕЧІ ---
 	"clockwork_mouse": {
 		"name": "Завідна Мишка",
 		"description": "Маленький механічний помічник. Заведіть її триває 5хвилин, і вона буде несамовито лупити манекен замість вас, поки не закінчиться завод.",
-		"proper": "Працює 30 сек (Перезарядка: 5 хв)",
+		"proper": "Працює 30 сек (Перезарядка: 2 хв)",
 		"icon": "res://Assets/Graphics/Icons/Items/clockwork-mouse-ai.png",
-		"type": ItemType.SPECIAL,
+		"type": ItemType.PASSIVE,
 		"price": 3950,
 		"for_gem": false,
 		"stackable": false,
-		"stats": {"auto_click_duration": 30, "cooldown": 300}
+		"stats": {"auto_click_duration": 30, "cooldown": 120}
 	},
 	"boss_map": {
 		"name": "Старовинна Карта",
 		"description": "Потертий пергамент із загадковими мітками. Що так де намальовано великий червоний хрест?",
 		"proper": "Дозволяє кинути виклик Босам",
 		"icon": "res://Assets/Graphics/Icons/Items/map-ai.png",
-		"type": ItemType.SPECIAL,
+		"type": ItemType.KEY_ITEM,
 		"price": 1100,
 		"for_gem": false,
 		"stackable": false,
@@ -221,12 +213,74 @@ const ITEM_DATABASE = {
 		"description": "Кажуть якщо її змішати з якимсь зіллям можно стати кот-магом.",
 		"proper": "Отримання кото-магії.",
 		"icon": "res://Assets/Graphics/Icons/Items/magical-rose-ai.png",
-		"type": ItemType.SPECIAL,
+		"type": ItemType.KEY_ITEM,
 		"price": 1,
 		"for_gem": true,
 		"stackable": true,
 		"stats": {"magic_upgrade": true}
-	}
+	},
+
+	# --- СТАТИСТИЧНІ ПРЕДМЕТИ ---
+	"cat_magic": {
+		"name": "Кото-Магія",
+		"description": "Стародавня сила, що зростає з кожним ритуалом.",
+		"proper": "Треба володіти магією",
+		"icon": "res://Assets/Graphics/Icons/Items/cat-magic-ai.png",
+		"type": ItemType.KEY_ITEM,
+		"price": 0, 
+		"for_gem": false,
+		"stackable": true, 
+		"is_upgrade_only": true,
+		"max_lvl": 10,
+		"stats": {"multiplier_per_level": 0.05}
+	},
+	"power_of_paws": {
+		"name": "Міць Лапок",
+		"description": "Показує вашу загальну силу удару по манекену.",
+		"proper": "Статистика сили",
+		"icon": "res://Assets/Graphics/Icons/Items/power-of-paws-ai.png",
+		"type": ItemType.KEY_ITEM,
+		"price": 0, 
+		"for_gem": false,
+		"stackable": false, 
+		"is_upgrade_only": false,
+		"stats": {}
+	},
+
+# --- ДЕКОРАЦІЇ ---
+	"soft_pet_bed": {
+		"name": "М'яка Лежанка",
+		"description": "Неймовірно пухнаста і зручна лежанка. Поки котик солодко спить, уві сні він обдумує нові бойові прийоми та набирається мудрості.",
+		"proper": "+5 XP кожні 10 сек",
+		"icon": "res://Assets/Graphics/Icons/Items/soft-pet-bed-ai.png",
+		"type": ItemType.PASSIVE,
+		"price": 2500,
+		"for_gem": false,
+		"stackable": false,
+		"stats": {"passive_xp": 5, "tick_rate": 10.0}
+	},
+	"meditative_aquarium": {
+		"name": "Медитативний Акваріум",
+		"description": "Заспокійливий рух магічних рибок і ніжне булькання води притягують удачу. Якщо довго дивитися на дно, можна помітити блискучі монетки.",
+		"proper": "+2 Монети кожні 15 сек",
+		"icon": "res://Assets/Graphics/Icons/Items/meditative-aquarium-ai.png",
+		"type": ItemType.PASSIVE,
+		"price": 4500,
+		"for_gem": false,
+		"stackable": false,
+		"stats": {"passive_coin": 2, "tick_rate": 15.0}
+	},
+	"book_of_cat_tales": {
+		"name": "Купка Книг Котячих Казок",
+		"description": "Збірка прадавніх легенд про великих котів-магів та воїнів. Навіть просте перебування поруч із цими фоліантами наповнює кімнату щільною аурою знань.",
+		"proper": "+50 XP кожні 20 сек",
+		"icon": "res://Assets/Graphics/Icons/Items/book-of-cat-tales-ai.png",
+		"type": ItemType.PASSIVE,
+		"price": 15,
+		"for_gem": true,
+		"stackable": false,
+		"stats": {"passive_xp": 50, "tick_rate": 20.0}
+	},
 }
 
 # --- ФУНКЦІЯ ДОСТУПУ ---

@@ -15,11 +15,15 @@ extends Control
 @onready var lowbar_shop_button = $UILayer/LowBar/Margin/Layout/ShopButton
 @onready var lowbar_inventory_button = $UILayer/LowBar/Margin/Layout/InvButton
 
+# --- ЗМІННІ СТАНУ ІНТЕРФЕЙСУ ТА АНІМАЦІЙ ---
 var is_menu_locked: bool = false
 var current_menu_offset_y: float = 0.0
 
 var world_tween: Tween
 
+# --- ІНІЦІАЛІЗАЦІЯ СЦЕНИ --- 
+# Викликається один раз при старті сцени. Завантажує збереження, 
+# оновлює інтерфейс та підключає всі необхідні сигнали кнопок і вікон.
 func _ready() -> void:
 	SaveManager.load_game()
 	update_ui()
@@ -40,53 +44,34 @@ func _ready() -> void:
 	resized.connect(_on_dashboard_resized)
 	_on_dashboard_resized()
 
-# --- ФУНКЦІЯ АВТОМАТИЧНОГО ЦЕНТРУВАННЯ ---
+# --- АВТОМАТИЧНЕ ЦЕНТРУВАННЯ СВІТУ ---
+# Викликається при зміні розміру вікна гри. 
+# Тримає котика та манекен рівно по центру екрана 
+# з урахуванням зсуву від відкритих меню.
 func _on_dashboard_resized() -> void:
 	game_world.position.x = size.x / 2.0
 	game_world.position.y = (size.y / 2.0) + current_menu_offset_y
 
+# --- ЛОГІКА ГОЛОВНОГО КЛІКУ (ОБЧИСЛЕННЯ) ---
+# Функція запускає візуальні ефекти удару, звертається до 
+# мозку гри (Global) для розрахунку результатів кліку 
+# та викликає оновлення UI (спливаючий текст та шкали).
 func _on_click_area_pressed() -> void:
-	
 	await cat.play_attack()
 	await dummy.take_hit()
 	
-	# --- РОЗРАХУНОК ДОСВІДУ (XP) ---
-	var total_xp = Global.click_power
+	var click_result = Global.process_click()
 	
-	if Global.bowl_bone_timer > 0:
-		var bowl_data = DataManager.get_item("bowl_with_bone")
-		total_xp += bowl_data["stats"]["xp_bonus"]
+	show_xp_feedback(click_result["xp"])
+	# --- ПЕРЕВІРКА НА ВУДОЧКУ ---
+	if Global.equipped_weapon == "magic_fishing_rod":
+		show_coin_feedback(1)
 		
-	if Global.equipped_weapon != "":
-		var w_data = DataManager.get_item(Global.equipped_weapon)
-		if Global.equipped_weapon == "magic_stick":
-			if Global.inventory.get("cat_magic", 0) >= 1:
-				total_xp += w_data["stats"]["xp_bonus"]
-		else:
-			total_xp += w_data["stats"]["xp_bonus"]
-			
-	if Global.equipped_shield != "":
-		var s_data = DataManager.get_item(Global.equipped_shield)
-		total_xp += s_data["stats"]["xp_bonus"]
-		
-	var magic_lvl = Global.inventory.get("cat_magic", 0)
-	if magic_lvl > 0:
-		var magic_data = DataManager.get_item("cat_magic")
-		var multiplier = 1.0 + (magic_lvl * magic_data["stats"]["multiplier_per_level"])
-		total_xp = int(total_xp * multiplier)
-		
-	Global.gain_xp(total_xp)
-	
-	show_xp_feedback(total_xp)
-	
-	# --- РОЗРАХУНОК МОНЕТ (Мішок фруктів) ---
-	if Global.bag_of_fruit_timer > 0:
-		var fruit_data = DataManager.get_item("bag_of_fruit")
-		var earned_coins = fruit_data["stats"].get("coin_gets", 1)
-		Global.meowcoin += earned_coins
-	
 	update_ui()
 
+# --- ОНОВЛЕННЯ ІНТЕРФЕЙСУ ---
+# Синхронізує текст монет, гемів, шкали рівня та 
+# карток магазину з актуальними даними з Global.
 func update_ui() -> void:
 	header.update_meowcoin(Global.meowcoin)
 	header.update_rustycoin(Global.rustycoin)
@@ -94,21 +79,19 @@ func update_ui() -> void:
 	
 	var level_bar = lowbar.get_node("Margin/Layout/LevelBar")
 	if level_bar:
-		if Global.level >= 100:
-			level_bar.get_node("LevelTitle").text = "Рівень MAX"
-			level_bar.update_xp(Global.xp, Global.max_xp) 
-		else:
-			level_bar.get_node("LevelTitle").text = "Рівень " + str(Global.level)
-			level_bar.update_xp(Global.xp, Global.max_xp)
+		level_bar.update_level_data(Global.level, Global.xp, Global.max_xp)
 	
 	if shop_popup:
 		shop_popup.update_all_cards()
 
-# --- ОБРОБКА ПОДІЙ ІНТЕРФЕЙСУ ---
+# --- ОБРОБКА УСПІШНОЇ ПОКУПКИ ---
+# Оновлює інтерфейс після того, як гравець щось придбав у магазині.
 func _on_item_bought_success() -> void:
 	update_ui()
 
-# --- ОБРОБКА КНОПОК ДЛЯ ПЕРЕМИКАННЯ ВКЛАДОК ---
+# --- ОБРОБКА КНОПКИ МАГАЗИНУ ---
+# Відкриває або закриває магазин. Блокує інші натискання 
+# під час анімації, щоб уникнути багів, та автоматично закриває інвентар.
 func _on_shop_button_pressed() -> void:
 	if is_menu_locked:
 		return
@@ -124,6 +107,9 @@ func _on_shop_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	is_menu_locked = false
 
+# --- ОБРОБКА КНОПКИ ІНВЕНТАРЮ ---
+# Відкриває або закриває інвентар. Якщо в цей момент 
+# відкрито магазин, спочатку закриває його.
 func _on_inventory_button_pressed() -> void:
 	if is_menu_locked:
 		return
@@ -143,13 +129,9 @@ func _on_inventory_button_pressed() -> void:
 	await get_tree().create_timer(0.5).timeout
 	is_menu_locked = false
 
-func _on_inventory_action():
-	update_ui()
-	
-	if cat.has_method("update_equipment_visuals"):
-		cat.update_equipment_visuals()
-
-# --- УНІВЕРСАЛЬНА ФУНКЦІЯ РУХУ СВІТУ (ДЛЯ ВСІХ ВІКОН) ---
+# --- УНІВЕРСАЛЬНА ФУНКЦІЯ РУХУ СВІТУ ---
+# Плавно зміщує ігровий світ та фон по вертикалі (використовуючи Tween),
+# щоб звільнити місце для меню, яке виїжджає знизу.
 func shift_game_world(target_y: float) -> void:
 	current_menu_offset_y = target_y
 	
@@ -163,7 +145,9 @@ func shift_game_world(target_y: float) -> void:
 	world_tween.tween_property(game_world, "position:y", final_game_world_y, 0.5)
 	world_tween.tween_property(background, "position:y", target_y, 0.5)
 
-# --- ОБРОБНИК МАГАЗИНУ (Використовує універсальну функцію) ---
+# --- РЕАКЦІЯ НА ЗМІНУ СТАНУ МАГАЗИНУ ---
+# Розраховує цільову позицію зміщення світу 
+# залежно від того, наскільки відкрито вікно магазину.
 func _on_shop_state_changed(new_state) -> void:
 	var target_y = 0.0
 	match new_state:
@@ -173,17 +157,21 @@ func _on_shop_state_changed(new_state) -> void:
 			
 	shift_game_world(target_y)
 
-# --- ОБРОБНИК ІНВЕНТАРЮ (Використовує універсальну функцію) ---
+# --- РЕАКЦІЯ НА ВІДКРИТТЯ ІНВЕНТАРЮ ---
+# Зміщує світ вгору при відкритті інвентарю 
+# та повертає на місце при його закритті.
 func _on_inventory_visibility_changed(is_open: bool) -> void:
 	var target_y = -210.0 if is_open else 0.0
 	shift_game_world(target_y)
 
-# --- ВІЗУАЛЬНИЙ ВІДГУК ДЛЯ КЛІКІВ ---
+# --- ВІЗУАЛЬНИЙ ВІДГУК ДЛЯ КЛІКІВ (СПЛИВАЮЧИЙ ДОСВІД) ---
+# Створює текстовий вузол, який плавно відлітає від котика вгору 
+# та розчиняється, показуючи кількість зароблених XP за клік.
 func show_xp_feedback(amount: int) -> void:
 	var xp_label = Label.new()
 	xp_label.text = "+" + str(amount) + " XP"
 	
-	xp_label.add_theme_color_override("font_color", Color(0.7, 0.3, 0.9)) # Фіолетовий
+	xp_label.add_theme_color_override("font_color", Color(0.7, 0.3, 0.9))
 	xp_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	xp_label.add_theme_constant_override("outline_size", 6)
 	xp_label.add_theme_font_size_override("font_size", 28)
@@ -205,6 +193,47 @@ func show_xp_feedback(amount: int) -> void:
 	
 	tw.chain().tween_callback(xp_label.queue_free)
 
+# --- ВІЗУАЛЬНИЙ ВІДГУК ДЛЯ ЗДОБИЧІ (СПЛИВАЮЧІ МОНЕТИ) ---
+# Створює текстовий вузол, який плавно відлітає від котика вгору 
+# та розчиняється, показуючи кількість зароблених монет (наприклад, від вудочки).
+func show_coin_feedback(amount: int) -> void:
+	var coin_label = RichTextLabel.new()
+	coin_label.bbcode_enabled = true
+	coin_label.fit_content = true
+	coin_label.autowrap_mode = TextServer.AUTOWRAP_OFF
+	coin_label.clip_contents = false
+	
+	var icon_path = "res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png"
+	
+	coin_label.text = "[center][color=gold]+" + str(amount) + "[/color][img=28]" + icon_path + "[/img][/center]"
+	
+	coin_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
+	coin_label.add_theme_constant_override("outline_size", 6)
+	coin_label.add_theme_font_size_override("normal_font_size", 28)
+	
+	game_world.add_child(coin_label)
+	
+	var start_offset_x = randf_range(-70.0, 70.0)
+	var start_offset_y = randf_range(-130.0, -80.0)
+	coin_label.global_position = cat.global_position + Vector2(start_offset_x, start_offset_y)
+	
+	var target_x = coin_label.global_position.x + randf_range(-60.0, 60.0)
+	var target_y = coin_label.global_position.y - randf_range(80.0, 120.0)
+	
+	var tw = create_tween().set_parallel(true)
+	
+	tw.tween_property(coin_label, "global_position", Vector2(target_x, target_y), 0.7).set_ease(Tween.EASE_OUT)
+	tw.tween_property(coin_label, "modulate:a", 0.0, 0.6).set_ease(Tween.EASE_IN).set_delay(0.2)
+	
+	tw.chain().tween_callback(coin_label.queue_free)
+
+# --- ОБРОБКА ДІЙ В ІНВЕНТАРІ ---
+func _on_inventory_action():
+	update_ui()
+	
+	if cat.has_method("update_equipment_visuals"):
+		cat.update_equipment_visuals()
+
 # --- ВІЗУАЛЬНИЙ ВІДГУК НОВОГО РІВНЯ ---
 func _on_leveled_up(new_level: int) -> void:
 	update_ui()
@@ -213,7 +242,9 @@ func _on_leveled_up(new_level: int) -> void:
 
 
 
-# --- cheats ---
+# --- СИСТЕМА ЧІТІВ (ІГНОРУВАТИ ЦЮ ФУНКЦІЮ) --- 
+# Обробляє натискання клавіш. Викликає приховане меню 
+# адміністратора при натисканні клавіші F1, якщо воно ще не відкрито.
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and event.keycode == KEY_F1:
 		if not $UILayer.has_node("AdminMenu"):

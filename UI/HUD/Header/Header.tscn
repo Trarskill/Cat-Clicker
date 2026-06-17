@@ -1,12 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://pmqogmam13pc"]
+[gd_scene load_steps=7 format=3 uid="uid://pmqogmam13pc"]
 
 [ext_resource type="Script" path="res://UI/HUD/Header/Header.gd" id="1_jw8aa"]
-[ext_resource type="Texture2D" uid="uid://dlai8i0awrfmw" path="res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png" id="2_dr76x"]
+[ext_resource type="Texture2D" uid="uid://dogqjlk70yc8r" path="res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png" id="2_dr76x"]
 [ext_resource type="PackedScene" uid="uid://cglp8i64m2qut" path="res://UI/Components/SettingsButton/SettingsButton.tscn" id="2_suana"]
 [ext_resource type="FontFile" uid="uid://wjw3f5lx5dj0" path="res://Assets/Fonts/Xolonium-Bold.ttf" id="3_1lsar"]
-[ext_resource type="Texture2D" uid="uid://bvd5mqj0ewhha" path="res://Assets/Graphics/Icons/Сurrency/Rustycoin-currency-ai.png" id="4_4m6ko"]
-[ext_resource type="Texture2D" uid="uid://cewg1yurarss5" path="res://Assets/Graphics/Icons/Сurrency/Meowgem-currency-ai.png" id="5_ato68"]
-[ext_resource type="Texture2D" uid="uid://c3f1e4460fmhw" path="res://Assets/Graphics/Icons/Button/icon-settings-ai.png" id="7_upevw"]
+[ext_resource type="Texture2D" uid="uid://coxb7vgx351qe" path="res://Assets/Graphics/Icons/Сurrency/Rustycoin-currency-ai.png" id="4_4m6ko"]
+[ext_resource type="Texture2D" uid="uid://pr531venfwc7" path="res://Assets/Graphics/Icons/Сurrency/Meowgem-currency-ai.png" id="5_ato68"]
 
 [node name="Header" type="MarginContainer"]
 anchors_preset = 10
@@ -110,4 +109,3 @@ vertical_alignment = 1
 [node name="SettingsButton" parent="HeaderLayout" instance=ExtResource("2_suana")]
 layout_mode = 2
 size_flags_horizontal = 8
-icon = ExtResource("7_upevw")

@@ -118,6 +118,18 @@ item_id = "bag_of_fruit"
 layout_mode = 2
 item_id = "catnip"
 
+[node name="soft_pet_bedItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "soft_pet_bed"
+
+[node name="aquariumItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "meditative_aquarium"
+
+[node name="mapItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "boss_map"
+
 [node name="WeaponList" type="VBoxContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists"]
 visible = false
 layout_mode = 2
@@ -134,10 +146,6 @@ item_id = "wooden_shield"
 [node name="StSwordItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
 item_id = "steel_sword"
-
-[node name="mapItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
-layout_mode = 2
-item_id = "boss_map"
 
 [node name="mouseItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
@@ -171,3 +179,7 @@ item_id = "curse_potion"
 [node name="fishingRodItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
 item_id = "magic_fishing_rod"
+
+[node name="book_talesItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "book_of_cat_tales"

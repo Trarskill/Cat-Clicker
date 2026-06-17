@@ -1,8 +1,7 @@
-[gd_scene load_steps=19 format=3 uid="uid://cbj3m1nj75luk"]
+[gd_scene load_steps=18 format=3 uid="uid://cbj3m1nj75luk"]
 
 [ext_resource type="Script" path="res://UI/Components/ShopItemCard/ShopItemCard.gd" id="1_jnlwc"]
 [ext_resource type="FontFile" uid="uid://cnyimp8u0qwah" path="res://Assets/Fonts/Linotype Aroma Bold.ttf" id="2_7pxda"]
-[ext_resource type="Texture2D" uid="uid://dlai8i0awrfmw" path="res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png" id="2_tc63r"]
 [ext_resource type="FontFile" uid="uid://bokyl6derud8j" path="res://Assets/Fonts/Montreal-Regular.ttf" id="3_bxoxk"]
 [ext_resource type="FontFile" uid="uid://gnwvb53hkvq3" path="res://Assets/Fonts/SourceCodePro-Black.ttf" id="5_3espe"]
 
@@ -336,7 +335,6 @@ texture_filter = 6
 custom_minimum_size = Vector2(20, 20)
 layout_mode = 2
 mouse_filter = 2
-texture = ExtResource("2_tc63r")
 expand_mode = 1
 stretch_mode = 5
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://0aynxwhm3cdr"
-path="res://.godot/imported/equipment_icon.png-86736bd9819b55157a353a02ac3058cd.ctex"
+uid="uid://duq204jpe3dsr"
+path="res://.godot/imported/soft-pet-bed-ai.png-7ea0e1f3dc0f7d6175fff6f0bb70ffda.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Icons/ItemTypes/equipment_icon.png"
-dest_files=["res://.godot/imported/equipment_icon.png-86736bd9819b55157a353a02ac3058cd.ctex"]
+source_file="res://Assets/Graphics/Icons/Items/soft-pet-bed-ai.png"
+dest_files=["res://.godot/imported/soft-pet-bed-ai.png-7ea0e1f3dc0f7d6175fff6f0bb70ffda.ctex"]
 
 [params]
 

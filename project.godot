@@ -42,6 +42,7 @@ folder_colors={
 "res://Characters/": "teal",
 "res://Characters/Cat/": "yellow",
 "res://Characters/Dummy/": "red",
+"res://Characters/Mouse/": "orange",
 "res://UI/": "orange"
 }
 

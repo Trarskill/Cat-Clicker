@@ -7,19 +7,21 @@ extends VBoxContainer
 var fade_tween: Tween
 
 func _ready() -> void:
-	if Global.level >= 100:
+	xp_label.modulate.a = 0.0
+	xp_label.visible = false
+	update_level_data(Global.level, Global.xp, Global.max_xp)
+
+func update_level_data(new_level: int, new_xp: int, new_max: int) -> void:
+	if new_level >= 100:
 		level_title.text = "Рівень MAX"
 		progress_bar.max_value = 1
 		progress_bar.value = 1
 		xp_label.text = "MAX XP"
 	else:
-		level_title.text = "Рівень " + str(Global.level)
-		progress_bar.max_value = Global.max_xp
-		progress_bar.value = Global.xp
-		xp_label.text = str(Global.xp) + " / " + str(Global.max_xp) + " XP"
-	
-	xp_label.modulate.a = 0.0
-	xp_label.visible = false
+		level_title.text = "Рівень " + str(new_level)
+		progress_bar.max_value = new_max
+		progress_bar.value = new_xp
+		xp_label.text = str(new_xp) + " / " + str(new_max) + " XP"
 
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed:

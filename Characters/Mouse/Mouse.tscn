@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://cstdqcn6p8d1b"]
+
+[ext_resource type="Texture2D" uid="uid://ixbbx5nwet72" path="res://Assets/Graphics/Icons/Items/clockwork-mouse-ai.png" id="1_efjjj"]
+[ext_resource type="Script" path="res://Characters/Mouse/Mouse.gd" id="1_qx7vt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_q4drk"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_llnbx"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_efjjj")
+}],
+"loop": true,
+"name": &"work",
+"speed": 5.0
+}]
+
+[node name="Mouse" type="Node2D"]
+script = ExtResource("1_qx7vt")
+
+[node name="Shadow" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_q4drk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 6
+scale = Vector2(0.25, 0.25)
+sprite_frames = SubResource("SpriteFrames_llnbx")
+animation = &"work"
+flip_h = true

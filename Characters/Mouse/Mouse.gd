@@ -67,13 +67,14 @@ func process_click() -> void:
 		Global.meowcoin += earned_coins
 	
 	show_xp_feedback(mouse_power)
+	
+	get_tree().call_group("UI", "update_quick_stats")
 
 # --- ВІЗУАЛІЗАЦІЯ ДОСВІДУ (Спливаючий текст) ---
 func show_xp_feedback(amount: int) -> void:
 	var xp_label = Label.new()
 	xp_label.text = "+" + str(amount) + " XP"
 	
-	# Налаштовуємо стиль тексту (наприклад, помаранчевий колір для мишки, щоб відрізнявся від кота)
 	xp_label.add_theme_color_override("font_color", Color(1.0, 0.6, 0.2)) 
 	xp_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	xp_label.add_theme_constant_override("outline_size", 6)

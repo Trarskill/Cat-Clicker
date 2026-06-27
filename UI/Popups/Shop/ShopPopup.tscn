@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://UI/Popups/Shop/ShopPopup.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://d4i4k3t5yiy30" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-shoppopup.png" id="2_micnq"]
-[ext_resource type="Texture2D" uid="uid://3w37jox4yr43" path="res://Assets/Graphics/Icons/MeowQuest-ai-arrow-shoppopup.png" id="3_vyik8"]
+[ext_resource type="Texture2D" uid="uid://3w37jox4yr43" path="res://Assets/Graphics/Common/UI_Elements/MeowQuest-ai-arrow-shoppopup.png" id="3_vyik8"]
 [ext_resource type="PackedScene" uid="uid://h44hsbgi5rj4" path="res://UI/Components/ButtonShopGroup/ButtonShopGroup.tscn" id="4_8td6q"]
 [ext_resource type="PackedScene" uid="uid://cbj3m1nj75luk" path="res://UI/Components/ShopItemCard/ShopItemCard.tscn" id="5_vx2fw"]
 
@@ -126,9 +126,9 @@ item_id = "soft_pet_bed"
 layout_mode = 2
 item_id = "meditative_aquarium"
 
-[node name="mapItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
+[node name="mouseItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
-item_id = "boss_map"
+item_id = "clockwork_mouse"
 
 [node name="WeaponList" type="VBoxContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists"]
 visible = false
@@ -147,9 +147,13 @@ item_id = "wooden_shield"
 layout_mode = 2
 item_id = "steel_sword"
 
-[node name="mouseItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
+[node name="fishingRodItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
-item_id = "clockwork_mouse"
+item_id = "magic_fishing_rod"
+
+[node name="mapItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/WeaponList" instance=ExtResource("5_vx2fw")]
+layout_mode = 2
+item_id = "boss_map"
 
 [node name="MagicList" type="VBoxContainer" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists"]
 visible = false
@@ -159,10 +163,6 @@ theme_override_constants/separation = 8
 [node name="RoseItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
 item_id = "magical_rose"
-
-[node name="MagStickItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
-layout_mode = 2
-item_id = "magic_stick"
 
 [node name="xpPotionItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
@@ -176,9 +176,9 @@ item_id = "strength_potion"
 layout_mode = 2
 item_id = "curse_potion"
 
-[node name="fishingRodItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
+[node name="MagStickItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2
-item_id = "magic_fishing_rod"
+item_id = "magic_stick"
 
 [node name="book_talesItem" parent="Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/MagicList" instance=ExtResource("5_vx2fw")]
 layout_mode = 2

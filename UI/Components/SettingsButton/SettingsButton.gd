@@ -8,8 +8,6 @@ var tween : Tween
 func _ready() -> void:
 	pivot_offset = size / 2
 	
-	mouse_entered.connect(_on_mouse_entered)
-	mouse_exited.connect(_on_mouse_exited)
 	button_down.connect(_on_button_down)
 	button_up.connect(_on_button_up)
 	
@@ -22,12 +20,6 @@ func animate_change(target_scale: Vector2, target_rotation: float) -> void:
 	tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
 	tween.tween_property(self, "scale", target_scale, 0.15)
 	tween.tween_property(self, "rotation_degrees", target_rotation, 0.15)
-
-func _on_mouse_entered() -> void:
-	animate_change(hover_scale, 15.0)
-
-func _on_mouse_exited() -> void:
-	animate_change(normal_scale, 0.0)
 
 func _on_button_down() -> void:
 	animate_change(pressed_scale, -15.0)

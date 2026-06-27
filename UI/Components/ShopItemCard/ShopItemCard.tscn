@@ -257,7 +257,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 0)
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_7pxda")
 theme_override_font_sizes/font_size = 28
-text = "Назва товару"
+text = "TitleLabel"
 autowrap_mode = 2
 
 [node name="InfoButton" type="Button" parent="Margin/HBox/TextContent"]
@@ -305,7 +305,7 @@ theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 4
 theme_override_fonts/font = ExtResource("2_7pxda")
 theme_override_font_sizes/font_size = 18
-text = "КУПИТИ"
+text = "BuyLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 

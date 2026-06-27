@@ -14,14 +14,14 @@ enum ItemType {
 const ITEM_DATABASE = {
 # --- СКРИНЯ ---
 	"mysterious_chest": {
-		"name": "Дерев'яна скриня з печатко",
-		"description": "Отримаєте декілька монет, але в майбутньому можна отримати щось ціне",
-		"proper": "Отримання предметів або грошей",
+		"name": "Скриня",
+		"description": "Незвичайна скриня з печаткою, дуже нетерпется відкрити",
+		"proper": "Випадяння предметів або грошей",
 		"icon": "res://Assets/Graphics/Icons/Items/mysterious-chest-ai.png",
 		"type": ItemType.LOOTBOX,
-		"price": 10,
-		"for_gem": true,
-		"stackable": false,
+		"price": 100,
+		"for_gem": false,
+		"stackable": true,
 		"stats": {"loot_table": true}
 	},
 
@@ -127,6 +127,17 @@ const ITEM_DATABASE = {
 		"stackable": true,
 		"stats": {"permanent_power": -1, "gem_reward": 2}
 	},
+	"magical_potion": {
+		"name": "Магічне Зілля",
+		"description": "Концентрована енергія! Використайте, щоб пробудити або посилити Кото-Магію.",
+		"proper": "Підвищує магію",
+		"icon": "res://Assets/Graphics/Icons/Items/magical-potion-ai.png",
+		"type": ItemType.CONSUMABLE,
+		"price": 0,
+		"for_gem": false,
+		"stackable": true,
+		"stats": {}
+	},
 
 # --- ЗБРОЯ/ЕКІПЕРУВАННЯ ---
 	"wooden_sword": {
@@ -210,14 +221,14 @@ const ITEM_DATABASE = {
 	},
 	"magical_rose": {
 		"name": "Магічна роза",
-		"description": "Кажуть якщо її змішати з якимсь зіллям можно стати кот-магом.",
-		"proper": "Отримання кото-магії.",
+		"description": "Рідкісна квітка. Змішайте з Зіллям Досвіду (XP), щоб зварити Магічне Зілля.",
+		"proper": "Матеріал для крафту",
 		"icon": "res://Assets/Graphics/Icons/Items/magical-rose-ai.png",
 		"type": ItemType.KEY_ITEM,
 		"price": 1,
 		"for_gem": true,
 		"stackable": true,
-		"stats": {"magic_upgrade": true}
+		"stats": {}
 	},
 
 	# --- СТАТИСТИЧНІ ПРЕДМЕТИ ---
@@ -239,6 +250,7 @@ const ITEM_DATABASE = {
 		"description": "Показує вашу загальну силу удару по манекену.",
 		"proper": "Статистика сили",
 		"icon": "res://Assets/Graphics/Icons/Items/power-of-paws-ai.png",
+		"strong_icon": "res://Assets/Graphics/Icons/Items/power-of-strong-paws-ai.png",
 		"type": ItemType.KEY_ITEM,
 		"price": 0, 
 		"for_gem": false,

@@ -1,14 +1,18 @@
-[gd_scene load_steps=10 format=3 uid="uid://cr7gx250rah1v"]
+[gd_scene load_steps=14 format=3 uid="uid://cr7gx250rah1v"]
 
 [ext_resource type="PackedScene" uid="uid://pmqogmam13pc" path="res://UI/HUD/Header/Header.tscn" id="1_header"]
 [ext_resource type="Script" path="res://UI/Screens/Dashboard.gd" id="1_i8p53"]
 [ext_resource type="PackedScene" uid="uid://8fdw2i4y4riu" path="res://Characters/Cat/Cat.tscn" id="2_eo25s"]
-[ext_resource type="Texture2D" uid="uid://dqx41idpcgyce" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-day.png" id="2_i7uc8"]
+[ext_resource type="Texture2D" uid="uid://dqx41idpcgyce" path="res://Assets/Graphics/Backgrounds/background-Dashboard-day.png" id="2_i7uc8"]
 [ext_resource type="PackedScene" uid="uid://dbo3grhqh1w52" path="res://UI/HUD/LowBar/LowBar.tscn" id="2_lowbar"]
 [ext_resource type="PackedScene" uid="uid://b8ao5lyyy132s" path="res://Characters/Dummy/Dummy.tscn" id="3_dqbfs"]
 [ext_resource type="PackedScene" uid="uid://cstdqcn6p8d1b" path="res://Characters/Mouse/Mouse.tscn" id="5_ror71"]
 [ext_resource type="PackedScene" uid="uid://c4qp3vfqv1njv" path="res://UI/Popups/Shop/ShopPopup.tscn" id="6_frujl"]
 [ext_resource type="PackedScene" uid="uid://d1otjlk781tvt" path="res://UI/Popups/Inventory/InventoryPopup.tscn" id="6_py225"]
+[ext_resource type="PackedScene" uid="uid://d2n208vxnln0e" path="res://Characters/IdleDecoration/SoftPetBed/SoftPetBed.tscn" id="6_xvuvn"]
+[ext_resource type="PackedScene" uid="uid://pwxoq5jl6n6j" path="res://Characters/IdleDecoration/MeditativeAquarium/MeditativeAquarium.tscn" id="7_ayffr"]
+[ext_resource type="PackedScene" uid="uid://ylrddjk3r42p" path="res://Characters/IdleDecoration/BookOfCatTales/BookOfCatTales.tscn" id="8_q8e0w"]
+[ext_resource type="PackedScene" uid="uid://ca5vg3iaw7kvr" path="res://UI/Screens/SettingsMenu/SettingsMenu.tscn" id="11_wko8r"]
 
 [node name="Dashboard" type="Control"]
 layout_mode = 3
@@ -44,26 +48,32 @@ flat = true
 [node name="GameWorld" type="Node2D" parent="."]
 position = Vector2(360, 620)
 
-[node name="DummyPosition" type="Marker2D" parent="GameWorld"]
-position = Vector2(120, -100)
+[node name="Dummy" parent="GameWorld" instance=ExtResource("3_dqbfs")]
+z_index = 1
+position = Vector2(120, -92)
+scale = Vector2(0.33, 0.33)
 
-[node name="Dummy" parent="GameWorld/DummyPosition" instance=ExtResource("3_dqbfs")]
-scale = Vector2(0.32, 0.32)
-
-[node name="CatPosition" type="Marker2D" parent="GameWorld"]
-position = Vector2(-120, -100)
-
-[node name="Cat" parent="GameWorld/CatPosition" instance=ExtResource("2_eo25s")]
-position = Vector2(20, 10)
+[node name="Cat" parent="GameWorld" instance=ExtResource("2_eo25s")]
+z_index = 2
+position = Vector2(-80, -75)
 scale = Vector2(0.3, 0.3)
 
-[node name="MousePosition" type="Marker2D" parent="GameWorld"]
+[node name="Mouse" parent="GameWorld" instance=ExtResource("5_ror71")]
+z_index = 3
+position = Vector2(-10, 2)
+
+[node name="Marker2D" type="Marker2D" parent="GameWorld"]
 position = Vector2(-20, 1)
 
-[node name="Mouse" parent="GameWorld/MousePosition" instance=ExtResource("5_ror71")]
+[node name="SoftPetBed" parent="GameWorld/Marker2D" instance=ExtResource("6_xvuvn")]
+position = Vector2(-205, -61)
 
-[node name="ItemsArea" type="Marker2D" parent="GameWorld"]
-position = Vector2(-232, 59)
+[node name="MeditativeAquarium" parent="GameWorld/Marker2D" instance=ExtResource("7_ayffr")]
+position = Vector2(240, -104)
+
+[node name="BookOfCatTales" parent="GameWorld/Marker2D" instance=ExtResource("8_q8e0w")]
+z_index = 2
+position = Vector2(239, 7)
 
 [node name="UILayer" type="CanvasLayer" parent="."]
 
@@ -76,7 +86,22 @@ anchors_preset = 12
 anchor_top = 1.0
 grow_vertical = 0
 
+[node name="LowBar" parent="UILayer" instance=ExtResource("2_lowbar")]
+
+[node name="Dimmer" type="ColorRect" parent="UILayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5)
+
+[node name="SettingsMenu" parent="UILayer" node_paths=PackedStringArray("dimmer") instance=ExtResource("11_wko8r")]
+visible = false
+offset_top = -250.0
+offset_bottom = 250.0
+dimmer = NodePath("../Dimmer")
+
 [node name="Header" parent="UILayer" instance=ExtResource("1_header")]
 offset_bottom = 90.0
-
-[node name="LowBar" parent="UILayer" instance=ExtResource("2_lowbar")]

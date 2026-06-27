@@ -41,7 +41,7 @@ script = ExtResource("1_dummy_script")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 6
-position = Vector2(-66.6666, 0)
+position = Vector2(-66.6666, -26.6667)
 scale = Vector2(1.985, 2)
 sprite_frames = SubResource("SpriteFrames_gfmer")
 animation = &"hurt"

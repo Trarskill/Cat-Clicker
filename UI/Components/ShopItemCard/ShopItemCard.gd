@@ -77,6 +77,12 @@ func _setup_styles() -> void:
 # --- ОНОВЛЕННЯ СТАНУ ---
 
 func update_state() -> void:
+	# --- 1. ДИНАМІЧНА ЦІНА ДЛЯ РОЗИ ---
+	if item_id == "magical_rose":
+		item_price = Global.get_magical_rose_price()
+		price_label.text = str(item_price)
+			
+	# --- 2. СТАНДАРТНА ПЕРЕВІРКА СТАКІВ ТА УНІКАЛЬНИХ ПРЕДМЕТІВ ---
 	if Global.inventory.has(item_id):
 		var item_data = Global.inventory[item_id]
 		
@@ -91,6 +97,7 @@ func update_state() -> void:
 	
 	_set_normal_state()
 	
+	# --- 3. ПЕРЕВІРКА ПЛАТОСПРОМОЖНОСТІ (з урахуванням нової ціни) ---
 	var can_afford = false
 	if for_gem:
 		can_afford = Global.meowgem >= item_price
@@ -102,7 +109,7 @@ func update_state() -> void:
 	if can_afford:
 		price_label.modulate = Color(1, 1, 1) 
 	else:
-		price_label.modulate = Color(1, 0.4, 0.4) 
+		price_label.modulate = Color(1, 0.4, 0.4)
 
 # --- ФУНКЦІЇ СТАНУ КНОПКИ ---
 

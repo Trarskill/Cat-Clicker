@@ -5,6 +5,7 @@ signal inventory_toggled(is_open: bool)
 signal item_action_executed
 
 @onready var panel = $Panel
+@onready var title = $Panel/MainLayout/Header/Title
 @onready var grid = $Panel/MainLayout/MarginContainer/ScrollContainer/Grid
 @onready var scroll_container = $Panel/MainLayout/MarginContainer/ScrollContainer
 
@@ -19,6 +20,9 @@ var current_popup = null
 # Ховає вікно за межі екрана при старті, підключає таймери
 # з Global для оновлення карток та налаштовує адаптивну сітку
 func _ready():
+	add_to_group("UI")
+	
+	title.text = "ІНВЕНТАР"
 	visible = false
 	panel.position.y = get_viewport_rect().size.y
 	
@@ -106,6 +110,12 @@ func update_inventory_display():
 		if should_show:
 			create_item_card(item_id, count)
 
+# --- ФУНКЦІЯ ОНОВЛЕННЯ ЧЕРЕЗ ГРУПУ "UI" ---
+# Її буде викликати скриня та будь-які інші сцени
+func update_ui() -> void:
+	if visible:
+		update_inventory_display()
+
 # --- ВІДКРИТТЯ ВІКНА ВЗАЄМОДІЇ ---
 # Знищує старе інформаційне віконце (якщо воно було відкрите)
 # і створює нове поруч із карткою, на яку натиснув гравець
@@ -157,7 +167,7 @@ func _input(event):
 # --- РЕЗУЛЬТАТ ВИКОРИСТАННЯ ПРЕДМЕТА ---
 # Викликається, коли гравець тисне кнопку у віконці взаємодії. 
 # Оновлює сітку карток і просить Global показати зелений/червоний спливаючий текст
-func _on_popup_action_handled(item_id: String, msg: String, is_success: bool):
+func _on_popup_action_handled(_item_id: String, msg: String, is_success: bool):
 	update_inventory_display()
 	
 	var text_color = Color(0.4, 1.0, 0.4) if is_success else Color(1.0, 0.4, 0.4)

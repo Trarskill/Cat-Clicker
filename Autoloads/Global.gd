@@ -12,7 +12,10 @@ var level: int = 1
 var xp: int = 0
 var max_xp: int = 50
 var max_level_announced: bool = false
-var is_endgame_half_reached: bool = false 
+
+# --- ЛІМІТИ ТА ДИНАМІЧНІ ЦІНИ ---
+var magical_rose_bought: int = 0
+var is_gift_claimed: bool = false
 
 var equipped_weapon: String = ""
 var equipped_shield: String = ""
@@ -24,7 +27,7 @@ var inventory: Dictionary = {
 	"meditative_aquarium": false,
 	"book_of_cat_tales": false,
 	"boss_map": false,
-	"mysterious_chest": false,
+	"mysterious_chest": 0,
 	"wooden_sword": false,
 	"wooden_shield": false,
 	"steel_sword": false,
@@ -37,6 +40,7 @@ var inventory: Dictionary = {
 	"bag_of_fruit": 0,
 	"catnip": 0,
 	"magical_rose": 0,
+	"magical_potion": 0,
 	"xp_potion": 0,
 	"strength_potion": 0,
 	"curse_potion": 0,
@@ -200,32 +204,22 @@ func gain_xp(amount: int) -> void:
 			break
 
 # --- ОБРОБКА ДОСВІДУ НА МАКСИМАЛЬНОМУ РІВНІ ---
-# Функція циклічно нараховує бонусні монети та геми, 
-# коли гравець заповнює шкалу після 100-го рівня
+# Кожне повне заповнення шкали після 100-го рівня дає одну скриню
 func process_endgame_xp() -> void:
-	var half_xp = max_xp / 2
-	
-	# ЕТАП 1: Половина бару
-	if xp >= half_xp and not is_endgame_half_reached:
-		is_endgame_half_reached = true
-		meowcoin += 250
-		show_floating_text("БОНУС: +250 Монет!", Color(1.0, 0.8, 0.2))
-	
-	# ЕТАП 2: Повний бар
 	while xp >= max_xp:
 		xp -= max_xp
-		is_endgame_half_reached = false
-		meowgem += 1
-		show_floating_text("МАКС. БОНУС: +1 Гем!", Color(0.9, 0.4, 1.0))
 		
-		if xp >= half_xp:
-			is_endgame_half_reached = true
-			meowcoin += 250
-			show_floating_text("БОНУС: +250 Монет!", Color(1.0, 0.8, 0.2))
+		var current_chests = inventory.get("mysterious_chest", 0)
+		inventory["mysterious_chest"] = current_chests + 1
+		
+		show_floating_text("БОНУС: Отримано Скриню!", Color(0.4, 0.6, 0.9))
+		
+		get_tree().call_group("UI", "update_ui")
 
 # --- ЛОГІКА ПІДВИЩЕННЯ РІВНЯ ---
 # Функція збільшує рівень, розраховує новий поріг досвіду 
 # та видає нагороди залежно від досягнутого етапу
+# --- ЛОГІКА ПІДВИЩЕННЯ РІВНЯ ---
 func level_up() -> void:
 	level += 1
 	xp -= max_xp
@@ -247,11 +241,14 @@ func level_up() -> void:
 		if (level - 1) % 10 == 0 and level <= 91:
 			click_lvl_power += 1
 		
-		# 2. ПЕРЕВІРКА НА 5-й РІВЕНЬ ТА ЗВИЧАЙНІ РІВНІ
+		# 2. ПЕРЕВІРКА НА 5-й ТА 10-й РІВНІ
 		if level % 5 == 0:
-			# Кожен 5-й рівень завжди дає Гем та суворо 50 монет (навіть після 30 рівня)
 			meowgem += 1
 			meowcoin += 50
+			
+			if level % 10 == 0:
+				var current_chests = inventory.get("mysterious_chest")
+				inventory["mysterious_chest"] = current_chests + 1
 		else:
 			# Звичайні рівні, які не діляться на 5
 			if level <= 30:
@@ -266,13 +263,15 @@ func level_up() -> void:
 			show_floating_text("ДОСЯГНУТО МАКС. РІВНЯ!", Color(1.0, 0.85, 0.2))
 	else:
 		if level % 10 == 0:
-			show_floating_text("Супер рівень: " + str(level) + "!", Color(0.4, 0.6, 0.9))
+			# --- НОВЕ: Додали повідомлення про скриню ---
+			show_floating_text("Супер рівень: " + str(level) + "!\nОтримано Скриню!", Color(0.4, 0.6, 0.9))
 		elif level % 5 == 0:
 			show_floating_text("Незвичайний рівень: " + str(level) + "!", Color(0.9, 0.4, 1.0))
 		elif level > 1 and (level - 1) % 10 == 0 and level <= 91:
 			show_floating_text("Рівень сили: " + str(level) + "!", Color(0.8, 0.3, 0.2))
 		else:
-			show_floating_text("Новий уровень: " + str(level) + "!", Color(0.2, 0.9, 1.0))
+			# Також я виправив тут одруківку ("уровень" на "рівень") :)
+			show_floating_text("Новий рівень: " + str(level) + "!", Color(0.2, 0.9, 1.0))
 	
 	leveled_up.emit(level)
 
@@ -284,6 +283,12 @@ func buy_item(item_id: String, price: int, is_premium: bool = false) -> bool:
 		print("[Global] Помилка: Предмет '", item_id, "' не знайдено в інвентарі!")
 		return false
 	
+	# --- 1. ДИНАМІЧНА ЦІНА ДЛЯ РОЗИ (БЕЗ ЖОРСТКОГО ЛІМІТУ) ---
+	var actual_price = price
+	if item_id == "magical_rose":
+		actual_price = get_magical_rose_price()
+	
+	# --- 2. ПЕРЕВІРКА СТАКІВ ТА НАЯВНОСТІ ---
 	var current_item = inventory[item_id]
 	if typeof(current_item) == TYPE_BOOL:
 		if current_item == true:
@@ -292,19 +297,25 @@ func buy_item(item_id: String, price: int, is_premium: bool = false) -> bool:
 		if current_item >= MAX_STACK:
 			return false
 	
+	# --- 3. ОПЛАТА (використовуємо actual_price) ---
 	if is_premium:
-		if meowgem < price:
+		if meowgem < actual_price:
 			return false
-		meowgem -= price
+		meowgem -= actual_price
 	else:
-		if meowcoin < price:
+		if meowcoin < actual_price:
 			return false
-		meowcoin -= price
+		meowcoin -= actual_price
 	
+	# --- 4. ДОДАВАННЯ В ІНВЕНТАР ---
 	if typeof(current_item) == TYPE_BOOL:
 		inventory[item_id] = true
 	else:
 		inventory[item_id] += 1
+		
+	# --- 5. ФІКСАЦІЯ ПОКУПКИ УНІКАЛЬНИХ ПРЕДМЕТІВ ---
+	if item_id == "magical_rose":
+		magical_rose_bought += 1
 		
 	print("[Global] Успішно придбано: ", item_id, ". Залишок монет: ", meowcoin, " Гемів: ", meowgem)
 	return true
@@ -312,109 +323,107 @@ func buy_item(item_id: String, price: int, is_premium: bool = false) -> bool:
 # --- ЛОГІКА ВИКОРИСТАННЯ ПРЕДМЕТІВ ---
 # Функція обробляє ефекти від зброї, спеціальних предметів та розхідників. 
 # Повертає рядок із результатом дії
-func use_item(item_id: String) -> String:
+func use_item(item_id: String) -> Dictionary:
 	var item_data = DataManager.get_item(item_id)
 	if item_data.is_empty(): 
-		return "Помилка бази даних"
+		return {"text": "Помилка бази даних", "success": false}
 		
 	var stats = item_data.get("stats", {})
 	var item_type = item_data.get("type")
 	
-	# --- 1. ЕКІПІРУВАННЯ (EQUIPMENT) ---
+	# --- 1. ЕКІПІРУВАННЯ ---
 	if item_type == DataManager.ItemType.EQUIPMENT:
 		if item_id == "magic_stick" and equipped_weapon != "magic_stick":
-			var magic_lvl = inventory.get("cat_magic", 0)
-			if magic_lvl == 0:
-				return "Потрібно володіти кото-магією!"
+			if inventory.get("cat_magic", 0) == 0:
+				return {"text": "Потрібно володіти кото-магією!", "success": false}
 		
 		if item_id == "wooden_shield":
 			if equipped_shield == item_id:
 				equipped_shield = ""
-				return "Щит знято"
+				return {"text": "Щит знято", "success": true}
 			else:
 				equipped_shield = item_id
-				return "Щит одягнено"
+				return {"text": "Щит одягнено", "success": true}
 		else:
 			if equipped_weapon == item_id:
 				equipped_weapon = ""
-				return "Зброю знято"
+				return {"text": "Зброю знято", "success": true}
 			else:
 				equipped_weapon = item_id
-				return "Зброю одягнено"
+				return {"text": "Зброю одягнено", "success": true}
 	
 	# --- 2. КЛЮЧОВІ ПРЕДМЕТИ (KEY_ITEM) ---
 	elif item_type == DataManager.ItemType.KEY_ITEM:
 		if item_id == "magical_rose":
 			if inventory.get("xp_potion", 0) >= 1:
-				var current_magic = inventory.get("cat_magic", 0)
-				var magic_data = DataManager.get_item("cat_magic")
-				var max_magic = magic_data.get("max_lvl", 10) if not magic_data.is_empty() else 10
-				
-				if current_magic >= max_magic:
-					return "Кото-магія досягла максимуму!"
-					
 				inventory["xp_potion"] -= 1
 				inventory["magical_rose"] -= 1
-				inventory["cat_magic"] = current_magic + 1
-				return "Магію пробуджено! Рівень: " + str(inventory["cat_magic"])
+				inventory["magical_potion"] += 1
+				return {"text": "Крафт успішний!\n Отримано Магічне Зілля.", "success": true}
 			else:
-				return "Потрібне 1 магічне зілля!"
-				
+				return {"text": "Потрібне 1 Зілля Досвіду (XP)!", "success": false}
 		elif item_id == "boss_map":
-			return "Карту вивчено!\n(Боси у наступних оновленнях)"
-
+			return {"text": "Карту вивчено!\n(Боси у наступних оновленнях)", "success": true}
+	
 	# --- 3. МИТТЄВІ РОЗХІДНИКИ (CONSUMABLE) ---
 	elif item_type == DataManager.ItemType.CONSUMABLE:
-		# Перевірка лімітів для зілль ДО того, як ми заберемо предмет з інвентаря
 		if item_id == "strength_potion":
 			if potion_balance >= 20:
-				return "Досягнуто ліміту Зілля Сили (20)!"
+				return {"text": "Досягнуто ліміту Зілля Сили!", "success": false}
 		elif item_id == "curse_potion":
 			if potion_balance <= 0:
-				return "Організм не витримає прокляття! (Баланс 0)"
+				return {"text": "Організм не витримає прокляття!", "success": false}
 		
-		# Віднімаємо предмет
 		if typeof(inventory[item_id]) == TYPE_BOOL:
 			inventory[item_id] = false
 		else:
 			inventory[item_id] -= 1
 			
-		# Логіка ефектів
 		if item_id == "apple":
-			var chance = stats.get("chance")
-			if randf() <= chance:
+			if randf() <= stats.get("chance"):
 				var xp_reward = stats.get("give_xp")
 				gain_xp(xp_reward)
-				return "Смачно! Отримано " + str(xp_reward) + " XP"
+				return {"text": "Смачно! Отримано " + str(xp_reward) + " XP", "success": true}
 			else:
-				return "Яблуко виявилося кислим... \nНічого не отримано."
+				return {"text": "Яблуко виявилося кислим... \nНічого не отримано.", "success": false}
 				
 		elif item_id == "xp_potion":
 			var magic_lvl = inventory.get("cat_magic", 0)
 			var bonus_xp = 100 + (100 * magic_lvl) 
 			gain_xp(bonus_xp)
-			return "Випито! Отримано " + str(bonus_xp) + " XP"
+			return {"text": "Випито! Отримано " + str(bonus_xp) + " XP", "success": true}
 			
 		elif item_id == "strength_potion":
 			potion_balance += 1
 			click_power += stats.get("permanent_power", 1)
-			return "Сила назавжди зросла! \n +1 Міць Лапок"
+			return {"text": "Сила назавжди зросла! \n +1 Міць Лапок", "success": true}
 			
 		elif item_id == "curse_potion":
 			potion_balance -= 1
 			click_power += stats.get("permanent_power", -1)
 			var gems = stats.get("gem_reward", 2)
 			meowgem += gems
-			return "Сили стало менше, але отримано " + str(gems) + " гемів! \n -1 Міць Лапок"
+			return {"text": "Сили стало менше, але отримано " + str(gems) + " гемів! \n -1 Міць Лапок", "success": true}
+		
+		if item_id == "magical_potion":
+			var current_magic = inventory.get("cat_magic", 0)
+			var magic_data = DataManager.get_item("cat_magic")
+			var max_magic = magic_data.get("max_lvl", 10) if not magic_data.is_empty() else 10
 			
-		elif item_id == "mysterious_chest":
-			var random_coins = randi_range(200, 1000)
-			meowcoin += random_coins
-			return "Зі скрині випало " + str(random_coins) + " монет!"
-
+			if current_magic >= max_magic:
+				var bonus_xp = 2 * (100 + (100 * max_magic))
+				gain_xp(bonus_xp)
+				return {"text": "Переповнення магії! Отримано " + str(bonus_xp) + " XP", "success": true}
+				
+			inventory["cat_magic"] = current_magic + 1
+			
+			if current_magic == 0:
+				return {"text": "Магію пробуджено!", "success": true}
+			else:
+				return {"text": "Рівень володіння магією досяг " + str(inventory["cat_magic"]) + "!", "success": true}
+	
 	# --- 4. ТИМЧАСОВІ БАФИ (BUFF) ---
 	elif item_type == DataManager.ItemType.BUFF:
-		
 		if typeof(inventory[item_id]) == TYPE_BOOL:
 			inventory[item_id] = false
 		else:
@@ -422,43 +431,73 @@ func use_item(item_id: String) -> String:
 		
 		if item_id == "bowl_with_bone":
 			bowl_bone_timer = min(bowl_bone_timer + stats.get("duration"), 600.0)
-			return "Бонус +1 XP активовано! \nЗалишилось: " + str(int(bowl_bone_timer)) + " сек"
-			
+			return {"text": "Бонус +1 XP активовано! \nЗалишилось: " + str(int(bowl_bone_timer)) + " сек", "success": true}
 		elif item_id == "bowl_with_rice":
 			bowl_rice_timer = min(bowl_rice_timer + stats.get("duration"), 600.0)
-			return "Рисовий бонус активовано! \nЗалишилось: " + str(int(bowl_rice_timer)) + " сек"
-			
+			return {"text": "Рисовий бонус активовано! \nЗалишилось: " + str(int(bowl_rice_timer)) + " сек", "success": true}
 		elif item_id == "bowl_with_fish":
 			bowl_fish_timer = min(bowl_fish_timer + stats.get("duration"), 600.0)
-			return "Рибний бонус активовано! \nЗалишилось: " + str(int(bowl_fish_timer)) + " сек"
-			
+			return {"text": "Рибний бонус активовано! \nЗалишилось: " + str(int(bowl_fish_timer)) + " сек", "success": true}
 		elif item_id == "bag_of_fruit":
 			bag_of_fruit_timer = min(bag_of_fruit_timer + stats.get("duration"), 600.0)
-			return "Фруктовий бонус активовано! \nЗалишилось: " + str(int(bag_of_fruit_timer)) + " сек"
-			
+			return {"text": "Фруктовий бонус активовано! \nЗалишилось: " + str(int(bag_of_fruit_timer)) + " сек", "success": true}
 		elif item_id == "catnip":
 			catnip_timer = min(catnip_timer + stats.get("duration"), 300.0)
-			return "Котяча м'ята діє! \nx2 XP залишилось: " + str(int(catnip_timer)) + " сек"
+			return {"text": "Котяча м'ята діє! \nx2 XP залишилось: " + str(int(catnip_timer)) + " сек", "success": true}
 	
 	# --- 5. ПАСИВНІ ПРЕДМЕТИ (PASSIVE) ---
 	elif item_data["type"] == DataManager.ItemType.PASSIVE:
 		if item_id == "clockwork_mouse":
-			if clockwork_mouse_timer > 0.0:
-				return "Мишка вже працює!"
-			if clockwork_mouse_cooldown > 0.0:
-				return "Мишка ще заводиться... Зачекайте!"
-			
 			var duration = float(stats.get("auto_click_duration", 30.0))
 			var cooldown = float(stats.get("cooldown"))
 			
 			clockwork_mouse_timer = duration
 			clockwork_mouse_cooldown = duration + cooldown
 			
-			return "Мишка почала несамовито працювати!"
+			return {"text": "Мишка почала несамовито працювати!", "success": true}
 		else:
-			return "Ця декорація працює автоматично."
+			return {"text": "Ця декорація працює автоматично.", "success": false}
 	
-	return "Немає ефекту"
+	return {"text": "Немає ефекту", "success": false}
+
+# --- ВІДКРИТТЯ ЛУТБОКСІВ (ПРОСТА ВЕРСІЯ) ---
+func open_lootbox(box_id: String) -> Array:
+	if box_id == "mysterious_chest":
+		# Забираємо скриню
+		inventory["mysterious_chest"] -= 1
+		
+		var final_loot = ChestLootManager.generate_chest_loot()
+		
+		# Зараховуємо предмети гравцю
+		for item in final_loot:
+			if item["id"] == "meowcoin":
+				meowcoin += item["amount"]
+			elif item["id"] == "meowgem":
+				meowgem += item["amount"]
+			else:
+				var current_val = inventory.get(item["id"], 0)
+				
+				if typeof(current_val) == TYPE_BOOL:
+					inventory[item["id"]] = true 
+				else:
+					inventory[item["id"]] = current_val + item["amount"]
+					
+		return final_loot
+		
+	return []
+
+# --- ДИНАМІЧНА ЦІНА ДЛЯ МАГІЧНОЇ РОЗИ ---
+# Розраховує актуальну вартість Магічної рози в магазині.
+# З кожною новою покупкою ціна зростає на 1 гем, 
+# але назавжди фіксується (зупиняється), коли досягає ліміту в 5 гемів.
+func get_magical_rose_price() -> int:
+	var base_price = 1
+	var price_increment = 1
+	var max_price = 5 
+	
+	var calculated_price = base_price + (magical_rose_bought * price_increment)
+	
+	return min(calculated_price, max_price)
 
 # --- УНІВЕРСАЛЬНИЙ ВІЗУАЛЬНИЙ ТЕКСТ (СПЛИВАЮЧЕ ПОВІДОМЛЕННЯ) ---
 # --- 1. ДОДАВАННЯ В ЧЕРГУ ---

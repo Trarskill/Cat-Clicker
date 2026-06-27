@@ -128,10 +128,11 @@ theme_override_font_sizes/font_size = 18
 text = "+100"
 vertical_alignment = 1
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Margin/Content"]
+[node name="ButtonContainer" type="HBoxContainer" parent="Margin/Content"]
 layout_mode = 2
+size_flags_vertical = 4
 
-[node name="ActionButton" type="Button" parent="Margin/Content/HBoxContainer"]
+[node name="ActionButton" type="Button" parent="Margin/Content/ButtonContainer"]
 custom_minimum_size = Vector2(0, 55)
 layout_mode = 2
 size_flags_horizontal = 3
@@ -143,7 +144,7 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 text = "ActionButton"
 
-[node name="ActionButtonx10" type="Button" parent="Margin/Content/HBoxContainer"]
+[node name="ActionButtonmulti" type="Button" parent="Margin/Content/ButtonContainer"]
 layout_mode = 2
 focus_mode = 0
 theme_override_font_sizes/font_size = 20

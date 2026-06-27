@@ -1,9 +1,9 @@
 [gd_scene load_steps=6 format=3 uid="uid://dbo3grhqh1w52"]
 
 [ext_resource type="PackedScene" uid="uid://b37i7wioi1wna" path="res://UI/Components/CustomButton/CustomButton.tscn" id="1_button"]
-[ext_resource type="Texture2D" uid="uid://cdsxutmaxbwbs" path="res://Assets/Graphics/Icons/Button/tent-shop-icon-ai.png" id="2_jy8ka"]
+[ext_resource type="Texture2D" uid="uid://cdsxutmaxbwbs" path="res://Assets/Graphics/Common/Buttons/tent-shop-icon-ai.png" id="2_jy8ka"]
 [ext_resource type="PackedScene" uid="uid://cp2jffsneldni" path="res://UI/HUD/LevelBar/LevelBar.tscn" id="2_levelbar"]
-[ext_resource type="Texture2D" uid="uid://bbs7aeva7e8a1" path="res://Assets/Graphics/Icons/Button/inventory-icon-ai.png" id="4_ss1sy"]
+[ext_resource type="Texture2D" uid="uid://bbs7aeva7e8a1" path="res://Assets/Graphics/Common/Buttons/inventory-icon-ai.png" id="4_ss1sy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lowbar"]
 bg_color = Color(0.188235, 0.121569, 0.0784314, 0.9)

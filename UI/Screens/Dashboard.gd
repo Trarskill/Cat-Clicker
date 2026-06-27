@@ -6,11 +6,14 @@ extends Control
 @onready var game_world = $GameWorld
 @onready var background = $Background
 
+@onready var settings_menu = $UILayer/SettingsMenu
+@onready var settings_button = $UILayer/Header/HeaderLayout/SettingsButton
+
 @onready var shop_popup = $UILayer/ShopPopup
 @onready var inventory_popup = $UILayer/InventoryPopup
 
-@onready var cat = $GameWorld/CatPosition/Cat
-@onready var dummy = $GameWorld/DummyPosition/Dummy
+@onready var cat = $GameWorld/Cat
+@onready var dummy = $GameWorld/Dummy
 
 @onready var lowbar_shop_button = $UILayer/LowBar/Margin/Layout/ShopButton
 @onready var lowbar_inventory_button = $UILayer/LowBar/Margin/Layout/InvButton
@@ -18,15 +21,18 @@ extends Control
 # --- ЗМІННІ СТАНУ ІНТЕРФЕЙСУ ТА АНІМАЦІЙ ---
 var is_menu_locked: bool = false
 var current_menu_offset_y: float = 0.0
-
 var world_tween: Tween
 
 # --- ІНІЦІАЛІЗАЦІЯ СЦЕНИ --- 
 # Викликається один раз при старті сцени. Завантажує збереження, 
 # оновлює інтерфейс та підключає всі необхідні сигнали кнопок і вікон.
 func _ready() -> void:
+	add_to_group("UI")
+	
 	SaveManager.load_game()
 	update_ui()
+	
+	get_tree().call_group("UI", "update_ui")
 	
 	if cat.has_method("update_equipment_visuals"):
 		cat.update_equipment_visuals()
@@ -38,6 +44,7 @@ func _ready() -> void:
 	shop_popup.item_bought.connect(_on_item_bought_success)
 	inventory_popup.item_action_executed.connect(_on_inventory_action)
 	inventory_popup.inventory_toggled.connect(_on_inventory_visibility_changed)
+	settings_button.pressed.connect(_on_settings_button_pressed)
 	
 	Global.leveled_up.connect(_on_leveled_up)
 	
@@ -84,10 +91,20 @@ func update_ui() -> void:
 	if shop_popup:
 		shop_popup.update_all_cards()
 
+# --- ШВИДКЕ ОНОВЛЕННЯ (ДЛЯ АВТОКЛІКЕРІВ) ---
+# Оновлює лише ті елементи, які можуть змінюватися часто (досвід та монети),
+# не навантажуючи магазин чи декорації.
+func update_quick_stats() -> void:
+	var level_bar = lowbar.get_node("Margin/Layout/LevelBar")
+	if level_bar:
+		level_bar.update_level_data(Global.level, Global.xp, Global.max_xp)
+		
+	header.update_meowcoin(Global.meowcoin)
+
 # --- ОБРОБКА УСПІШНОЇ ПОКУПКИ ---
 # Оновлює інтерфейс після того, як гравець щось придбав у магазині.
 func _on_item_bought_success() -> void:
-	update_ui()
+	get_tree().call_group("UI", "update_ui")
 
 # --- ОБРОБКА КНОПКИ МАГАЗИНУ ---
 # Відкриває або закриває магазин. Блокує інші натискання 
@@ -128,6 +145,15 @@ func _on_inventory_button_pressed() -> void:
 	
 	await get_tree().create_timer(0.5).timeout
 	is_menu_locked = false
+
+# --- ОБРОБКА КНОПКИ НАЛАШТУВАНЬ ---
+# Запускає функцію керування вікном налаштувань
+# При повторному натискані закриває вікно
+func _on_settings_button_pressed() -> void:
+	if is_menu_locked:
+		return
+		
+	settings_menu.toggle()
 
 # --- УНІВЕРСАЛЬНА ФУНКЦІЯ РУХУ СВІТУ ---
 # Плавно зміщує ігровий світ та фон по вертикалі (використовуючи Tween),
@@ -171,14 +197,15 @@ func show_xp_feedback(amount: int) -> void:
 	var xp_label = Label.new()
 	xp_label.text = "+" + str(amount) + " XP"
 	
-	xp_label.add_theme_color_override("font_color", Color(0.7, 0.3, 0.9))
+	xp_label.add_theme_color_override("font_color", Color(0.4, 0.7, 1.0))
 	xp_label.add_theme_color_override("font_outline_color", Color(0, 0, 0, 1))
 	xp_label.add_theme_constant_override("outline_size", 6)
 	xp_label.add_theme_font_size_override("font_size", 28)
 	
+	xp_label.z_index = 100
 	game_world.add_child(xp_label)
 	
-	var start_offset_x = randf_range(-70.0, 70.0)
+	var start_offset_x = randf_range(-70.0, 45.0)
 	var start_offset_y = randf_range(-130.0, -80.0)
 	xp_label.global_position = cat.global_position + Vector2(start_offset_x, start_offset_y)
 	
@@ -211,9 +238,10 @@ func show_coin_feedback(amount: int) -> void:
 	coin_label.add_theme_constant_override("outline_size", 6)
 	coin_label.add_theme_font_size_override("normal_font_size", 28)
 	
+	coin_label.z_index = 100
 	game_world.add_child(coin_label)
 	
-	var start_offset_x = randf_range(-70.0, 70.0)
+	var start_offset_x = randf_range(-70.0, 45.0)
 	var start_offset_y = randf_range(-130.0, -80.0)
 	coin_label.global_position = cat.global_position + Vector2(start_offset_x, start_offset_y)
 	
@@ -229,14 +257,14 @@ func show_coin_feedback(amount: int) -> void:
 
 # --- ОБРОБКА ДІЙ В ІНВЕНТАРІ ---
 func _on_inventory_action():
-	update_ui()
+	get_tree().call_group("UI", "update_ui")
 	
 	if cat.has_method("update_equipment_visuals"):
 		cat.update_equipment_visuals()
 
 # --- ВІЗУАЛЬНИЙ ВІДГУК НОВОГО РІВНЯ ---
-func _on_leveled_up(new_level: int) -> void:
-	update_ui()
+func _on_leveled_up(_new_level: int) -> void:
+	get_tree().call_group("UI", "update_ui")
 
 
 

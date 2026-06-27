@@ -13,8 +13,18 @@ var quantity: int = 0
 @onready var click_area = $ClickArea
 @onready var timer_label = $TimerLabel
 
+# --- ІНІЦІАЛІЗАЦІЯ КАРТКИ ---
+# Встановлює іконку та підключає обробку кліків
 func _ready():
-	if item_icon:
+	if item_id == "power_of_paws":
+		var total = Global.click_lvl_power + Global.potion_balance
+		
+		if total > 20:
+			var item_data = DataManager.get_item(item_id)
+			icon_rect.texture = load(item_data["strong_icon"])
+		else:
+			icon_rect.texture = item_icon
+	elif item_icon:
 		icon_rect.texture = item_icon
 	
 	click_area.pressed.connect(_on_card_pressed)

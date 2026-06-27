@@ -1,6 +1,8 @@
 extends Node
 
+# --- ФАЙЛИ НАЛАШТУВАНЬ ---
 const SAVE_FILE_PATH = "user://save_game.json"
+const SETTINGS_FILE_PATH = "user://settings.save"
 
 # Змінні для автозбереження
 var autosave_timer: float = 0.0
@@ -49,9 +51,9 @@ func save_game() -> void:
 		"xp": Global.xp,
 		"max_xp": Global.max_xp,
 		"max_level_announced": Global.max_level_announced,
-		"is_endgame_half_reached": Global.is_endgame_half_reached,
 		"equipped_weapon": Global.equipped_weapon,
 		"equipped_shield": Global.equipped_shield,
+		"magical_rose_bought": Global.magical_rose_bought,
 		# --- УСІ ТАЙМЕРИ ---
 		"bowl_bone_timer": Global.bowl_bone_timer,
 		"bowl_rice_timer": Global.bowl_rice_timer,
@@ -74,7 +76,6 @@ func save_game() -> void:
 		print("[SaveManager] Гру успішно збережено у фізичний файл!")
 	else:
 		print("[SaveManager] Помилка: Не вдалося створити файл збереження!")
-
 
 # --- ЛОГІКА ЗАВАНТАЖЕННЯ ГРИ ---
 # Функція перевіряє наявність файлу збереження, зчитує його, 
@@ -106,9 +107,9 @@ func load_game() -> void:
 			if data.has("xp"): Global.xp = int(data["xp"])
 			if data.has("max_xp"): Global.max_xp = int(data["max_xp"])
 			if data.has("max_level_announced"): Global.max_level_announced = data["max_level_announced"]
-			if data.has("is_endgame_half_reached"): Global.is_endgame_half_reached = data["is_endgame_half_reached"]
 			if data.has("equipped_weapon"): Global.equipped_weapon = data["equipped_weapon"]
 			if data.has("equipped_shield"): Global.equipped_shield = data["equipped_shield"]
+			if data.has("magical_rose_bought"): Global.magical_rose_bought = int(data["magical_rose_bought"])
 			# --- ЗАВАНТАЖЕННЯ ВСІХ ТАЙМЕРІВ ---
 			if data.has("clockwork_mouse_cooldown"): Global.clockwork_mouse_cooldown = float(data["clockwork_mouse_cooldown"])
 			if data.has("clockwork_mouse_timer"): Global.clockwork_mouse_timer = float(data["clockwork_mouse_timer"])
@@ -129,3 +130,27 @@ func load_game() -> void:
 			print("[SaveManager] Помилка: Не вдалося розпарсити JSON файл!")
 	else:
 		print("[SaveManager] Помилка: Не вдалося відкрити файл для читання!")
+
+# --- ЗБЕРЕЖЕННЯ НАЛАШТУВАНЬ ---
+# Приймає словник (Dictionary) з нашими даними (гучність, мова) і записує його 
+# у бінарному форматі. Режим FileAccess.WRITE автоматично створить новий файл, 
+# якщо його ще немає, або повністю перезапише старий.
+func save_settings(data: Dictionary) -> void:
+	var file = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.WRITE)
+	if file:
+		file.store_var(data)
+		file.close()
+
+# --- ЗАВАНТАЖЕННЯ НАЛАШТУВАНЬ ---
+# Перевіряє наявність файлу та безпечно зчитує його вміст. 
+# Включає перевірку типу (typeof), щоб захистити гру від вильоту (crash), 
+# якщо файл збереження раптом пошкодиться гравцем або системою.
+func load_settings() -> Dictionary:
+	if FileAccess.file_exists(SETTINGS_FILE_PATH):
+		var file = FileAccess.open(SETTINGS_FILE_PATH, FileAccess.READ)
+		if file:
+			var data = file.get_var()
+			file.close()
+			if typeof(data) == TYPE_DICTIONARY:
+				return data
+	return {}

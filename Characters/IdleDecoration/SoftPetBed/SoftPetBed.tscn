@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2n208vxnln0e"]
+
+[ext_resource type="Texture2D" uid="uid://duq204jpe3dsr" path="res://Assets/Graphics/Icons/Items/soft-pet-bed-ai.png" id="1_llg0j"]
+[ext_resource type="Script" path="res://Characters/IdleDecoration/SoftPetBed/SoftPetBed.gd" id="1_ud30m"]
+
+[node name="SoftPetBed" type="Node2D"]
+texture_filter = 6
+script = ExtResource("1_ud30m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("1_llg0j")
+flip_h = true

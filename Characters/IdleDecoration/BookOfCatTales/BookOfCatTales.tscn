@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://ylrddjk3r42p"]
+
+[ext_resource type="Script" path="res://Characters/IdleDecoration/BookOfCatTales/BookOfCatTales.gd" id="1_q0fqy"]
+[ext_resource type="Texture2D" uid="uid://bswawpl28xhfr" path="res://Assets/Graphics/Icons/Items/book-of-cat-tales-ai.png" id="1_sx40j"]
+
+[node name="BookOfCatTales" type="Node2D"]
+texture_filter = 6
+script = ExtResource("1_q0fqy")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.28, 0.28)
+texture = ExtResource("1_sx40j")

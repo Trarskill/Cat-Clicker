@@ -1,15 +1,44 @@
-[gd_scene load_steps=5 format=3 uid="uid://cstdqcn6p8d1b"]
+[gd_scene load_steps=7 format=3 uid="uid://cstdqcn6p8d1b"]
 
-[ext_resource type="Texture2D" uid="uid://ixbbx5nwet72" path="res://Assets/Graphics/Icons/Items/clockwork-mouse-ai.png" id="1_efjjj"]
 [ext_resource type="Script" path="res://Characters/Mouse/Mouse.gd" id="1_qx7vt"]
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_xis64"]
+load_path = "res://.godot/imported/mouse-work-1.png-cac0a40fded08bfd818583812736a40c.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_65c2r"]
+load_path = "res://.godot/imported/mouse-work-2.png-1578817250753e3920258f19b938a26a.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_37pfm"]
+load_path = "res://.godot/imported/mouse-work-3.png-e206f9863e32b7565f8bac6d5f0d4c72.ctex"
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_q4drk"]
+animations = [{
+"frames": [{
+"duration": 1.2,
+"texture": SubResource("CompressedTexture2D_xis64")
+}, {
+"duration": 1.2,
+"texture": SubResource("CompressedTexture2D_65c2r")
+}, {
+"duration": 1.2,
+"texture": SubResource("CompressedTexture2D_37pfm")
+}],
+"loop": true,
+"name": &"work",
+"speed": 5.0
+}]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_llnbx"]
 animations = [{
 "frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_efjjj")
+"duration": 1.2,
+"texture": SubResource("CompressedTexture2D_xis64")
+}, {
+"duration": 1.2,
+"texture": SubResource("CompressedTexture2D_65c2r")
+}, {
+"duration": 1.2,
+"texture": SubResource("CompressedTexture2D_37pfm")
 }],
 "loop": true,
 "name": &"work",
@@ -20,11 +49,21 @@ animations = [{
 script = ExtResource("1_qx7vt")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.392157)
+self_modulate = Color(0, 0, 0, 1)
+texture_filter = 6
+position = Vector2(7.00001, 6.5)
+scale = Vector2(0.46594, 0.350534)
+skew = 0.539307
 sprite_frames = SubResource("SpriteFrames_q4drk")
+animation = &"work"
+frame_progress = 0.787947
+flip_h = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 6
-scale = Vector2(0.25, 0.25)
+scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_llnbx")
 animation = &"work"
+frame = 1
 flip_h = true

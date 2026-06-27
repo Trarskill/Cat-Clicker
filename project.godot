@@ -15,7 +15,7 @@ config/version="0.2"
 config/tags=PackedStringArray("clicker")
 run/main_scene="res://Core/main.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
-config/icon="res://Assets/Graphics/Logo/logo_v1.png"
+config/icon="res://Assets/Graphics/System/Logo/logo_v1.png"
 
 [autoload]
 

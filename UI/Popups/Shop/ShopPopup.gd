@@ -157,11 +157,7 @@ func _on_card_info_requested(item_id: String, card_pos: Vector2) -> void:
 	current_popup = popup
 	
 	if popup.has_method("setup"):
-		popup.setup(item_id)
-		
-		var action_btn = popup.find_child("ActionButton", true, false)
-		if action_btn:
-			action_btn.visible = false
+		popup.setup(item_id, null, true)
 	
 	if popup.has_method("appear_at"):
 		popup.appear_at(card_pos)

@@ -1,0 +1,157 @@
+[gd_scene load_steps=8 format=3 uid="uid://cww0xooqoexlr"]
+
+[ext_resource type="Script" path="res://UI/Screens/ChestOpening/ChestOpening.gd" id="1_0ngp3"]
+[ext_resource type="Texture2D" uid="uid://bvhmrj4qixtwo" path="res://Assets/Graphics/EnvAnim/ChestOpening/ChestOpening-close.png" id="2_1uce8"]
+[ext_resource type="Texture2D" uid="uid://kjdr5gvx7ivs" path="res://Assets/Graphics/Backgrounds/background-ChestOpening.png" id="2_a57gc"]
+[ext_resource type="Texture2D" uid="uid://61g27epe1w37" path="res://Assets/Graphics/EnvAnim/ChestOpening/ChestOpening-bring.png" id="3_0cr55"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_magic"]
+blend_mode = 1
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w5811"]
+bg_color = Color(0.09956, 0.38, 0.0684, 0.960784)
+border_width_left = 3
+border_width_top = 5
+border_width_right = 3
+border_width_bottom = 2
+border_color = Color(0.0977783, 0.140625, 0.0692139, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 2
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_supercell"]
+bg_color = Color(0.2905, 0.7, 0.245, 0.960784)
+border_width_left = 3
+border_width_top = 2
+border_width_right = 3
+border_width_bottom = 5
+border_color = Color(0.0977783, 0.140625, 0.0692139, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+expand_margin_left = 4.0
+expand_margin_top = 4.0
+expand_margin_right = 4.0
+expand_margin_bottom = 4.0
+shadow_color = Color(0, 0, 0, 0.3)
+shadow_size = 2
+shadow_offset = Vector2(0, 3)
+
+[node name="ChestOpening" type="CanvasLayer"]
+layer = 100
+script = ExtResource("1_0ngp3")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -460.0
+offset_top = -890.0
+offset_right = 460.0
+offset_bottom = 800.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+color = Color(0.09, 0.09, 0.09, 1)
+
+[node name="BackgroundImage" type="TextureRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+texture = ExtResource("2_a57gc")
+expand_mode = 1
+stretch_mode = 6
+
+[node name="eclipse" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 0.176471)
+
+[node name="VBox" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -347.0
+offset_right = 200.0
+offset_bottom = 252.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+theme_override_constants/separation = 2
+
+[node name="HintLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Натискай!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Center" type="CenterContainer" parent="VBox"]
+layout_mode = 2
+
+[node name="EffectRect" type="TextureRect" parent="VBox/Center"]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_magic")
+custom_minimum_size = Vector2(400, 400)
+layout_mode = 2
+texture = ExtResource("3_0cr55")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="ChestSpace" type="VBoxContainer" parent="VBox/Center"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="ChestButton" type="TextureButton" parent="VBox/Center/ChestSpace"]
+custom_minimum_size = Vector2(325, 325)
+layout_mode = 2
+size_flags_horizontal = 4
+texture_normal = ExtResource("2_1uce8")
+ignore_texture_size = true
+stretch_mode = 5
+
+[node name="CountLabel" type="Label" parent="VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.843137, 0, 1)
+theme_override_font_sizes/font_size = 48
+text = "• • •"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="VBox"]
+custom_minimum_size = Vector2(0, 35)
+layout_mode = 2
+
+[node name="ContinueButton" type="Button" parent="VBox"]
+visible = false
+custom_minimum_size = Vector2(250, 70)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 8
+theme_override_font_sizes/font_size = 32
+theme_override_styles/hover = SubResource("StyleBoxFlat_w5811")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_supercell")
+theme_override_styles/normal = SubResource("StyleBoxFlat_supercell")

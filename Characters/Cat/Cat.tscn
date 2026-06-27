@@ -1,140 +1,137 @@
-[gd_scene load_steps=42 format=3 uid="uid://8fdw2i4y4riu"]
+[gd_scene load_steps=49 format=3 uid="uid://8fdw2i4y4riu"]
 
 [ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
-[ext_resource type="Texture2D" uid="uid://bkxyi1poxdbkx" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-1.png" id="3_5y7ob"]
-[ext_resource type="Texture2D" uid="uid://be5r0xn705vje" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-1.png" id="3_axrts"]
-[ext_resource type="Texture2D" uid="uid://bis5tn45uea05" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-1.png" id="3_bci1o"]
-[ext_resource type="Texture2D" uid="uid://be53jsit5l36u" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-1.png" id="3_r3b0j"]
-[ext_resource type="Texture2D" uid="uid://dxfdetvtbkv0v" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-1.png" id="3_s6vmk"]
-[ext_resource type="Texture2D" uid="uid://o5pm0lx5ehb" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-2.png" id="4_0cbvm"]
-[ext_resource type="Texture2D" uid="uid://bi0h7e0sviggh" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-3.png" id="4_34orq"]
-[ext_resource type="Texture2D" uid="uid://cteon0tbni0xl" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-2.png" id="4_axqa5"]
-[ext_resource type="Texture2D" uid="uid://3u7ow2b4gtyl" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-2.png" id="4_l2rcv"]
-[ext_resource type="Texture2D" uid="uid://ba6hdawe3a3mo" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-2.png" id="4_w6ygq"]
-[ext_resource type="Texture2D" uid="uid://btw0c1088pkts" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-4.png" id="5_8b0yj"]
-[ext_resource type="Texture2D" uid="uid://bdkr41b8vpqyh" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-3.png" id="5_37ed7"]
-[ext_resource type="Texture2D" uid="uid://tm1mbmatm46s" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-3.png" id="5_lsnlw"]
-[ext_resource type="Texture2D" uid="uid://bgfqr0kxafdco" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-3.png" id="5_mo5i2"]
-[ext_resource type="Texture2D" uid="uid://bpgjp1e8mt7mo" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-3.png" id="5_pkapd"]
-[ext_resource type="Texture2D" uid="uid://cv4oyjnxth65h" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-4.png" id="6_65nsa"]
-[ext_resource type="Texture2D" uid="uid://bwfi2rkm0qqys" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-4.png" id="6_epmss"]
-[ext_resource type="Texture2D" uid="uid://y7ojbydga1nq" path="res://Assets/Graphics/Characters/hero/hero_sptite-ai-v2.1.png" id="6_goovc"]
-[ext_resource type="Texture2D" uid="uid://b62snh1778w4a" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-2.png" id="6_hsl2u"]
-[ext_resource type="Texture2D" uid="uid://dqw570n0r5yrm" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-1.png" id="7_2qhf5"]
-[ext_resource type="Texture2D" uid="uid://dpl8iahcvonxk" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-2.png" id="8_wm2r3"]
-[ext_resource type="Texture2D" uid="uid://cs73rrauu1pm1" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-3.png" id="9_2508u"]
-[ext_resource type="Texture2D" uid="uid://b61h2o2pqakqu" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-4.png" id="10_keg76"]
-[ext_resource type="Texture2D" uid="uid://du75i7sy306cp" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-1.png" id="15_o2kiy"]
-[ext_resource type="Texture2D" uid="uid://bfrholvcqnrc4" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-1.png" id="15_xq482"]
-[ext_resource type="Texture2D" uid="uid://pc0t8k0whde" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-2.png" id="16_ipjld"]
-[ext_resource type="Texture2D" uid="uid://dgg5tv8dhligd" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-2.png" id="16_n5an8"]
-[ext_resource type="Texture2D" uid="uid://cwssgq042awd0" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-3.png" id="17_4cdbw"]
-[ext_resource type="Texture2D" uid="uid://c3mpp3rywqw1v" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-3.png" id="17_8sdnb"]
-[ext_resource type="Texture2D" uid="uid://d4du4ny0oub1l" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-1.png" id="19_dkbj0"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_v0apj"]
-atlas = ExtResource("6_goovc")
-region = Rect2(0, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_fxr10"]
-atlas = ExtResource("6_goovc")
-region = Rect2(512, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cpppl"]
-atlas = ExtResource("6_goovc")
-region = Rect2(1024, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yuear"]
-atlas = ExtResource("6_goovc")
-region = Rect2(1536, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_4a5op"]
-atlas = ExtResource("6_goovc")
-region = Rect2(2048, 512, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_x5kde"]
-atlas = ExtResource("6_goovc")
-region = Rect2(0, 0, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_sp63n"]
-atlas = ExtResource("6_goovc")
-region = Rect2(512, 0, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_k0yt6"]
-atlas = ExtResource("6_goovc")
-region = Rect2(1024, 0, 512, 512)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_kw1gx"]
-atlas = ExtResource("6_goovc")
-region = Rect2(1536, 0, 512, 512)
+[ext_resource type="Texture2D" uid="uid://ddfaq71nghl2y" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-1.png" id="2_bpld5"]
+[ext_resource type="Texture2D" uid="uid://dttk3ef82l815" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-cat-1.png" id="2_f6ymb"]
+[ext_resource type="Texture2D" uid="uid://7l11qhyyo300" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-1.png" id="3_5y7ob"]
+[ext_resource type="Texture2D" uid="uid://ccmk42y0obbua" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-1.png" id="3_axrts"]
+[ext_resource type="Texture2D" uid="uid://b3eulcqhs8s8a" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-1.png" id="3_bci1o"]
+[ext_resource type="Texture2D" uid="uid://ct5o8cb3mhmkx" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-1.png" id="3_r3b0j"]
+[ext_resource type="Texture2D" uid="uid://ddwnmiwd64j6c" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-1.png" id="3_s6vmk"]
+[ext_resource type="Texture2D" uid="uid://d1n37m4c6pbsr" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-2.png" id="3_tfmrn"]
+[ext_resource type="Texture2D" uid="uid://4itm2iue74ew" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-cat-2.png" id="3_uyigs"]
+[ext_resource type="Texture2D" uid="uid://bawcmuej5iwcj" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-2.png" id="4_0cbvm"]
+[ext_resource type="Texture2D" uid="uid://biv8yirkwqfp5" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-cat-3.png" id="4_2kfj2"]
+[ext_resource type="Texture2D" uid="uid://bi0bx1i17hqbq" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-3.png" id="4_34orq"]
+[ext_resource type="Texture2D" uid="uid://cwk0swh3lfukt" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-2.png" id="4_axqa5"]
+[ext_resource type="Texture2D" uid="uid://cxitiwdkve3vt" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-2.png" id="4_l2rcv"]
+[ext_resource type="Texture2D" uid="uid://cpkv3rywasxyq" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-3.png" id="4_w2vvl"]
+[ext_resource type="Texture2D" uid="uid://dwyti13qw740r" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-2.png" id="4_w6ygq"]
+[ext_resource type="Texture2D" uid="uid://ck1d2cf4c4gb8" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-4.png" id="5_8b0yj"]
+[ext_resource type="Texture2D" uid="uid://cteod1edft3tj" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-3.png" id="5_37ed7"]
+[ext_resource type="Texture2D" uid="uid://fphygpvl8n7s" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-4.png" id="5_ju3aq"]
+[ext_resource type="Texture2D" uid="uid://cor8ao7maic11" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-3.png" id="5_lsnlw"]
+[ext_resource type="Texture2D" uid="uid://co6vd1oplc5gm" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-steel-sword-3.png" id="5_mo5i2"]
+[ext_resource type="Texture2D" uid="uid://duddffr8ugni2" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-sword-3.png" id="5_pkapd"]
+[ext_resource type="Texture2D" uid="uid://63fr5vhvr5kq" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-cat-4.png" id="5_s3d4m"]
+[ext_resource type="Texture2D" uid="uid://ccki12mppf8wi" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-4.png" id="6_65nsa"]
+[ext_resource type="Texture2D" uid="uid://d122ntdnb4nvp" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-4.png" id="6_epmss"]
+[ext_resource type="Texture2D" uid="uid://v8i74gvpmbes" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-2.png" id="6_hsl2u"]
+[ext_resource type="Texture2D" uid="uid://d0p1kbesdw4qu" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-5.png" id="6_ij3c5"]
+[ext_resource type="Texture2D" uid="uid://coiquisrv2x2u" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-1.png" id="7_2qhf5"]
+[ext_resource type="Texture2D" uid="uid://cj2n47vemxc30" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-fishing-rod-1.png" id="7_exey2"]
+[ext_resource type="Texture2D" uid="uid://btb75uogxjop4" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-2.png" id="7_o70pc"]
+[ext_resource type="Texture2D" uid="uid://nvynv54lxxk3" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-fishing-rod-2.png" id="8_usx7n"]
+[ext_resource type="Texture2D" uid="uid://codfilexxp3cc" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-2.png" id="8_wm2r3"]
+[ext_resource type="Texture2D" uid="uid://cbv2jvn5j323h" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-3.png" id="8_wx2xb"]
+[ext_resource type="Texture2D" uid="uid://dojdbldddin1q" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-fishing-rod-4.png" id="9_56bit"]
+[ext_resource type="Texture2D" uid="uid://0dem2qhgo2qf" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-3.png" id="9_2508u"]
+[ext_resource type="Texture2D" uid="uid://b4rr6rffy8xm" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-4.png" id="9_v12ev"]
+[ext_resource type="Texture2D" uid="uid://cyyekukpnfqlo" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-fishing-rod-5.png" id="10_c68jk"]
+[ext_resource type="Texture2D" uid="uid://bcr0dl54xav7f" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-4.png" id="10_keg76"]
+[ext_resource type="Texture2D" uid="uid://dc6rjbs0oq5m8" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-11.png" id="13_o5yq8"]
+[ext_resource type="Texture2D" uid="uid://c42g2pag0p30r" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-12.png" id="14_yg5m7"]
+[ext_resource type="Texture2D" uid="uid://dxblgcy72h5iy" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-13.png" id="15_a4i67"]
+[ext_resource type="Texture2D" uid="uid://ttgorsupw1a3" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-1.png" id="15_xq482"]
+[ext_resource type="Texture2D" uid="uid://dctxmj05c4rir" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-shield-14.png" id="16_gxaed"]
+[ext_resource type="Texture2D" uid="uid://omfns5h4612b" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-2.png" id="16_n5an8"]
+[ext_resource type="Texture2D" uid="uid://2u7l5c0c36n8" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-3.png" id="17_8sdnb"]
+[ext_resource type="Texture2D" uid="uid://cerv6rpsmro2c" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-1.png" id="19_dkbj0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cat"]
 animations = [{
 "frames": [{
-"duration": 0.9,
-"texture": SubResource("AtlasTexture_v0apj")
+"duration": 0.8,
+"texture": ExtResource("2_bpld5")
 }, {
-"duration": 0.9,
-"texture": SubResource("AtlasTexture_fxr10")
+"duration": 0.8,
+"texture": ExtResource("3_tfmrn")
 }, {
-"duration": 0.9,
-"texture": SubResource("AtlasTexture_cpppl")
+"duration": 0.8,
+"texture": ExtResource("4_w2vvl")
 }, {
-"duration": 0.9,
-"texture": SubResource("AtlasTexture_yuear")
+"duration": 0.8,
+"texture": ExtResource("5_ju3aq")
 }, {
-"duration": 0.9,
-"texture": SubResource("AtlasTexture_4a5op")
+"duration": 0.8,
+"texture": ExtResource("6_ij3c5")
 }],
 "loop": false,
 "name": &"attack_cat",
-"speed": 10.0
+"speed": 9.0
 }, {
 "frames": [{
-"duration": 1.0,
+"duration": 0.8,
+"texture": ExtResource("7_exey2")
+}, {
+"duration": 0.8,
+"texture": ExtResource("8_usx7n")
+}, {
+"duration": 0.8,
+"texture": ExtResource("9_56bit")
+}, {
+"duration": 0.8,
+"texture": ExtResource("10_c68jk")
+}],
+"loop": false,
+"name": &"attack_fishing_rod",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 0.8,
 "texture": ExtResource("3_axrts")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": ExtResource("4_axqa5")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": ExtResource("5_lsnlw")
 }, {
-"duration": 1.0,
+"duration": 0.8,
 "texture": ExtResource("6_65nsa")
 }],
 "loop": false,
 "name": &"attack_magic_stick",
-"speed": 10.0
+"speed": 9.0
 }, {
 "frames": [{
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("3_bci1o")
 }, {
-"duration": 0.9,
+"duration": 0.8,
+"texture": ExtResource("6_hsl2u")
+}, {
+"duration": 0.8,
 "texture": ExtResource("4_34orq")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("5_8b0yj")
-}, {
-"duration": 0.9,
-"texture": ExtResource("6_hsl2u")
 }],
 "loop": false,
 "name": &"attack_shield",
 "speed": 9.0
 }, {
 "frames": [{
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("3_s6vmk")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("4_l2rcv")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("5_37ed7")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("6_epmss")
 }],
 "loop": false,
@@ -142,16 +139,16 @@ animations = [{
 "speed": 9.0
 }, {
 "frames": [{
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("7_2qhf5")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("8_wm2r3")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("9_2508u")
 }, {
-"duration": 0.9,
+"duration": 0.8,
 "texture": ExtResource("10_keg76")
 }],
 "loop": false,
@@ -160,16 +157,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_x5kde")
+"texture": ExtResource("2_f6ymb")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_sp63n")
+"texture": ExtResource("3_uyigs")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_k0yt6")
+"texture": ExtResource("4_2kfj2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_kw1gx")
+"texture": ExtResource("5_s3d4m")
 }],
 "loop": true,
 "name": &"idle_cat",
@@ -178,6 +175,15 @@ animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("19_dkbj0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_o70pc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_wx2xb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_v12ev")
 }],
 "loop": true,
 "name": &"idle_fishing_rod",
@@ -199,13 +205,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("15_o2kiy")
+"texture": ExtResource("13_o5yq8")
 }, {
 "duration": 1.0,
-"texture": ExtResource("16_ipjld")
+"texture": ExtResource("14_yg5m7")
 }, {
 "duration": 1.0,
-"texture": ExtResource("17_4cdbw")
+"texture": ExtResource("15_a4i67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_gxaed")
 }],
 "loop": true,
 "name": &"idle_shield",
@@ -241,22 +250,25 @@ animations = [{
 }]
 
 [node name="Cat" type="Node2D"]
+position = Vector2(-1, 0)
 scale = Vector2(0.9, 0.9)
 script = ExtResource("1_cat_script")
 
 [node name="Shadow" type="AnimatedSprite2D" parent="."]
 modulate = Color(0, 0, 0, 0.392157)
 texture_filter = 6
-position = Vector2(-435, 140)
+position = Vector2(-438.333, -28.8889)
 scale = Vector2(1.8521, 0.520142)
 skew = 0.436332
 sprite_frames = SubResource("SpriteFrames_cat")
 animation = &"attack_cat"
+frame = 4
+frame_progress = 1.0
 centered = false
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 6
-position = Vector2(-582.222, -540)
+position = Vector2(-660, -1152.22)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_cat")
 animation = &"attack_cat"

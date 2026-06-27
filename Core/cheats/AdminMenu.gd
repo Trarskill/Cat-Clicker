@@ -89,8 +89,7 @@ func _on_clear_all_pressed() -> void:
 	Global.level = 1
 	Global.max_xp = 50
 	Global.max_level_announced = false
-	Global.is_endgame_half_reached = false
-	
+	Global.magical_rose_bought = 0
 	Global.equipped_weapon = ""
 	Global.equipped_shield = ""
 	
@@ -114,8 +113,6 @@ func _on_clear_all_pressed() -> void:
 	Global.show_floating_text("Повний вайп пройдено! 🧹", Color(1.0, 0.4, 0.4))
 	_refresh_game_state()
 
-# Синхронізація та збереження файлу
+# Синхронізація
 func _refresh_game_state() -> void:
-	var current_scene = get_tree().current_scene
-	if current_scene and current_scene.has_method("update_ui"):
-		current_scene.update_ui()
+	get_tree().call_group("UI", "update_ui")

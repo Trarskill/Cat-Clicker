@@ -11,6 +11,10 @@ var for_gem: bool = false
 var card_bg_color: Color = Color("a9744c")
 var card_border_color: Color = Color("885434")
 
+# --- НОВІ ЗМІННІ ДЛЯ МУЛЬТИ-ПОКУПКИ ---
+var current_buy_amount: int = 1
+var last_anim_time: float = 0.0
+
 @onready var title_label = $Margin/HBox/TextContent/TitleLabel
 @onready var info_button = $Margin/HBox/TextContent/InfoButton
 @onready var buy_button = $Margin/HBox/BuyButton
@@ -44,7 +48,6 @@ func _load_data_from_db() -> void:
 	for_gem = item_data.get("for_gem", false)
 	
 	title_label.text = item_name
-	price_label.text = str(item_price)
 	
 	var icon_path = item_data.get("icon", "")
 	if icon_path != "":
@@ -54,10 +57,6 @@ func _load_data_from_db() -> void:
 		coin_rect.texture = preload("res://Assets/Graphics/Icons/Сurrency/Meowgem-currency-ai.png")
 	else:
 		coin_rect.texture = preload("res://Assets/Graphics/Icons/Сurrency/Meowcoin-currency-ai.png")
-	
-	# Наприклад: 
-	# if item_data.get("rarity") == "epic":
-	#     card_border_color = Color(0.8, 0.2, 0.8)
 
 func _setup_styles() -> void:
 	var icon_style = icon_frame.get_theme_stylebox("panel").duplicate()
@@ -75,38 +74,59 @@ func _setup_styles() -> void:
 	icon_frame.add_theme_stylebox_override("panel", icon_style)
 
 # --- ОНОВЛЕННЯ СТАНУ ---
-
 func update_state() -> void:
+	if item_id == "": return
+	
+	var item_data = DataManager.get_item(item_id)
+	if item_data.is_empty(): return
+	
+	var item_type = item_data.get("type")
+	var current_amount = Global.inventory.get(item_id, 0)
+	
 	# --- 1. ДИНАМІЧНА ЦІНА ДЛЯ РОЗИ ---
 	if item_id == "magical_rose":
 		item_price = Global.get_magical_rose_price()
-		price_label.text = str(item_price)
 			
-	# --- 2. СТАНДАРТНА ПЕРЕВІРКА СТАКІВ ТА УНІКАЛЬНИХ ПРЕДМЕТІВ ---
-	if Global.inventory.has(item_id):
-		var item_data = Global.inventory[item_id]
-		
-		if typeof(item_data) == TYPE_BOOL:
-			if item_data == true:
-				_set_bought_state("КУПЛЕНО")
-				return 
-		else:
-			if item_data >= Global.MAX_STACK:
-				_set_bought_state("МАКС (" + str(Global.MAX_STACK) + ")")
-				return 
-	
-	_set_normal_state()
-	
-	# --- 3. ПЕРЕВІРКА ПЛАТОСПРОМОЖНОСТІ (з урахуванням нової ціни) ---
-	var can_afford = false
-	if for_gem:
-		can_afford = Global.meowgem >= item_price
+	# --- 2. ПЕРЕВІРКА СТАКІВ ТА ВІЛЬНОГО МІСЦЯ В ІНВЕНТАРІ ---
+	var space_left = 1
+	if typeof(current_amount) == TYPE_BOOL:
+		if current_amount == true:
+			_set_bought_state("КУПЛЕНО")
+			return 
+		space_left = 1
 	else:
-		can_afford = Global.meowcoin >= item_price 
-		
+		space_left = max(0, Global.MAX_STACK - int(current_amount))
+		if space_left <= 0:
+			_set_bought_state("МАКС (" + str(Global.MAX_STACK) + ")")
+			return 
+	
+	# --- 3. РОЗРАХУНОК МУЛЬТИ-ПОКУПКИ ---
+	var target_amount = Global.multi_click_options[Global.current_multi_idx]
+	
+	if item_type == DataManager.ItemType.EQUIPMENT or item_type == DataManager.ItemType.KEY_ITEM:
+		target_amount = 1
+	
+	if target_amount == 999:
+		target_amount = space_left
+	
+	current_buy_amount = min(target_amount, space_left)
+	
+	var total_price = item_price * current_buy_amount
+	price_label.text = str(total_price)
+	
+	if current_buy_amount > 1:
+		if target_amount == space_left and Global.multi_click_options[Global.current_multi_idx] == 999:
+			_set_normal_state("ВСІ (" + str(current_buy_amount) + ")")
+		else:
+			_set_normal_state("КУПИТИ x" + str(current_buy_amount))
+	else:
+		_set_normal_state("КУПИТИ")
+	
+	# --- 4. ПЕРЕВІРКА ПЛАТОСПРОМОЖНОСТІ ---
+	var currency = Global.meowgem if for_gem else Global.meowcoin
 	buy_button.disabled = false 
 	
-	if can_afford:
+	if currency >= total_price:
 		price_label.modulate = Color(1, 1, 1) 
 	else:
 		price_label.modulate = Color(1, 0.4, 0.4)
@@ -119,14 +139,22 @@ func _set_bought_state(text: String) -> void:
 	price_bg.visible = false
 	price_label.modulate = Color(1, 1, 1)
 
-func _set_normal_state() -> void:
-	buy_label.text = "КУПИТИ" 
+func _set_normal_state(text: String) -> void:
+	buy_label.text = text 
 	price_bg.visible = true
 
 # --- НАТИСКАННЯ НА КНОПКИ ---
 
 func _on_buy_button_pressed() -> void:
-	buy_requested.emit(item_id, item_price, for_gem)
+	var total_price = item_price * current_buy_amount
+	var currency = Global.meowgem if for_gem else Global.meowcoin
+	
+	if currency < total_price:
+		play_error_animation()
+		return
+	
+	for i in range(current_buy_amount):
+		buy_requested.emit(item_id, item_price, for_gem)
 
 func _on_info_button_pressed() -> void:
 	info_requested.emit(item_id, info_button.global_position)
@@ -134,10 +162,23 @@ func _on_info_button_pressed() -> void:
 # --- АНІМАЦІЇ ТА ПОВІДОМЛЕННЯ ---
 
 func play_success_animation() -> void:
+	var current_time = Time.get_ticks_msec() / 1000.0
 	anim_player.play("purchase_success")
-	Global.show_floating_text("+1! " + item_name, Color(0.4, 1.0, 0.4))
+	
+	if current_time - last_anim_time > 0.05:
+		if current_buy_amount > 1:
+			Global.show_floating_text("+" + str(current_buy_amount) + "! " + item_name, Color(0.4, 1.0, 0.4))
+		else:
+			Global.show_floating_text("+1! " + item_name, Color(0.4, 1.0, 0.4))
+			
+	last_anim_time = current_time
 	update_state() 
 
 func play_error_animation() -> void:
+	var current_time = Time.get_ticks_msec() / 1000.0
 	anim_player.play("purchase_error")
-	Global.show_floating_text("МАЛО КОШТІВ", Color(1.0, 0.4, 0.4))
+	
+	if current_time - last_anim_time > 0.05:
+		Global.show_floating_text("МАЛО КОШТІВ", Color(1.0, 0.4, 0.4))
+		
+	last_anim_time = current_time

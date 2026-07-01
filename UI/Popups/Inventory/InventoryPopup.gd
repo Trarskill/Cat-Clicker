@@ -26,6 +26,7 @@ func _ready():
 	visible = false
 	panel.position.y = get_viewport_rect().size.y
 	
+	
 	Global.item_timer_expired.connect(update_inventory_display)
 	
 	scroll_container.resized.connect(_on_scroll_resized)
@@ -43,6 +44,7 @@ func open():
 
 # --- ЗАКРИТТЯ ІНВЕНТАРЮ ---
 func close():
+
 	remove_current_popup()
 	
 	inventory_toggled.emit(false)

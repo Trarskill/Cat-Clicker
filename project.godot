@@ -22,6 +22,7 @@ config/icon="res://Assets/Graphics/System/Logo/logo_v1.png"
 Global="*res://Autoloads/Global.gd"
 DataManager="*res://Autoloads/DataManager.gd"
 SaveManager="*res://Autoloads/SaveManager.gd"
+AudioManager="*res://Autoloads/AudioManager.gd"
 
 [display]
 

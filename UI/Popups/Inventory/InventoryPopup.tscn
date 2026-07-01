@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://d1otjlk781tvt"]
+[gd_scene load_steps=6 format=3 uid="uid://d1otjlk781tvt"]
 
 [ext_resource type="Script" path="res://UI/Popups/Inventory/InventoryPopup.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://d4i4k3t5yiy30" path="res://Assets/Graphics/Backgrounds/MeowQuest-ai-background-shoppopup.png" id="2_bg"]
 [ext_resource type="FontFile" uid="uid://gnwvb53hkvq3" path="res://Assets/Fonts/SourceCodePro-Black.ttf" id="3_f73o6"]
+[ext_resource type="PackedScene" uid="uid://dep256846pc2e" path="res://UI/Components/MultiModeBtn/MultiModeBtn.tscn" id="4_ff5cy"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0w08o"]
 bg_color = Color(0.1, 0.1, 0.1, 0.5)
@@ -41,7 +42,9 @@ theme_override_constants/separation = 16
 
 [node name="Header" type="MarginContainer" parent="Panel/MainLayout"]
 layout_mode = 2
+theme_override_constants/margin_left = 16
 theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 16
 
 [node name="Title" type="Label" parent="Panel/MainLayout/Header"]
 layout_mode = 2
@@ -52,6 +55,10 @@ theme_override_fonts/font = ExtResource("3_f73o6")
 theme_override_font_sizes/font_size = 42
 text = "Text"
 horizontal_alignment = 1
+
+[node name="MultiModeButton" parent="Panel/MainLayout/Header" instance=ExtResource("4_ff5cy")]
+layout_mode = 2
+size_flags_horizontal = 8
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel/MainLayout"]
 layout_mode = 2

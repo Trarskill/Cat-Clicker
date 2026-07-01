@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://d0p1kbesdw4qu"
-path="res://.godot/imported/hero-attack-cat-5.png-4965380eeda2b02747c28a89028cb019.ctex"
+uid="uid://dd1arn0tjjrgc"
+path="res://.godot/imported/hero-idle-tricky-stick-4.png-a7f797b371a80fc489653a3969a76a08.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-5.png"
-dest_files=["res://.godot/imported/hero-attack-cat-5.png-4965380eeda2b02747c28a89028cb019.ctex"]
+source_file="res://Assets/Graphics/Characters/hero/idle/hero-idle-tricky-stick-4.png"
+dest_files=["res://.godot/imported/hero-idle-tricky-stick-4.png-a7f797b371a80fc489653a3969a76a08.ctex"]
 
 [params]
 

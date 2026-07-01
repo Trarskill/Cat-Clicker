@@ -47,7 +47,6 @@ func _on_reset_level_pressed() -> void:
 	Global.xp = 0
 	Global.max_xp = 50
 	Global.max_level_announced = false
-	Global.is_endgame_half_reached = false
 	Global.click_lvl_power = 0
 	Global.leveled_up.emit(Global.level)
 	_refresh_game_state()

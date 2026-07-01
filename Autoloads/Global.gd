@@ -33,6 +33,7 @@ var inventory: Dictionary = {
 	"steel_sword": false,
 	"magic_stick": false,
 	"magic_fishing_rod": false,
+	"tricky_stick": false,
 	"bowl_with_bone": 0,
 	"bowl_with_rice": 0,
 	"bowl_with_fish": 0,
@@ -60,6 +61,10 @@ var catnip_timer: float = 0.0
 var clockwork_mouse_timer: float = 0.0
 var clockwork_mouse_cooldown: float = 0.0
 
+# --- НАЛАШТУВАННЯ МУЛЬТИ-КЛІКУ ---
+var multi_click_options: Array = [2, 5, 10, 999]
+var current_multi_idx: int = 2 
+
 # --- ЗМІННІ ДЛЯ ЧЕРГИ ТЕКСТІВ ---
 var floating_text_queue: Array = []
 var is_showing_floating_text: bool = false
@@ -67,6 +72,28 @@ var is_showing_floating_text: bool = false
 # --- СИГНАЛИ (ПОДІЇ) ---
 signal item_timer_expired
 signal leveled_up(new_level)
+
+@warning_ignore("unused_signal")
+signal multi_mode_changed
+
+# --- Плейлист з треками --- 
+var music_playlist: Array = [
+	preload("res://Assets/Audio/Music/A_Map_in_the_Paw.mp3"),
+	preload("res://Assets/Audio/Music/Tiptoe_Through_the_Treasury.mp3")
+]
+
+# --- ЗВУКОВІ ЕФЕКТИ ---
+const SFX = {
+	"CLICK": preload("res://Assets/Audio/SFX/main_click.mp3"),
+	"LEVEL_UP": preload("res://Assets/Audio/SFX/level-up.mp3"),
+	"BUY_SUCCESS": preload("res://Assets/Audio/SFX/buy-sucsses.mp3"),
+	"BUY_ERROR": preload("res://Assets/Audio/SFX/buy-error.mp3"),
+	"UI_OPEN": preload("res://Assets/Audio/SFX/popup-open.mp3"),
+	"USE_EQUIP": preload("res://Assets/Audio/SFX/use-equipment.mp3"),
+	"CHEST_APPEAR": preload("res://Assets/Audio/SFX/chest-appear.mp3"),
+	"CHEST_TAP": preload("res://Assets/Audio/SFX/chest-tap.mp3"),
+	"CHEST_OPEN": preload("res://Assets/Audio/SFX/chest-opening.mp3")
+}
 
 # --- ГОЛОВНИЙ ЦИКЛ ГРИ (ОНОВЛЕННЯ) ---
 # Функція автоматично викликається Godot 
@@ -134,22 +161,31 @@ func process_click() -> Dictionary:
 	var total_xp = click_power + click_lvl_power
 	var earned_coins = 0
 	
-	# 1. ДОДАВАННЯ ДОСВІДУ ВІД МИСОК (можуть працювати всі одночасно)
-	if bowl_bone_timer > 0:
-		total_xp += DataManager.get_item("bowl_with_bone")["stats"]["xp_bonus"]
-	if bowl_rice_timer > 0:
-		total_xp += DataManager.get_item("bowl_with_rice")["stats"]["xp_bonus"]
-	if bowl_fish_timer > 0:
-		total_xp += DataManager.get_item("bowl_with_fish")["stats"]["xp_bonus"]
+	var are_buffs_active = (equipped_weapon != "tricky_stick")
 	
-	# 2. БОНУСИ ВІД ЕКІПІРУВАННЯ
+	if are_buffs_active:
+		if bowl_bone_timer > 0:
+			total_xp += DataManager.get_item("bowl_with_bone")["stats"]["xp_bonus"]
+		if bowl_rice_timer > 0:
+			total_xp += DataManager.get_item("bowl_with_rice")["stats"]["xp_bonus"]
+		if bowl_fish_timer > 0:
+			total_xp += DataManager.get_item("bowl_with_fish")["stats"]["xp_bonus"]
+	
 	if equipped_weapon != "":
 		var w_data = DataManager.get_item(equipped_weapon)
+		
 		if equipped_weapon == "magic_stick":
 			if inventory.get("cat_magic", 0) >= 1:
 				total_xp += w_data["stats"].get("xp_bonus", 0)
+				
 		elif equipped_weapon == "magic_fishing_rod":
 			earned_coins += w_data["stats"].get("coin_bonus", 1)
+			
+		elif equipped_weapon == "tricky_stick":
+			var percent = w_data["stats"].get("xp_percent", 0.01)
+			var dynamic_bonus = int(max_xp * percent)
+			total_xp += max(1, dynamic_bonus)
+			
 		else:
 			total_xp += w_data["stats"].get("xp_bonus", 0)
 	
@@ -157,15 +193,15 @@ func process_click() -> Dictionary:
 		var s_data = DataManager.get_item(equipped_shield)
 		total_xp += s_data["stats"].get("xp_bonus", 0)
 	
-	# 3. МНОЖНИК ВІД РІВНЯ КОТО-МАГІЇ
+	# 3. МНОЖНИК ВІД РІВНЯ КОТО-МАГІЇ 
 	var magic_lvl = inventory.get("cat_magic", 0)
 	if magic_lvl > 0:
 		var magic_data = DataManager.get_item("cat_magic")
 		var multiplier = 1.0 + (magic_lvl * magic_data["stats"]["multiplier_per_level"])
 		total_xp = int(total_xp * multiplier)
 	
-	# 4. МНОЖНИК ВІД КОТЯЧОЇ М'ЯТИ (застосовується в самому кінці до всього зібраного XP)
-	if catnip_timer > 0:
+	# 4. МНОЖНИК ВІД КОТЯЧОЇ М'ЯТИ 
+	if are_buffs_active and catnip_timer > 0:
 		var catnip_data = DataManager.get_item("catnip")
 		var catnip_mult = catnip_data["stats"].get("xp_multiplier", 2.0)
 		total_xp = int(total_xp * catnip_mult)
@@ -173,15 +209,13 @@ func process_click() -> Dictionary:
 	gain_xp(total_xp)
 	
 	# 5. ДОДАВАННЯ МОНЕТ ВІД МІШЕЧКА
-	if bag_of_fruit_timer > 0:
+	if are_buffs_active and bag_of_fruit_timer > 0:
 		var fruit_data = DataManager.get_item("bag_of_fruit")
 		earned_coins += fruit_data["stats"].get("coin_gets", 1)
 		
-	# Якщо є зароблені монети за клік (від вудки або мішечка), додаємо їх
 	if earned_coins > 0:
 		meowcoin += earned_coins
 		
-	# Повертаємо результати для інтерфейсу
 	return {"xp": total_xp, "coins": earned_coins}
 
 # --- ЛОГІКА НАРАХУВАННЯ ДОСВІДУ ---
@@ -221,6 +255,7 @@ func process_endgame_xp() -> void:
 # та видає нагороди залежно від досягнутого етапу
 # --- ЛОГІКА ПІДВИЩЕННЯ РІВНЯ ---
 func level_up() -> void:
+	AudioManager.play_sfx(Global.SFX["LEVEL_UP"], false, false)
 	level += 1
 	xp -= max_xp
 	
@@ -333,28 +368,45 @@ func use_item(item_id: String) -> Dictionary:
 	
 	# --- 1. ЕКІПІРУВАННЯ ---
 	if item_type == DataManager.ItemType.EQUIPMENT:
+		AudioManager.play_sfx(Global.SFX["USE_EQUIP"], false, true)
+		
+		var two_handed_weapons = ["magic_stick", "magic_fishing_rod", "tricky_stick"]
+		
 		if item_id == "magic_stick" and equipped_weapon != "magic_stick":
 			if inventory.get("cat_magic", 0) == 0:
 				return {"text": "Потрібно володіти кото-магією!", "success": false}
 		
+		# Логіка Щита
 		if item_id == "wooden_shield":
 			if equipped_shield == item_id:
 				equipped_shield = ""
 				return {"text": "Щит знято", "success": true}
 			else:
+				
 				equipped_shield = item_id
 				return {"text": "Щит одягнено", "success": true}
+				
+		# Логіка Зброї
 		else:
 			if equipped_weapon == item_id:
 				equipped_weapon = ""
 				return {"text": "Зброю знято", "success": true}
 			else:
 				equipped_weapon = item_id
-				return {"text": "Зброю одягнено", "success": true}
+				var extra_text = ""
+				
+				if equipped_weapon in two_handed_weapons and equipped_shield != "":
+					equipped_shield = ""
+					extra_text = "\nЩит знято (потрібні обидві лапки)"
+					
+				return {"text": "Зброю одягнено" + extra_text, "success": true}
 	
 	# --- 2. КЛЮЧОВІ ПРЕДМЕТИ (KEY_ITEM) ---
 	elif item_type == DataManager.ItemType.KEY_ITEM:
 		if item_id == "magical_rose":
+			if inventory.get("magical_potion", 0) >= MAX_STACK:
+				return {"text": "Крафт неможливий!\n Ліміт Магічних Зіль в інветарі.", "success": false}
+			
 			if inventory.get("xp_potion", 0) >= 1:
 				inventory["xp_potion"] -= 1
 				inventory["magical_rose"] -= 1
@@ -362,6 +414,7 @@ func use_item(item_id: String) -> Dictionary:
 				return {"text": "Крафт успішний!\n Отримано Магічне Зілля.", "success": true}
 			else:
 				return {"text": "Потрібне 1 Зілля Досвіду (XP)!", "success": false}
+		
 		elif item_id == "boss_map":
 			return {"text": "Карту вивчено!\n(Боси у наступних оновленнях)", "success": true}
 	

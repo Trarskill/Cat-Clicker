@@ -19,7 +19,7 @@ const ITEM_DATABASE = {
 		"proper": "Випадяння предметів або грошей",
 		"icon": "res://Assets/Graphics/Icons/Items/mysterious-chest-ai.png",
 		"type": ItemType.LOOTBOX,
-		"price": 100,
+		"price": 215,
 		"for_gem": false,
 		"stackable": true,
 		"stats": {"loot_table": true}
@@ -139,7 +139,7 @@ const ITEM_DATABASE = {
 		"stats": {}
 	},
 
-# --- ЗБРОЯ/ЕКІПЕРУВАННЯ ---
+# --- ЕКІПЕРУВАННЯ ---
 	"wooden_sword": {
 		"name": "Меч з дерева",
 		"description": "Звичайни мач з дерева? З ним я стану сильнішим!",
@@ -194,6 +194,17 @@ const ITEM_DATABASE = {
 		"for_gem": false,
 		"stackable": false,
 		"stats": {"coin_bonus": 1}
+	},
+	"tricky_stick": {
+		"name": "Хитра палиця",
+		"description": "Здається звичайною гілкою, але вона краде рівно 1% від потрібного досвіду за кожен удар!",
+		"proper": "Сила +1% XP",
+		"icon": "res://Assets/Graphics/Icons/Items/tricky_stick.png",
+		"type": ItemType.EQUIPMENT,
+		"price": 0,
+		"for_gem": false,
+		"stackable": false,
+		"stats": {"xp_percent": 0.01}
 	},
 
 # --- СПЕЦИФІЧНІ РЕЧІ ---

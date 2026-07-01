@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://8fdw2i4y4riu"]
+[gd_scene load_steps=55 format=3 uid="uid://8fdw2i4y4riu"]
 
 [ext_resource type="Script" path="res://Characters/Cat/Cat.gd" id="1_cat_script"]
 [ext_resource type="Texture2D" uid="uid://ddfaq71nghl2y" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-1.png" id="2_bpld5"]
@@ -27,7 +27,6 @@
 [ext_resource type="Texture2D" uid="uid://ccki12mppf8wi" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-magic-stick-4.png" id="6_65nsa"]
 [ext_resource type="Texture2D" uid="uid://d122ntdnb4nvp" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-steel-sword-4.png" id="6_epmss"]
 [ext_resource type="Texture2D" uid="uid://v8i74gvpmbes" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-shield-2.png" id="6_hsl2u"]
-[ext_resource type="Texture2D" uid="uid://d0p1kbesdw4qu" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-cat-5.png" id="6_ij3c5"]
 [ext_resource type="Texture2D" uid="uid://coiquisrv2x2u" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-sword-1.png" id="7_2qhf5"]
 [ext_resource type="Texture2D" uid="uid://cj2n47vemxc30" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-fishing-rod-1.png" id="7_exey2"]
 [ext_resource type="Texture2D" uid="uid://btb75uogxjop4" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-2.png" id="7_o70pc"]
@@ -47,24 +46,28 @@
 [ext_resource type="Texture2D" uid="uid://omfns5h4612b" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-2.png" id="16_n5an8"]
 [ext_resource type="Texture2D" uid="uid://2u7l5c0c36n8" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-magic-stick-3.png" id="17_8sdnb"]
 [ext_resource type="Texture2D" uid="uid://cerv6rpsmro2c" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-fishing-rod-1.png" id="19_dkbj0"]
+[ext_resource type="Texture2D" uid="uid://diqal4qhy5gy3" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-tricky-stick-1.png" id="44_6o6js"]
+[ext_resource type="Texture2D" uid="uid://ejckxj1rcrbt" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-tricky-stick-2.png" id="45_axge2"]
+[ext_resource type="Texture2D" uid="uid://5lk5j4pfuvk0" path="res://Assets/Graphics/Characters/hero/attack/hero-attack-tricky-stick-3.png" id="46_11w3y"]
+[ext_resource type="Texture2D" uid="uid://b4p5wv5tmtd5r" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-tricky-stick-1.png" id="47_6h2bm"]
+[ext_resource type="Texture2D" uid="uid://b8r6dq6rmxj00" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-tricky-stick-2.png" id="48_pu0di"]
+[ext_resource type="Texture2D" uid="uid://k1u0hh3qtiv" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-tricky-stick-3.png" id="49_n6dqy"]
+[ext_resource type="Texture2D" uid="uid://dd1arn0tjjrgc" path="res://Assets/Graphics/Characters/hero/idle/hero-idle-tricky-stick-4.png" id="50_6d3ny"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_cat"]
 animations = [{
 "frames": [{
-"duration": 0.8,
+"duration": 0.7,
 "texture": ExtResource("2_bpld5")
 }, {
-"duration": 0.8,
+"duration": 0.7,
 "texture": ExtResource("3_tfmrn")
 }, {
-"duration": 0.8,
+"duration": 0.7,
 "texture": ExtResource("4_w2vvl")
 }, {
-"duration": 0.8,
+"duration": 0.7,
 "texture": ExtResource("5_ju3aq")
-}, {
-"duration": 0.8,
-"texture": ExtResource("6_ij3c5")
 }],
 "loop": false,
 "name": &"attack_cat",
@@ -136,6 +139,20 @@ animations = [{
 }],
 "loop": false,
 "name": &"attack_steel_sword",
+"speed": 9.0
+}, {
+"frames": [{
+"duration": 0.8,
+"texture": ExtResource("44_6o6js")
+}, {
+"duration": 0.8,
+"texture": ExtResource("45_axge2")
+}, {
+"duration": 0.8,
+"texture": ExtResource("46_11w3y")
+}],
+"loop": false,
+"name": &"attack_tricky_stick",
 "speed": 9.0
 }, {
 "frames": [{
@@ -236,6 +253,23 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("47_6h2bm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_pu0di")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_n6dqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_6d3ny")
+}],
+"loop": true,
+"name": &"idle_tricky_stick",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("3_5y7ob")
 }, {
 "duration": 1.0,
@@ -262,7 +296,7 @@ scale = Vector2(1.8521, 0.520142)
 skew = 0.436332
 sprite_frames = SubResource("SpriteFrames_cat")
 animation = &"attack_cat"
-frame = 4
+frame = 3
 frame_progress = 1.0
 centered = false
 
@@ -271,5 +305,6 @@ texture_filter = 6
 position = Vector2(-660, -1152.22)
 scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_cat")
-animation = &"attack_cat"
+animation = &"idle_tricky_stick"
+frame_progress = 0.14265
 centered = false

@@ -3,6 +3,7 @@ extends PanelContainer
 @export var dimmer: ColorRect 
 
 var is_open: bool = false
+var is_menu_ready: bool = false
 var tween: Tween
 
 @onready var close_button = $MarginContainer/VBox/HBoxContainer/BtnClose
@@ -18,8 +19,8 @@ var tween: Tween
 # --- ЗМІННІ СТАНУ НАЛАШТУВАНЬ ---
 var is_music_muted: bool = false
 var is_sfx_muted: bool = false
-var pre_mute_music_val: float = 0.5
-var pre_mute_sfx_val: float = 0.7
+var pre_mute_music_val: float = 0.6
+var pre_mute_sfx_val: float = 0.6
 var current_language: String = "uk"
 
 # --- ІНІЦІАЛІЗАЦІЯ ---
@@ -31,10 +32,12 @@ func _ready() -> void:
 	hide()
 	modulate.a = 0.0
 	is_open = false
+	is_menu_ready = true
 	
 	if dimmer:
 		dimmer.hide()
 		dimmer.modulate.a = 0.0
+		dimmer.gui_input.connect(_on_dimmer_gui_input)
 
 	close_button.pressed.connect(close)
 	music_slider.value_changed.connect(_on_music_changed)
@@ -97,29 +100,48 @@ func close() -> void:
 		if dimmer: dimmer.hide()
 	)
 
+# --- ЗАКРИТТЯ ПО КЛІКУ НА ФОН ---
+# Перевіряємо, чи це будь-яка кнопка миші АБО 
+# тап по екрану, і чи відбулося натискання
+func _on_dimmer_gui_input(event: InputEvent) -> void:
+	if (event is InputEventMouseButton or event is InputEventScreenTouch) and event.is_pressed():
+		if is_open:
+			close()
+
 # --- Slider МУЗИКИ ---
 # Обробник ручної зміни повзунка музики. Встановлює нову гучність у децибелах. 
 # Якщо музика була вимкнена (Mute), автоматично знімає це блокування при русі повзунка.
 func _on_music_changed(value: float) -> void:
-	if is_music_muted:
-		is_music_muted = false
-		AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"), false)
+	if value <= 0.001: 
+		is_music_muted = true
+		AudioManager.set_music_mute(true)
+		music_mute_btn.text = "🔇"
+	else:
+		if is_music_muted:
+			is_music_muted = false
+			AudioManager.set_music_mute(false)
 		music_mute_btn.text = "🔊"
+		pre_mute_music_val = value 
 		
-	pre_mute_music_val = value 
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(value))
+	AudioManager.set_music_volume(value)
 
 # --- Slider SFX ---
 # Обробник ручної зміни повзунка звукових ефектів (SFX). Оновлює рівень гучності 
 # та автоматично вимикає режим Mute, якщо гравець почав тягнути повзунок.
 func _on_sfx_changed(value: float) -> void:
-	if is_sfx_muted:
-		is_sfx_muted = false
-		AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"), false)
+	if value <= 0.001:
+		is_sfx_muted = true
+		AudioManager.set_sfx_mute(true)
+		sfx_mute_btn.text = "🔇"
+	else:
+		if is_sfx_muted:
+			is_sfx_muted = false
+			AudioManager.set_sfx_mute(false)
 		sfx_mute_btn.text = "🔊"
+		AudioManager.play_sfx(Global.SFX["CLICK"], true)
+		pre_mute_sfx_val = value
 		
-	pre_mute_sfx_val = value
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(value))
+	AudioManager.set_sfx_volume(value)
 
 # --- ЛОГІКА ВИМКНЕННЯ МУЗИКИ (MUTE) ---
 # Обробник кнопки вимкнення музики. Перемикає стан Mute для шини "Music", 
@@ -127,15 +149,13 @@ func _on_sfx_changed(value: float) -> void:
 # не викликаючи при цьому подію зміни гучності.
 func _on_music_mute_toggled() -> void:
 	is_music_muted = !is_music_muted
-	var bus_idx = AudioServer.get_bus_index("Music")
-	AudioServer.set_bus_mute(bus_idx, is_music_muted)
+	AudioManager.set_music_mute(is_music_muted)
 	
 	if is_music_muted:
 		pre_mute_music_val = music_slider.value
 		music_slider.set_value_no_signal(0.0)
 		music_mute_btn.text = "🔇"
 	else:
-		# Повертаємо збережене значення
 		music_slider.set_value_no_signal(pre_mute_music_val)
 		music_mute_btn.text = "🔊"
 
@@ -144,8 +164,7 @@ func _on_music_mute_toggled() -> void:
 # запам'ятовує попереднє значення повзунка та оновлює візуальний інтерфейс.
 func _on_sfx_mute_toggled() -> void:
 	is_sfx_muted = !is_sfx_muted
-	var bus_idx = AudioServer.get_bus_index("SFX")
-	AudioServer.set_bus_mute(bus_idx, is_sfx_muted)
+	AudioManager.set_sfx_mute(is_sfx_muted)
 	
 	if is_sfx_muted:
 		pre_mute_sfx_val = sfx_slider.value
@@ -154,8 +173,6 @@ func _on_sfx_mute_toggled() -> void:
 	else:
 		sfx_slider.set_value_no_signal(pre_mute_sfx_val)
 		sfx_mute_btn.text = "🔊"
-	
-	sfx_mute_btn.text = "🔇" if is_sfx_muted else "🔊"
 
 # --- ЛОГІКА МОВИ ---
 # Змінює активну мову локалізації гри.
@@ -168,6 +185,9 @@ func _set_language(lang_code: String) -> void:
 	
 	btn_lang_ua.modulate.a = 1.0
 	btn_lang_gb.modulate.a = 1.0
+
+	#if is_menu_ready:
+		#Global.show_floating_text("Переклад у розробці!", Color(1.0, 0.35, 0.2))
 
 # --- ЛОГІКА ПОДАРУНКА (ПРОМОКОДУ) ---
 # Логіка активації промокоду. Видає гравцеві нагороду, відмічає статус подарунка як "отриманий", 
@@ -215,22 +235,26 @@ func _load_and_apply_settings() -> void:
 	pre_mute_music_val = saved.get("pre_mute_music_val", 0.5)
 	pre_mute_sfx_val = saved.get("pre_mute_sfx_val", 0.7)
 	
-	# Застосовуємо звук
+	# Застосовуємо звук (ВИПРАВЛЕНО НА AudioManager)
 	music_mute_btn.text = "🔇" if is_music_muted else "🔊"
-	AudioServer.set_bus_mute(AudioServer.get_bus_index("Music"), is_music_muted)
+	AudioManager.set_music_mute(is_music_muted)
+	
 	if is_music_muted:
 		music_slider.set_value_no_signal(0.0)
 	else:
 		music_slider.set_value_no_signal(pre_mute_music_val)
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"), linear_to_db(pre_mute_music_val))
+		
+	AudioManager.set_music_volume(pre_mute_music_val)
 	
 	sfx_mute_btn.text = "🔇" if is_sfx_muted else "🔊"
-	AudioServer.set_bus_mute(AudioServer.get_bus_index("SFX"), is_sfx_muted)
+	AudioManager.set_sfx_mute(is_sfx_muted)
+	
 	if is_sfx_muted:
 		sfx_slider.set_value_no_signal(0.0)
 	else:
 		sfx_slider.set_value_no_signal(pre_mute_sfx_val)
-	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"), linear_to_db(pre_mute_sfx_val))
+		
+	AudioManager.set_sfx_volume(pre_mute_sfx_val)
 	
 	# ЗАВАНТАЖУЄМО ТА ЗАСТОСОВУЄМО МОВУ
 	var saved_lang = saved.get("language", "uk")

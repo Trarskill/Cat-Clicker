@@ -24,6 +24,7 @@ const TEX_CHEST_OPEN = preload("res://Assets/Graphics/EnvAnim/ChestOpening/Chest
 # Викликається при старті: підключає кнопки, встановлює 
 # стартовий текст, центрує елементи та запускає анімацію появи
 func _ready() -> void:
+	AudioManager.play_sfx(Global.SFX["CHEST_APPEAR"], false, true)
 	chest_button.pressed.connect(_on_chest_pressed)
 	close_button.pressed.connect(_on_close_pressed)
 	
@@ -42,6 +43,7 @@ func _ready() -> void:
 # Зменшує лічильник кліків, викликає тряску та 
 # змінює колір/індикатори з кожним ударом
 func _on_chest_pressed() -> void:
+	AudioManager.play_sfx(Global.SFX["CHEST_TAP"], false, true)
 	if clicks_left <= 0:
 		return 
 		
@@ -62,6 +64,7 @@ func _on_chest_pressed() -> void:
 # Звертається до Global за лутом, блокує кнопку 
 # взаємодії та запускає фінальну епічну анімацію
 func open_chest() -> void:
+	AudioManager.play_sfx(Global.SFX["CHEST_OPEN"], false, true)
 	dropped_items = Global.open_lootbox(chest_id)
 	
 	chest_button.disabled = true

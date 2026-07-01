@@ -23,6 +23,8 @@ var is_menu_locked: bool = false
 var current_menu_offset_y: float = 0.0
 var world_tween: Tween
 
+var current_track_idx: int = 0
+
 # --- ІНІЦІАЛІЗАЦІЯ СЦЕНИ --- 
 # Викликається один раз при старті сцени. Завантажує збереження, 
 # оновлює інтерфейс та підключає всі необхідні сигнали кнопок і вікон.
@@ -30,12 +32,16 @@ func _ready() -> void:
 	add_to_group("UI")
 	
 	SaveManager.load_game()
-	update_ui()
-	
 	get_tree().call_group("UI", "update_ui")
 	
 	if cat.has_method("update_equipment_visuals"):
 		cat.update_equipment_visuals()
+	
+	if not AudioManager.music_player.finished.is_connected(_on_music_finished):
+		AudioManager.music_player.finished.connect(_on_music_finished)
+	
+	current_track_idx = randi() % Global.music_playlist.size()
+	AudioManager.play_music(Global.music_playlist[current_track_idx])
 	
 	click_area.pressed.connect(_on_click_area_pressed)
 	lowbar_shop_button.pressed.connect(_on_shop_button_pressed)
@@ -70,9 +76,9 @@ func _on_click_area_pressed() -> void:
 	var click_result = Global.process_click()
 	
 	show_xp_feedback(click_result["xp"])
-	# --- ПЕРЕВІРКА НА ВУДОЧКУ ---
-	if Global.equipped_weapon == "magic_fishing_rod":
-		show_coin_feedback(1)
+	
+	if click_result["coins"] > 0:
+		show_coin_feedback(click_result["coins"])
 		
 	update_ui()
 
@@ -121,6 +127,7 @@ func _on_shop_button_pressed() -> void:
 		
 	shop_popup.toggle_shop()
 	
+	AudioManager.play_sfx(Global.SFX["UI_OPEN"], true, false)
 	await get_tree().create_timer(0.5).timeout
 	is_menu_locked = false
 
@@ -143,6 +150,7 @@ func _on_inventory_button_pressed() -> void:
 			
 		inventory_popup.open()
 	
+	AudioManager.play_sfx(Global.SFX["UI_OPEN"], true, false)
 	await get_tree().create_timer(0.5).timeout
 	is_menu_locked = false
 
@@ -261,6 +269,16 @@ func _on_inventory_action():
 	
 	if cat.has_method("update_equipment_visuals"):
 		cat.update_equipment_visuals()
+
+# --- ЛОГІКА ПЛЕЙЛИСТА (ВИПАДКОВИЙ ПОРЯДОК) ---
+func _on_music_finished() -> void:
+	var next_idx = randi() % Global.music_playlist.size()
+	if next_idx == current_track_idx:
+		next_idx = (current_track_idx + 1) % Global.music_playlist.size()
+		
+	current_track_idx = next_idx
+	
+	AudioManager.play_music(Global.music_playlist[current_track_idx])
 
 # --- ВІЗУАЛЬНИЙ ВІДГУК НОВОГО РІВНЯ ---
 func _on_leveled_up(_new_level: int) -> void:

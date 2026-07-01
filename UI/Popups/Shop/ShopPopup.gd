@@ -9,8 +9,8 @@ enum State { CLOSED, PARTIAL, FULL }
 var current_state = State.CLOSED
 
 @onready var panel = $Panel
-@onready var arrow = $Panel/MainLayout/HandleArea/Arrow
-@onready var handle_area = $Panel/MainLayout/HandleArea
+@onready var arrow = $Panel/MainLayout/HandleArea/ButtonArrow/Arrow
+@onready var handle_area = $Panel/MainLayout/HandleArea/ButtonArrow
 @onready var shop_group = $Panel/MainLayout/ButtonShopGroup
 
 @onready var general_list = $Panel/MainLayout/MarginContainer/ScrollContainer/ShopLists/GeneralList
@@ -33,6 +33,7 @@ func _ready() -> void:
 	panel.position.y = 0
 	visible = false 
 	handle_area.pressed.connect(_on_handle_pressed)
+	Global.multi_mode_changed.connect(update_all_cards)
 	
 	if shop_group:
 		shop_group.shop_category_changed.connect(_on_category_changed)
@@ -61,9 +62,10 @@ func _on_buy_requested(item_id: String, price: int, for_gem: bool) -> void:
 		card.play_success_animation()
 		item_bought.emit()
 		update_all_cards()
-		
+		AudioManager.play_sfx(Global.SFX["BUY_SUCCESS"], false, true)
 	else:
 		card.play_error_animation()
+		AudioManager.play_sfx(Global.SFX["BUY_ERROR"], false, true)
 
 # --- ОНОВЛЕННЯ СТАНУ КАРТОК ---
 # Проходить по всіх списках магазину і викликає функцію оновлення у кожної картки 

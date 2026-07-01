@@ -35,7 +35,7 @@ func setup(id: String, extra_param = null, in_shop: bool = false):
 	
 	if typeof(extra_param) == TYPE_VECTOR2:
 		var approx_size = Vector2(350, 177) 
-		global_position = extra_param - Vector2(approx_size.x / 2.0, approx_size.y - 85)
+		global_position = extra_param - Vector2(approx_size.x / 2.0, approx_size.y - 95)
 		var viewport_size = get_viewport_rect().size
 		global_position.x = clamp(global_position.x, 10, viewport_size.x - approx_size.x - 10)
 		global_position.y = clamp(global_position.y, 10, viewport_size.y - approx_size.y - 10)
@@ -194,14 +194,25 @@ func update_ui_state(data: Dictionary):
 				action_button.text = "СКРАФТИТИ"
 				
 				var rose_count = Global.inventory.get(current_item_id, 0)
+				
+				var current_magic_potions = Global.inventory.get("magical_potion", 0)
+				var space_left = max(0, Global.MAX_STACK - current_magic_potions)
+				
 				var possible_crafts = min(int(rose_count), int(potion_count))
+				possible_crafts = min(possible_crafts, space_left)
 				
 				if possible_crafts > 1:
 					multi_action.visible = true
 					multi_action.disabled = false
 					multi_action.modulate = Color(1, 1, 1, 1)
 					
-					multi_action.text = "x" + str(min(possible_crafts, 10))
+					var target_amount = Global.multi_click_options[Global.current_multi_idx]
+					var use_amount = min(possible_crafts, target_amount)
+					
+					if target_amount == 999:
+						multi_action.text = "ВСІ (" + str(use_amount) + ")"
+					else:
+						multi_action.text = "x" + str(use_amount)
 				else:
 					multi_action.visible = false
 					
@@ -218,6 +229,13 @@ func update_ui_state(data: Dictionary):
 				action_button.modulate = Color(1, 1, 1, 0.5)
 				action_button.text = "ПОТРІБНА МАГІЯ"
 				return
+			
+		if current_item_id == "wooden_shield" and not is_equipped:
+			if Global.equipped_weapon in ["magic_stick", "magic_fishing_rod", "tricky_stick"]:
+				action_button.disabled = true
+				action_button.modulate = Color(1, 1, 1, 0.5)
+				action_button.text = "НАДЯГНУТА НЕСУМІСНА ЗБРОЯ"
+				return
 		
 		action_button.text = "ЗНЯТИ" if is_equipped else "ОДЯГНУТИ"
 		return
@@ -231,9 +249,18 @@ func update_ui_state(data: Dictionary):
 			multi_action.disabled = false
 			multi_action.modulate = Color(1, 1, 1, 1)
 			
-			var use_amount = min(int(item_count), 10)
-			multi_action.text = "x" + str(use_amount)
+			var target_amount = Global.multi_click_options[Global.current_multi_idx]
 			
+			if data.get("type") == DataManager.ItemType.BUFF:
+				target_amount = min(target_amount, 10)
+				
+			var use_amount = min(int(item_count), target_amount)
+			
+			if target_amount == 999 and data.get("type") != DataManager.ItemType.BUFF:
+				multi_action.text = "ВСІ (" + str(use_amount) + ")"
+			else:
+				multi_action.text = "x" + str(use_amount)
+				
 			var is_timer_active = false
 			match current_item_id:
 				"bowl_with_bone": is_timer_active = Global.bowl_bone_timer > 0
@@ -261,7 +288,7 @@ func appear_at(pos: Vector2) -> void:
 	var window_size = size
 	var low_bar_height = 132.0 
 	
-	global_position = pos - Vector2(window_size.x / 2.0, window_size.y - 85)
+	global_position = pos - Vector2(window_size.x / 2.0, window_size.y - 95)
 	
 	if global_position.y + window_size.y > screen_size.y - low_bar_height:
 		global_position.y = screen_size.y - low_bar_height - window_size.y
@@ -297,14 +324,20 @@ func _on_action_pressed():
 # Підсумовує результати (досвід, час, статси), зберігає гру і закривається.
 func _on_action_multi_pressed():
 	var item_count = Global.inventory.get(current_item_id, 0)
-	var use_amount = min(int(item_count), 10) 
+	var item_data = DataManager.get_item(current_item_id)
+	
+	var target_amount = Global.multi_click_options[Global.current_multi_idx]
+	
+	if item_data.get("type") == DataManager.ItemType.BUFF:
+		target_amount = min(target_amount, 10)
+	
+	var use_amount = min(int(item_count), target_amount) 
 	var success_count = 0
 	
 	var start_gems = Global.meowgem
 	var total_xp_gained = 0
 	var last_error = ""
 	
-	var item_data = DataManager.get_item(current_item_id)
 	var stats = item_data.get("stats", {})
 	var buff_duration = stats.get("duration", 0)
 	
@@ -318,9 +351,13 @@ func _on_action_multi_pressed():
 		if current_item_id == "curse_potion" and Global.potion_balance <= 0:
 			last_error = "Мінімальна сила!"
 			break
-		if current_item_id == "magical_rose" and Global.inventory.get("xp_potion", 0) < 1:
-			last_error = "Не вистачає Зіль Досвіду!"
-			break
+		if current_item_id == "magical_rose":
+			if Global.inventory.get("magical_potion", 0) >= Global.MAX_STACK:
+				last_error = "Інвентар переповнений Магічними Зіллями!"
+				break
+			if Global.inventory.get("xp_potion", 0) < 1:
+				last_error = "Не вистачає Зіль Досвіду!"
+				break
 			
 		var result = Global.use_item(current_item_id)
 		success_count += 1

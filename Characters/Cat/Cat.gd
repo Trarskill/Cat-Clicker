@@ -18,7 +18,9 @@ func get_current_anim(action: String) -> String:
 		"wooden_sword":
 			return action + "_wooden_sword"
 		"magic_fishing_rod":
-			return action + "_fishing_rod" 
+			return action + "_fishing_rod"
+		"tricky_stick":
+			return action + "_tricky_stick" 
 			
 	# Якщо зброї немає, але є щит
 	if Global.equipped_shield != "":
@@ -50,7 +52,7 @@ func play_attack() -> void:
 	if anim.sprite_frames.has_animation(anim_name) and anim.sprite_frames.get_frame_count(anim_name) > 0:
 		anim.play(anim_name)
 		_play_shadow(anim_name, "attack")
-		
+		AudioManager.play_sfx(Global.SFX["CLICK"], true, true)
 		await anim.animation_finished
 		
 		play_idle() 

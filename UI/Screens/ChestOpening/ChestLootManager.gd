@@ -19,13 +19,13 @@ const CHEST_POOL = [
 	{"id": "xp_potion", "min": 1, "max": 2, "weight": 25, "unique": false},
 	{"id": "boss_map", "min": 1, "max": 1, "weight": 2.5, "unique": true},
 	{"id": "wooden_shield", "min": 1, "max": 1, "weight": 2, "unique": true},
-	{"id": "wooden_sword", "min": 1, "max": 1, "weight": 1.5, "unique": true},
-	{"id": "steel_sword", "min": 1, "max": 1, "weight": 0.5, "unique": true}
+	{"id": "tricky_stick", "min": 1, "max": 1, "weight": 2, "unique": true},
+	{"id": "wooden_sword", "min": 1, "max": 1, "weight": 1.5, "unique": true}
 ]
 
 # --- ГОЛОВНА ФУНКЦІЯ ГЕНЕРАЦІЇ ЛУТУ ---
 # Визначає кількість предметів, відфільтровує вже отримані унікальні речі 
-# та випадковим чином обирає нагороди на основі їхньої "ваги" .
+# та предмети, що досягли ліміту стаків, а потім випадковим чином обирає нагороди.
 static func generate_chest_loot() -> Array:
 	var final_loot = []
 	
@@ -34,14 +34,19 @@ static func generate_chest_loot() -> Array:
 	if randf() <= 0.45:
 		drops_count = 2
 		
-	# 2. Формуємо актуальний пул, викидаючи унікальні предмети, які вже є
+	# 2. Формуємо актуальний пул, викидаючи вже наявні або переповнені предмети
 	var current_pool = []
 	var total_weight: float = 0.0
 	
 	for item in CHEST_POOL:
 		if item["unique"] and _has_unique_item(item["id"]):
 			continue
-			
+		
+		if not item["unique"] and item["id"] not in ["meowcoin", "meowgem"]:
+			var current_amount = Global.inventory.get(item["id"], 0)
+			if current_amount >= Global.MAX_STACK:
+				continue
+				
 		current_pool.append(item.duplicate())
 		total_weight += float(item["weight"])
 		
